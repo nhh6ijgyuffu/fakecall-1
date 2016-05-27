@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#4fa72f</color>
+    <color name="colorPrimaryDark">#3f8525</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="colorAccept">#4fa72f</color>
+    <color name="colorAcceptPress">#804fa72f</color>
+    <color name="colorReject">#db3030</color>
+    <color name="colorRejectPress">#80db3030</color>
+</resources>

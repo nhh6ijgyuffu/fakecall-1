@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">FakeCall</string>
+    <string name="lb_incoming_call">Incoming call</string>
+    <string name="lb_reject_call">Reject call with message</string>
+    <string name="lb_fake_call">Fake Call</string>
+    <string name="lb_fake_sms">Fake SMS</string>
+    <string name="lb_schedule_sms">Schedule SMS</string>
+</resources>
