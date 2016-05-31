@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="@color/colorPrimary"
+        android:background="?attr/colorPrimary"
         android:orientation="vertical"
         android:padding="10dp">
 
@@ -35,7 +35,7 @@
                 android:layout_gravity="bottom"
                 android:layout_marginTop="2dp"
                 android:contentDescription="@null"
-                android:src="@drawable/gs5_three_dot"
+                android:src="@drawable/call_dialing_ani"
                 app:autoRun="true" />
         </LinearLayout>
 
@@ -72,7 +72,7 @@
         android:adjustViewBounds="true"
         android:contentDescription="@null"
         android:scaleType="centerCrop"
-        android:src="@drawable/call_avatar_default" />
+        android:src="@drawable/gs5_call_avatar_default" />
 
     <LinearLayout
         android:id="@+id/bottomLayout"

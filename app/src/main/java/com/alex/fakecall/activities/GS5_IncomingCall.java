@@ -15,7 +15,7 @@ import butterknife.OnClick;
 import butterknife.OnTouch;
 
 
-public class GS5IncomingCallActivity extends BaseActivity {
+public class GS5_IncomingCall extends BaseActivity {
     @BindView(R.id.lyArrow)
     View lyArrow;
 
@@ -74,7 +74,7 @@ public class GS5IncomingCallActivity extends BaseActivity {
 
     @OnClick(R.id.btnAccept)
     void onAcceptCall() {
-        Intent intent = new Intent(this, GS5InCallActivity.class);
+        Intent intent = new Intent(this, GS5_InCall.class);
         callInstance.setType(CallLog.Calls.INCOMING_TYPE);
         intent.putExtra("call", callInstance);
         startActivity(intent);

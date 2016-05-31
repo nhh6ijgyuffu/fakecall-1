@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="@color/colorPrimary"
+        android:background="?attr/colorPrimary"
         android:orientation="vertical"
         android:padding="10dp">
 
@@ -43,7 +43,7 @@
             android:adjustViewBounds="true"
             android:contentDescription="@null"
             android:scaleType="centerCrop"
-            android:src="@drawable/call_avatar_default" />
+            android:src="@drawable/gs5_call_avatar_default" />
 
         <ImageView
             android:contentDescription="@null"

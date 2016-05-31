@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.alex.fakecall">
 
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <uses-permission android:name="android.permission.WRITE_CALL_LOG" />
 
@@ -14,15 +15,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".activities.GS5IncomingCallActivity">
+        <activity
+            android:name=".activities.AndroidL_IncomingCall"
+            android:theme="@style/AndroidL">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.GS5InCallActivity"/>
+        <activity
+            android:name=".activities.AndroidL_InCall"
+            android:theme="@style/AndroidL" />
 
+        <activity android:name=".activities.GS5_IncomingCall" />
+        <activity android:name=".activities.GS5_InCall" />
     </application>
 
 </manifest>

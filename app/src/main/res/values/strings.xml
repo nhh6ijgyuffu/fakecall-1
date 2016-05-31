@@ -5,4 +5,6 @@
     <string name="lb_fake_call">Fake Call</string>
     <string name="lb_fake_sms">Fake SMS</string>
     <string name="lb_schedule_sms">Schedule SMS</string>
+    <string name="lb_default_phone">(84) 919 456 002</string>
+    <string name="lb_default_country">Vietnam</string>
 </resources>

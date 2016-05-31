@@ -16,7 +16,7 @@ import com.alex.fakecall.utils.PhoneUtils;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class GS5InCallActivity extends BaseActivity implements SensorEventListener {
+public class GS5_InCall extends BaseActivity implements SensorEventListener {
     @BindView(R.id.tvDuration)
     TextView tvDuration;
     @BindView(R.id.tvFakeNumber)

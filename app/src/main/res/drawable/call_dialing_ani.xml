@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/gs5_three_dot_0"
+    <item android:drawable="@drawable/call_dialling_ani_01"
         android:duration="500"/>
-    <item android:drawable="@drawable/gs5_three_dot_1"
+    <item android:drawable="@drawable/call_dialling_ani_02"
         android:duration="500"/>
-    <item android:drawable="@drawable/gs5_three_dot_2"
+    <item android:drawable="@drawable/call_dialling_ani_03"
         android:duration="500"/>
 </animation-list>
