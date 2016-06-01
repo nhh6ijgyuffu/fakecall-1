@@ -1,4 +1,4 @@
-package com.alex.fakecall.activities;
+package com.alex.fakecall.activities.call_ui;
 
 import android.content.Intent;
 import android.os.CountDownTimer;
@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.alex.fakecall.R;
+import com.alex.fakecall.activities.BaseActivity;
 import com.alex.fakecall.models.Call;
 import com.alex.fakecall.utils.PhoneUtils;
 

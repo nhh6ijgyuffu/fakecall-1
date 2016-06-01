@@ -1,11 +1,11 @@
-package com.alex.fakecall.activities;
+package com.alex.fakecall.activities.call_ui;
 
 
 import android.os.SystemClock;
-import android.text.format.DateUtils;
 import android.widget.Chronometer;
 
 import com.alex.fakecall.R;
+import com.alex.fakecall.activities.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;

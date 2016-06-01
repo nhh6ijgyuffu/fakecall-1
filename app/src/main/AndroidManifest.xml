@@ -16,20 +16,22 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".activities.AndroidL_IncomingCall"
-            android:theme="@style/AndroidL">
+            android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".activities.AndroidL_InCall"
-            android:theme="@style/AndroidL" />
+        <activity android:name=".activities.call_ui.AndroidL_InCall"/>
+        <activity android:name=".activities.call_ui.AndroidL_IncomingCall"/>
 
-        <activity android:name=".activities.GS5_IncomingCall" />
-        <activity android:name=".activities.GS5_InCall" />
+        <activity android:name=".activities.call_ui.GS5_InCall"/>
+        <activity android:name=".activities.call_ui.GS5_IncomingCall"/>
+
+        <activity
+            android:label="@string/more_settings"
+            android:name=".activities.CallMoreSettingsActivity"/>
     </application>
 
 </manifest>

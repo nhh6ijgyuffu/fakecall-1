@@ -1,4 +1,4 @@
-package com.alex.fakecall.activities;
+package com.alex.fakecall.activities.call_ui;
 
 
 import android.hardware.Sensor;
@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.widget.TextView;
 
 import com.alex.fakecall.R;
+import com.alex.fakecall.activities.BaseActivity;
 import com.alex.fakecall.models.Call;
 import com.alex.fakecall.utils.Converter;
 import com.alex.fakecall.utils.PhoneUtils;

@@ -1,4 +1,4 @@
-package com.alex.fakecall.activities;
+package com.alex.fakecall.activities.call_ui;
 
 
 import android.content.ClipData;
@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.alex.fakecall.R;
+import com.alex.fakecall.activities.BaseActivity;
 import com.alex.fakecall.views.AnimImageView;
 
 import butterknife.BindView;
