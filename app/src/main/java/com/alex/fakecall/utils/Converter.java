@@ -1,12 +1,34 @@
 package com.alex.fakecall.utils;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 
 public class Converter {
-
-    public static String secondToMMSS(int totalSeconds){
-        String theFormat = "%02d:%02d";
-        int minutes = (totalSeconds % 3600) / 60;
-        int seconds = (totalSeconds % 3600) % 60;
-        return String.format( theFormat, minutes, seconds);
+    public static Calendar string2Calendar(String dateStr, String pattern) {
+        Calendar calendar = null;
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern, Locale.getDefault());
+            Date date = simpleDateFormat.parse(dateStr);
+            calendar = Calendar.getInstance();
+            calendar.setTime(date);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return calendar;
     }
+
+    public static String calendar2String(Calendar calendar, String pattern) {
+        String rs = null;
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern, Locale.US);
+            rs = simpleDateFormat.format(calendar.getTime());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
 }

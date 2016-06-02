@@ -1,62 +1,25 @@
 package com.alex.fakecall.models;
 
-import android.provider.CallLog;
 
 import java.io.Serializable;
 
-public class Call implements Serializable{
-    private String callerName;
-    private String callerNumber;
-    private String callerAvatarPath;
-    private String voiceFilePath;
-    private int duration;
-    private int type;
+public class Call implements Serializable {
+    public static final String TAG = "CallInstance";
 
-    public String getCallerName() {
-        return callerName;
-    }
+    public String name;
+    public String number;
 
-    public void setCallerName(String callerName) {
-        this.callerName = callerName;
-    }
+    public PhoneUI phone_ui;
 
-    public int getType() {
-        return type;
-    }
+    public Integer call_type;
 
-    public void setType(int type) {
-        this.type = type;
-    }
+    public Long alarm_time;
 
-    public String getCallerNumber() {
-        return callerNumber;
-    }
+    public String image;
 
-    public void setCallerNumber(String callerNumber) {
-        this.callerNumber = callerNumber;
-    }
+    public Integer repeat;
+    public Long repeat_intervals;
 
-    public String getCallerAvatarPath() {
-        return callerAvatarPath;
-    }
+    public String voice_file;
 
-    public void setCallerAvatarPath(String callerAvatarPath) {
-        this.callerAvatarPath = callerAvatarPath;
-    }
-
-    public String getVoiceFilePath() {
-        return voiceFilePath;
-    }
-
-    public void setVoiceFilePath(String voiceFilePath) {
-        this.voiceFilePath = voiceFilePath;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
 }

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    app:contentPadding="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ui_samsung_s4_50x_incoming" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ui_samsung_s4_50x_incoming" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/selectIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|right"
+                android:layout_margin="2dp"
+                android:contentDescription="@null"
+                android:src="@drawable/select_icon" />
+
+        </FrameLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/btnPreview"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Galaxy S5"
+                    android:textColor="#000"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/tvOs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Android 5.0"
+                    android:textColor="#000"
+                    android:textSize="17sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/btnPreview"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/circle_transparent_black"
+                android:contentDescription="@null"
+                android:padding="5dp"
+                android:src="@drawable/ic_play" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+</android.support.v7.widget.CardView>

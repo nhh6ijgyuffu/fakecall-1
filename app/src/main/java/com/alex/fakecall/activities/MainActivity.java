@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.alex.fakecall.R;
-import com.alex.fakecall.fragments.EmptyFrag;
 import com.alex.fakecall.fragments.FakeCallFragment;
 
 import java.util.ArrayList;
@@ -38,8 +37,6 @@ public class MainActivity extends BaseActivity {
     void setUpViewPager(){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addTab("Fake Call", new FakeCallFragment());
-        adapter.addTab("Fake SMS", new EmptyFrag());
-        adapter.addTab("History", new EmptyFrag());
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);

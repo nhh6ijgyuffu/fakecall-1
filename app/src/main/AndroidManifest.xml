@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_CALL_LOG" />
 
     <application
@@ -15,19 +15,27 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity
-            android:name=".activities.MainActivity">
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.call_ui.AndroidL_InCall"/>
-        <activity android:name=".activities.call_ui.AndroidL_IncomingCall"/>
+        <activity
+            android:name=".activities.MoreCallSettingsActivity"
+            android:label="@string/more_settings" />
 
-        <activity android:name=".activities.call_ui.GS5_InCall"/>
-        <activity android:name=".activities.call_ui.GS5_IncomingCall"/>
+        <activity
+            android:name=".activities.PhoneUISelectorActivity"
+            android:label="@string/phone_ui" />
+
+
+        <activity android:name=".activities.phone_ui.AndroidL_InCall" />
+        <activity android:name=".activities.phone_ui.AndroidL_IncomingCall" />
+
+        <activity android:name=".activities.phone_ui.GS5_InCall" />
+        <activity android:name=".activities.phone_ui.GS5_IncomingCall" />
 
     </application>
 

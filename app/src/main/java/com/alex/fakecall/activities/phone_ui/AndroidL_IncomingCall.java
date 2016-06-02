@@ -1,4 +1,4 @@
-package com.alex.fakecall.activities.call_ui;
+package com.alex.fakecall.activities.phone_ui;
 
 
 import android.content.ClipData;
