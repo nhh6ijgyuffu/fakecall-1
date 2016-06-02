@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 
 import com.alex.fakecall.R;
 import com.alex.fakecall.fragments.FakeCallFragment;
+import com.alex.fakecall.fragments.ScheduledFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,23 +23,27 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.tabLayout)
     TabLayout tabLayout;
 
-
     @Override
-    public int getLayoutResource() {
-        return R.layout.main;
+    protected int getLayoutResource() {
+        return R.layout.activity_main;
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void setUp() {
         setUpViewPager();
     }
 
     void setUpViewPager(){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addTab("Fake Call", new FakeCallFragment());
+        adapter.addTab("Fake Call", FakeCallFragment.newInstance(null));
+        adapter.addTab("Scheduled", new ScheduledFragment());
 
         viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
+    public void selectPage(int pageIndex) {
+        viewPager.setCurrentItem(pageIndex);
         tabLayout.setupWithViewPager(viewPager);
     }
 

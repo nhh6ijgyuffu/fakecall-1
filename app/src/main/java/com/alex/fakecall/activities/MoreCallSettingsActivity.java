@@ -6,8 +6,11 @@ public class MoreCallSettingsActivity extends BaseActivity {
 
     @Override
     public int getLayoutResource() {
-        return R.layout.fake_call_more_settings;
+        return R.layout.activity_more_call_settings;
     }
 
+    @Override
+    protected void setUp() {
 
+    }
 }

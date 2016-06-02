@@ -12,7 +12,15 @@ import butterknife.ButterKnife;
 
 public abstract class BaseFragment extends Fragment {
 
-    public abstract int getLayoutResource();
+    /**
+     * @return a layout resource of fragment
+     */
+    protected abstract int getLayoutResource();
+
+    /**
+     * Use for setting up fragment
+     */
+    protected abstract void setUp();
 
     @Nullable
     @Override
@@ -23,5 +31,6 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this,view);
+        setUp();
     }
 }

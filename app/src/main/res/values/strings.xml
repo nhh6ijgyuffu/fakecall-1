@@ -1,12 +1,8 @@
 <resources>
     <string name="app_name">FakeCall</string>
     <string name="more_settings">More Settings</string>
-    <string name="phone_ui">Phone Interfaces</string>
+    <string name="phone_ui">Choose your Phone UI</string>
     <string name="lb_incoming_call">Incoming call</string>
-    <string name="lb_reject_call">Reject call with message</string>
-    <string name="lb_fake_call">Fake Call</string>
-    <string name="lb_fake_sms">Fake SMS</string>
-    <string name="lb_schedule_sms">Schedule SMS</string>
     <string name="lb_default_phone">(84) 919 456 002</string>
     <string name="lb_default_country">Vietnam</string>
     <string name="lb_time_to_call">Time to call</string>
@@ -15,4 +11,9 @@
     <string name="time_value_30s">30 seconds from now</string>
     <string name="time_value_1m">1 minutes from now</string>
     <string name="time_value_5m">5 minutes from now</string>
+    <string name="lb_phone_ui">Phone UI</string>
+    <string name="lb_more">More …</string>
+    <string name="label_caller_name">Caller name</string>
+    <string name="lb_caller_number">Caller number</string>
+    <string name="lb_not_set">N/A</string>
 </resources>

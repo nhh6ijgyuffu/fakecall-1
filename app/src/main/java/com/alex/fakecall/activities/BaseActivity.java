@@ -12,7 +12,15 @@ import com.alex.fakecall.R;
 import butterknife.ButterKnife;
 
 public abstract class BaseActivity extends AppCompatActivity {
-    public abstract int getLayoutResource();
+    /**
+     * @return a layout resource of activity
+     */
+    protected abstract int getLayoutResource();
+
+    /**
+     * Use for setting up activity
+     */
+    protected abstract void setUp();
 
     protected Toolbar toolbar;
 
@@ -30,6 +38,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
         }
+        setUp();
     }
 
     @Override

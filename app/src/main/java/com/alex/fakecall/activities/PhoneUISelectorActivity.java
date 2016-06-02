@@ -1,13 +1,13 @@
 package com.alex.fakecall.activities;
 
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.alex.fakecall.R;
-import com.alex.fakecall.activities.phone_ui.AndroidL_IncomingCall;
-import com.alex.fakecall.activities.phone_ui.GS5_IncomingCall;
-import com.alex.fakecall.adapters.ListPhoneUIAdapter;
+import com.alex.fakecall.activities.phone_ui.AndroidM_IncomingCall;
+import com.alex.fakecall.adapters.PhoneUIsAdapter;
 import com.alex.fakecall.models.PhoneUI;
 
 import butterknife.BindView;
@@ -22,15 +22,27 @@ public class PhoneUISelectorActivity extends BaseActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-
+    protected void setUp() {
         rvListUI.setLayoutManager(new LinearLayoutManager(this));
         rvListUI.setHasFixedSize(true);
 
-        ListPhoneUIAdapter adapter = new ListPhoneUIAdapter();
-        adapter.addItem(new PhoneUI("Galaxy S5", "Android 5.0", GS5_IncomingCall.class));
-        adapter.addItem(new PhoneUI("Lollipop", "Android 5.0", AndroidL_IncomingCall.class));
+        PhoneUIsAdapter adapter = new PhoneUIsAdapter();
+        adapter.addItem(new PhoneUI(
+                "Android Marshmallow",
+                "Android M",
+                R.drawable.preview_android6_incoming_ui,
+                R.drawable.preview_android6_incall_ui,
+                AndroidM_IncomingCall.class));
+
+        adapter.setOnListCallback(new PhoneUIsAdapter.OnListCallback() {
+            @Override
+            public void onSelect(PhoneUI ui) {
+                Intent intent = new Intent();
+                intent.putExtra(PhoneUI.KEY, ui);
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        });
 
         rvListUI.setAdapter(adapter);
     }

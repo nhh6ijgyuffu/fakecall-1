@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-
 public class Converter {
     public static Calendar string2Calendar(String dateStr, String pattern) {
         Calendar calendar = null;
@@ -29,6 +28,12 @@ public class Converter {
             e.printStackTrace();
         }
         return rs;
+    }
+
+    public static String millis2String(long millis, String pattern){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(millis);
+        return calendar2String(calendar, pattern);
     }
 
 }

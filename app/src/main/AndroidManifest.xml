@@ -31,11 +31,9 @@
             android:label="@string/phone_ui" />
 
 
-        <activity android:name=".activities.phone_ui.AndroidL_InCall" />
-        <activity android:name=".activities.phone_ui.AndroidL_IncomingCall" />
-
-        <activity android:name=".activities.phone_ui.GS5_InCall" />
-        <activity android:name=".activities.phone_ui.GS5_IncomingCall" />
+        <activity android:name=".activities.phone_ui.AndroidM_InCall" />
+        <activity android:name=".activities.phone_ui.AndroidM_IncomingCall" />
+        <receiver android:name=".receivers.FakeCallReceiver"/>
 
     </application>
 
