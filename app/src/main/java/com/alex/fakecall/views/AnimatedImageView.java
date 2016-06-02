@@ -8,27 +8,25 @@ import android.widget.ImageView;
 
 import com.alex.fakecall.R;
 
-public class AnimImageView extends ImageView {
-    private boolean autoRun = false;
+public class AnimatedImageView extends ImageView {
 
-    public AnimImageView(Context context) {
+    public AnimatedImageView(Context context) {
         super(context);
     }
 
-    public AnimImageView(Context context, AttributeSet attrs) {
+    public AnimatedImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray a = context.getTheme().obtainStyledAttributes(
                 attrs,
-                R.styleable.AnimImageView,
+                R.styleable.AnimatedImageView,
                 0, 0);
 
         try {
-            autoRun = a.getBoolean(R.styleable.AnimImageView_autoRun, false);
+            boolean autoRun = a.getBoolean(R.styleable.AnimatedImageView_autoRun, false);
+            if(autoRun) startAnimation();
         } finally {
             a.recycle();
         }
-
-        if(autoRun) startAnimation();
     }
 
     public void startAnimation() {

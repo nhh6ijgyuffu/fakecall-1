@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.alex.fakecall.R;
 import com.alex.fakecall.activities.BaseActivity;
-import com.alex.fakecall.views.AnimImageView;
+import com.alex.fakecall.views.AnimatedImageView;
 
 import butterknife.BindView;
 
@@ -32,7 +32,7 @@ public class AndroidL_IncomingCall extends BaseActivity {
     ImageView btnSms;
 
     @BindView(R.id.callAnim)
-    AnimImageView callAnim;
+    AnimatedImageView callAnim;
 
     @Override
     public int getLayoutResource() {

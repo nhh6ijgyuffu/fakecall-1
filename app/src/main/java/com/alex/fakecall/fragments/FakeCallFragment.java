@@ -2,30 +2,56 @@ package com.alex.fakecall.fragments;
 
 
 import android.content.Intent;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.alex.fakecall.R;
-import com.alex.fakecall.activities.CallMoreSettingsActivity;
 import com.alex.fakecall.activities.call_ui.GS5_IncomingCall;
+import com.alex.fakecall.views.LinearLayoutEx;
 
+import butterknife.BindView;
 import butterknife.OnClick;
 
 public class FakeCallFragment extends BaseFragment {
-    private static final int REQUEST_MORE_SETTINGS = 1;
+
+    @BindView(R.id.lyMoreSettings)
+    LinearLayoutEx lyMoreSettings;
+
+    @BindView(R.id.tvShowMore)
+    TextView tvShowMore;
+
+    @BindView(R.id.ivExpandCollapse)
+    ImageView ivExpandCollapse;
 
     @Override
     public int getLayoutResource() {
         return R.layout.fake_call;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        lyMoreSettings.setOnToggleListener(new LinearLayoutEx.OnToggleListener() {
+            @Override
+            public void onChange(boolean isShowing) {
+                if(isShowing){
+                    tvShowMore.setText("Hide");
+                    ivExpandCollapse.setImageResource(R.drawable.ic_collapse);
+                }else{
+                    tvShowMore.setText("More settings...");
+                    ivExpandCollapse.setImageResource(R.drawable.ic_expand);
+                }
+            }
+        });
+    }
+
     @OnClick(R.id.btnMoreSettings)
     void onMoreSettings(){
-        Intent intent = new Intent(getActivity(), CallMoreSettingsActivity.class);
-        startActivityForResult(intent, REQUEST_MORE_SETTINGS);
+        lyMoreSettings.toggle();
     }
 
     @OnClick(R.id.btnSave)
     void saveCall(){
-        Intent intent = new Intent(getContext(), GS5_IncomingCall.class);
-        startActivity(intent);
+
     }
 }

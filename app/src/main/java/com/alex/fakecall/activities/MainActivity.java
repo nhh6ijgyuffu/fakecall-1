@@ -38,6 +38,7 @@ public class MainActivity extends BaseActivity {
     void setUpViewPager(){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addTab("Fake Call", new FakeCallFragment());
+        adapter.addTab("Fake SMS", new EmptyFrag());
         adapter.addTab("History", new EmptyFrag());
 
         viewPager.setAdapter(adapter);

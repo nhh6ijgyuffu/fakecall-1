@@ -29,7 +29,7 @@
                 android:textColor="#FFF"
                 android:textSize="20sp" />
 
-            <com.alex.fakecall.views.AnimImageView
+            <com.alex.fakecall.views.AnimatedImageView
                 android:layout_width="32dp"
                 android:layout_height="24dp"
                 android:layout_gravity="bottom"
@@ -110,7 +110,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <com.alex.fakecall.views.AnimImageView
+                <com.alex.fakecall.views.AnimatedImageView
                     android:layout_width="72dp"
                     android:layout_height="24dp"
                     android:layout_gravity="left"
@@ -120,7 +120,7 @@
                     android:src="@drawable/gs5_accept_call_arrow"
                     app:autoRun="true" />
 
-                <com.alex.fakecall.views.AnimImageView
+                <com.alex.fakecall.views.AnimatedImageView
                     android:layout_width="72dp"
                     android:layout_height="24dp"
                     android:layout_gravity="right"

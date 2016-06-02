@@ -88,7 +88,7 @@
             android:contentDescription="@null"
             android:src="@drawable/androidl_ic_user" />
 
-        <com.alex.fakecall.views.AnimImageView
+        <com.alex.fakecall.views.AnimatedImageView
             android:id="@+id/callAnim"
             android:layout_width="256dp"
             android:layout_height="256dp"
