@@ -6,10 +6,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
 import com.alex.fakecall.R;
 import com.alex.fakecall.fragments.FakeCallFragment;
-import com.alex.fakecall.fragments.ScheduledFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,14 +29,18 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void setUp() {
+    protected void onSetUp() {
         setUpViewPager();
+    }
+
+    @Override
+    protected void onCleanUp() {
+     
     }
 
     void setUpViewPager(){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addTab("Fake Call", FakeCallFragment.newInstance(null));
-        adapter.addTab("Scheduled", new ScheduledFragment());
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);

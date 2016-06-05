@@ -4,36 +4,57 @@ package com.alex.fakecall.models;
 import java.io.Serializable;
 
 public class Call implements Serializable {
-    public static final String KEY = "CallInstance";
+    public static final String KEY = Call.class.getSimpleName();
+    private int id = 0;
+    private String name;
+    private String number;
+    private Long time;
+    private PhoneUI phone_ui;
 
-    public String name;
-    public String number;
+    public int getId() {
+        return id;
+    }
 
-    public PhoneUI phone_ui;
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public Integer call_type;
+    public String getName() {
+        return name;
+    }
 
-    public Long alarm_time;
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public String image;
+    public String getNumber() {
+        return number;
+    }
 
-    public Integer repeat;
-    public Long repeat_intervals;
+    public void setNumber(String number) {
+        this.number = number;
+    }
 
-    public String voice_file;
+    public PhoneUI getPhoneUI() {
+        return phone_ui;
+    }
 
-    @Override
-    public String toString() {
-        return "Call{" +
-                "name='" + name + '\'' +
-                ", number='" + number + '\'' +
-                ", phone_ui=" + phone_ui +
-                ", call_type=" + call_type +
-                ", alarm_time=" + alarm_time +
-                ", image='" + image + '\'' +
-                ", repeat=" + repeat +
-                ", repeat_intervals=" + repeat_intervals +
-                ", voice_file='" + voice_file + '\'' +
-                '}';
+    public void setPhoneUI(PhoneUI phone_ui) {
+        this.phone_ui = phone_ui;
+    }
+
+    public Long getTime() {
+        return time;
+    }
+
+    public void setTime(Long time) {
+        this.time = time;
+    }
+
+    public String getDisplayName() {
+        if (name == null || name.isEmpty()) {
+            return number;
+        }
+        return name;
     }
 }

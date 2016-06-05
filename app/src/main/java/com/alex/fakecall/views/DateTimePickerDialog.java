@@ -63,8 +63,10 @@ public class DateTimePickerDialog extends
     @Override
     public void onClick(DialogInterface dialog, int which) {
         if (which == BUTTON_POSITIVE) {
-            if (listener != null)
+            if (listener != null) {
+                mCalendar.set(Calendar.SECOND, 0);
                 listener.OnDateTimeSet(mCalendar);
+            }
         }
     }
 

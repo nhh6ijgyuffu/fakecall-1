@@ -12,15 +12,11 @@ import com.alex.fakecall.R;
 import butterknife.ButterKnife;
 
 public abstract class BaseActivity extends AppCompatActivity {
-    /**
-     * @return a layout resource of activity
-     */
     protected abstract int getLayoutResource();
 
-    /**
-     * Use for setting up activity
-     */
-    protected abstract void setUp();
+    protected abstract void onSetUp();
+
+    protected abstract void onCleanUp();
 
     protected Toolbar toolbar;
 
@@ -34,18 +30,24 @@ public abstract class BaseActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
-        if(actionBar != null){
+        if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
         }
-        setUp();
+        onSetUp();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             onBackPressed();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        onCleanUp();
+        super.onDestroy();
     }
 }

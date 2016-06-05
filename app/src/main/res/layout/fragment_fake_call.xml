@@ -22,7 +22,7 @@
                 android:layout_height="64dp"
                 android:layout_centerVertical="true"
                 android:layout_margin="10dp"
-                android:src="@drawable/anh" />
+                android:src="@drawable/android_50x_img_no_image" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -55,13 +55,13 @@
 
             <ImageView
                 android:id="@+id/btnChangeCaller"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_margin="10dp"
                 android:contentDescription="@null"
-                android:src="@drawable/ic_change_caller" />
+                android:src="@drawable/ic_action_contact" />
 
         </RelativeLayout>
 
@@ -74,8 +74,7 @@
             android:id="@+id/btnSelectTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            android:padding="10dp">
+            android:background="?attr/selectableItemBackground">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -86,11 +85,11 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_margin="15dp"
                     android:contentDescription="@null"
-                    android:src="@drawable/ic_alarm" />
+                    android:src="@drawable/ic_action_timer" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -120,8 +119,9 @@
                 android:layout_height="24dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:layout_margin="15dp"
                 android:contentDescription="@null"
-                android:src="@drawable/ic_expand" />
+                android:src="@drawable/ic_action_expand" />
         </RelativeLayout>
 
 
@@ -131,15 +131,14 @@
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="10dp">
+            android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_margin="15dp"
                 android:contentDescription="@null"
-                android:src="@drawable/ic_phone" />
+                android:src="@drawable/ic_action_phone_ui" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -164,20 +163,20 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/btnMore"
+            android:id="@+id/btnShowMore"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="10dp">
+            android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:id="@+id/ivExpandSetting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_margin="15dp"
                 android:contentDescription="@null"
-                android:src="@drawable/ic_settings" />
+                android:src="@drawable/ic_action_expand" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -185,15 +184,166 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tvMore"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:text="@string/lb_more"
+                    android:text="@string/lb_show_more"
                     android:textColor="#000"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lyMoreSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_action_voice" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="Voice"
+                        android:textColor="#000"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Record001.wav" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_action_ringtone" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="Ringtone"
+                        android:textColor="#000"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Default Ringtone + Vibrate" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_action_repeat" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="Repeat"
+                        android:textColor="#000"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3 times each 5 mins" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_action_call_time" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="Talk time"
+                        android:textColor="#000"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2 mins" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
 
         <View
             android:layout_width="match_parent"
@@ -205,8 +355,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="@drawable/button_bg"
+            android:background="@drawable/primary_button_bg"
             android:text="Save"
+            android:textColor="#FFF" />
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/primary_button_bg"
+            android:text="Cancel"
             android:textColor="#FFF" />
 
     </LinearLayout>

@@ -30,10 +30,5 @@ public class Converter {
         return rs;
     }
 
-    public static String millis2String(long millis, String pattern){
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(millis);
-        return calendar2String(calendar, pattern);
-    }
 
 }

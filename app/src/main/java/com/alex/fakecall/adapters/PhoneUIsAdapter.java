@@ -16,6 +16,15 @@ import butterknife.BindView;
 public class PhoneUIsAdapter extends BaseRecyclerViewAdapter<PhoneUI, PhoneUIsAdapter.ViewHolder> {
     private OnListCallback callback;
 
+    public PhoneUIsAdapter(Context context) {
+        super(context);
+        try {
+            callback = (OnListCallback) context;
+        } catch (ClassCastException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(parent, R.layout.phone_ui_item);
@@ -43,36 +52,31 @@ public class PhoneUIsAdapter extends BaseRecyclerViewAdapter<PhoneUI, PhoneUIsAd
 
         @Override
         protected void onBind(final PhoneUI item, int pos) {
-            tvName.setText(item.name);
-            tvOs.setText(item.os);
-            ivIncallUI.setImageResource(item.inCallRes);
-            ivIncomingUI.setImageResource(item.incomingRes);
+            tvName.setText(item.getName());
+            tvOs.setText(item.getOs());
+            ivIncallUI.setImageResource(item.getInCallRes());
+            ivIncomingUI.setImageResource(item.getIncomingRes());
 
             btnPreview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Context context = itemView.getContext();
-                    Intent intent = new Intent(context, item.incoming_act);
-
-                    context.startActivity(intent);
+                    Intent intent = new Intent(mContext, item.getIncoming_act());
+                    intent.putExtra("isPreview", true);
+                    mContext.startActivity(intent);
                 }
             });
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(callback != null)
-                        callback.onSelect(item);
+                    if (callback != null)
+                        callback.onPhoneUISelect(item);
                 }
             });
         }
     }
 
-    public void setOnListCallback(OnListCallback callback){
-        this.callback = callback;
-    }
-
-    public interface OnListCallback{
-        void onSelect(PhoneUI ui);
+    public interface OnListCallback {
+        void onPhoneUISelect(PhoneUI ui);
     }
 }

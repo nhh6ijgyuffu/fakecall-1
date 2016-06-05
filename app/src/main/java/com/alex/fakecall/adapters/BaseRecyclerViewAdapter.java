@@ -1,5 +1,6 @@
 package com.alex.fakecall.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -9,6 +10,11 @@ import java.util.List;
 public abstract class BaseRecyclerViewAdapter<T, VH extends BaseRecyclerViewVH<T>> extends RecyclerView.Adapter<VH> {
 
     private List<T> listItem = new ArrayList<>();
+    protected Context mContext;
+
+    public BaseRecyclerViewAdapter(Context context){
+        mContext = context;
+    }
 
     public void setList(List<T> list) {
         this.listItem = list;

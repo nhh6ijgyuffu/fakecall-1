@@ -10,11 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -39,17 +34,6 @@
                     android:contentDescription="@null" />
 
             </LinearLayout>
-
-            <ImageView
-                android:id="@+id/selectIndicator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top|right"
-                android:layout_margin="2dp"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_select_indicator" />
-
-        </FrameLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -89,7 +73,7 @@
                 android:background="@drawable/circle_transparent_black"
                 android:contentDescription="@null"
                 android:padding="5dp"
-                android:src="@drawable/ic_play" />
+                android:src="@drawable/ic_action_play" />
         </RelativeLayout>
 
 
