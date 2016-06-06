@@ -28,7 +28,8 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone">
 
-                <Chronometer
+                <com.alex.fakecall.views.MyChronometer
+                    android:id="@id/chronometer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"

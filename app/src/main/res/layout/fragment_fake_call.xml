@@ -87,7 +87,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
+                    android:layout_margin="20dp"
                     android:contentDescription="@null"
                     android:src="@drawable/ic_action_timer" />
 
@@ -136,7 +136,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
+                android:layout_margin="20dp"
                 android:contentDescription="@null"
                 android:src="@drawable/ic_action_phone_ui" />
 
@@ -174,7 +174,7 @@
                 android:id="@+id/ivExpandSetting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
+                android:layout_margin="20dp"
                 android:contentDescription="@null"
                 android:src="@drawable/ic_action_expand" />
 
@@ -190,8 +190,7 @@
                     android:layout_marginBottom="5dp"
                     android:text="@string/lb_show_more"
                     android:textColor="#000"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:textSize="15sp" />
 
             </LinearLayout>
         </LinearLayout>
@@ -201,7 +200,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -213,7 +212,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
+                    android:layout_margin="20dp"
                     android:contentDescription="@null"
                     android:src="@drawable/ic_action_voice" />
 
@@ -248,7 +247,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
+                    android:layout_margin="20dp"
                     android:contentDescription="@null"
                     android:src="@drawable/ic_action_ringtone" />
 
@@ -283,7 +282,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
+                    android:layout_margin="20dp"
                     android:contentDescription="@null"
                     android:src="@drawable/ic_action_repeat" />
 
@@ -318,7 +317,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
+                    android:layout_margin="20dp"
                     android:contentDescription="@null"
                     android:src="@drawable/ic_action_call_time" />
 
@@ -357,15 +356,6 @@
             android:layout_margin="10dp"
             android:background="@drawable/primary_button_bg"
             android:text="Save"
-            android:textColor="#FFF" />
-
-        <Button
-            android:id="@+id/btnCancel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/primary_button_bg"
-            android:text="Cancel"
             android:textColor="#FFF" />
 
     </LinearLayout>

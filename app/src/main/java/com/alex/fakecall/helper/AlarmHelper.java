@@ -6,40 +6,45 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
+import com.alex.fakecall.App;
 import com.alex.fakecall.models.Call;
-import com.alex.fakecall.receivers.FakeCallReceiver;
 
 public class AlarmHelper {
     private static AlarmHelper mInstance;
     private AlarmManager mAlarmManager;
-    private Context mContext;
 
-    private AlarmHelper(Context ctx) {
-        mContext = ctx;
-        mAlarmManager = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
+    private AlarmHelper() {
+
     }
 
-    public static synchronized AlarmHelper getInstance(Context ctx) {
+    public static synchronized AlarmHelper getInstance() {
         if (mInstance == null) {
-            mInstance = new AlarmHelper(ctx);
+            mInstance = new AlarmHelper();
         }
         return mInstance;
     }
 
-    public void placeCall(Call call) {
-        Intent broadcast = new Intent(mContext, FakeCallReceiver.class);
+    public void placeCall(Context ctx, Call call) {
+        if (mAlarmManager == null) {
+            mAlarmManager = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
+        }
+
+        Intent broadcast = new Intent(App.GlobalVars.ACTION_RECEIVER);
         broadcast.putExtra(Call.KEY, call);
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, call.getId(), broadcast,
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(ctx, call.getId(), broadcast,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
         mAlarmManager.set(AlarmManager.RTC_WAKEUP, call.getTime(), pendingIntent);
     }
 
-    public void cancelCall(int id) {
-        Intent broadcast = new Intent(mContext, FakeCallReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, id, broadcast,
+    public void cancelCall(Context ctx, int id) {
+        if (mAlarmManager == null) {
+            mAlarmManager = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
+        }
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(ctx, id, new Intent(),
                 PendingIntent.FLAG_UPDATE_CURRENT);
+
         pendingIntent.cancel();
         mAlarmManager.cancel(pendingIntent);
     }

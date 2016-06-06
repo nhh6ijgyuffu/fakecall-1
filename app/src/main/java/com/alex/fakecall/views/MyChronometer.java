@@ -21,13 +21,8 @@ public class MyChronometer extends Chronometer {
 
     public MyChronometer(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.setOnChronometerTickListener(listener);
-    }
-
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
         duration = 0;
+        this.setOnChronometerTickListener(listener);
     }
 
     @Override
@@ -36,7 +31,7 @@ public class MyChronometer extends Chronometer {
         duration = 0;
     }
 
-    public long getDuration(){
+    public long getDuration() {
         return duration;
     }
 }

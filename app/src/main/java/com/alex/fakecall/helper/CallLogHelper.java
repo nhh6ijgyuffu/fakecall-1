@@ -12,28 +12,26 @@ import com.alex.fakecall.models.Call;
 
 public class CallLogHelper {
     private static CallLogHelper mInstance;
-    private Context mContext;
 
-    public static synchronized CallLogHelper getInstance(Context context) {
+    public static synchronized CallLogHelper getInstance() {
         if (mInstance == null) {
-            mInstance = new CallLogHelper(context);
+            mInstance = new CallLogHelper();
         }
         return mInstance;
     }
 
-    private CallLogHelper(Context context) {
-        mContext = context;
+    private CallLogHelper() {
     }
 
-    public void writeMissedCall(Call call) {
-        writeCallLog(call, 0, CallLog.Calls.MISSED_TYPE);
+    public void writeMissedCall(Context ctx, Call call) {
+        writeCallLog(ctx, call, 0, CallLog.Calls.MISSED_TYPE);
     }
 
-    public void writeIncomingCall(Call call, long duration){
-        writeCallLog(call, duration, CallLog.Calls.INCOMING_TYPE);
+    public void writeIncomingCall(Context ctx, Call call, long duration) {
+        writeCallLog(ctx, call, duration, CallLog.Calls.INCOMING_TYPE);
     }
 
-    private void writeCallLog(Call call, long duration, int type) {
+    private void writeCallLog(Context ctx, Call call, long duration, int type) {
         ContentValues values = new ContentValues();
         values.put(CallLog.Calls.TYPE, type);
         values.put(CallLog.Calls.CACHED_NAME, call.getDisplayName());
@@ -41,10 +39,10 @@ public class CallLogHelper {
         values.put(CallLog.Calls.DATE, System.currentTimeMillis());
         values.put(CallLog.Calls.DURATION, duration);
 
-        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_CALL_LOG)
+        if (ContextCompat.checkSelfPermission(ctx, Manifest.permission.WRITE_CALL_LOG)
                 != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        mContext.getContentResolver().insert(CallLog.Calls.CONTENT_URI, values);
+        ctx.getContentResolver().insert(CallLog.Calls.CONTENT_URI, values);
     }
 }

@@ -17,11 +17,12 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alex.fakecall.App;
 import com.alex.fakecall.R;
 import com.alex.fakecall.activities.PhoneUISelectorActivity;
 import com.alex.fakecall.helper.AlarmHelper;
+import com.alex.fakecall.helper.DatabaseHelper;
 import com.alex.fakecall.models.Call;
-import com.alex.fakecall.models.PhoneUI;
 import com.alex.fakecall.utils.Converter;
 import com.alex.fakecall.utils.DialogUtils;
 import com.alex.fakecall.utils.SimpleTextWatcher;
@@ -88,6 +89,8 @@ public class FakeCallFragment extends BaseFragment {
                 mCall.setNumber(s.toString().trim());
             }
         });
+
+        App.GlobalVars.isInFakeCall = false;
     }
 
     @OnClick(R.id.btnChangeCaller)
@@ -181,20 +184,16 @@ public class FakeCallFragment extends BaseFragment {
 
     @OnClick(R.id.btnSave)
     void onSaveCall() {
-        Toast.makeText(getContext(), "New call has been planned", Toast.LENGTH_SHORT).show();
-
         if (selectedTimeInterval != -1) {
             mCall.setTime(System.currentTimeMillis() + selectedTimeInterval);
         } else {
             mCall.setTime(calendarTimePicked);
         }
 
-        AlarmHelper.getInstance(getContext()).placeCall(mCall);
-    }
+        AlarmHelper.getInstance().placeCall(getContext(), mCall);
 
-    @OnClick(R.id.btnCancel)
-    void onCancelCall(){
-        AlarmHelper.getInstance(getContext()).cancelCall(0);
+        Toast.makeText(getContext(), "New call has been planned", Toast.LENGTH_SHORT).show();
+        getActivity().finish();
     }
 
     @Override
@@ -204,7 +203,7 @@ public class FakeCallFragment extends BaseFragment {
         switch (requestCode) {
             case REQUEST_PHONE_UI:
                 if (data == null) return;
-                PhoneUI pui = (PhoneUI) data.getSerializableExtra(PhoneUI.KEY);
+                Call.PhoneUI pui = (Call.PhoneUI) data.getSerializableExtra(Call.PhoneUI.KEY);
                 tvPhoneUIValue.setText(pui.getName());
                 mCall.setPhoneUI(pui);
 

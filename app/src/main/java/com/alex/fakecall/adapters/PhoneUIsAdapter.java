@@ -9,11 +9,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alex.fakecall.R;
-import com.alex.fakecall.models.PhoneUI;
+import com.alex.fakecall.models.Call;
 
 import butterknife.BindView;
 
-public class PhoneUIsAdapter extends BaseRecyclerViewAdapter<PhoneUI, PhoneUIsAdapter.ViewHolder> {
+public class PhoneUIsAdapter extends BaseRecyclerViewAdapter<Call.PhoneUI, PhoneUIsAdapter.ViewHolder> {
     private OnListCallback callback;
 
     public PhoneUIsAdapter(Context context) {
@@ -30,12 +30,9 @@ public class PhoneUIsAdapter extends BaseRecyclerViewAdapter<PhoneUI, PhoneUIsAd
         return new ViewHolder(parent, R.layout.phone_ui_item);
     }
 
-    class ViewHolder extends BaseRecyclerViewVH<PhoneUI> {
+    class ViewHolder extends BaseRecyclerViewVH<Call.PhoneUI> {
         @BindView(R.id.tvName)
         TextView tvName;
-
-        @BindView(R.id.tvOs)
-        TextView tvOs;
 
         @BindView(R.id.btnPreview)
         ImageView btnPreview;
@@ -51,9 +48,8 @@ public class PhoneUIsAdapter extends BaseRecyclerViewAdapter<PhoneUI, PhoneUIsAd
         }
 
         @Override
-        protected void onBind(final PhoneUI item, int pos) {
+        protected void onBind(final Call.PhoneUI item, int pos) {
             tvName.setText(item.getName());
-            tvOs.setText(item.getOs());
             ivIncallUI.setImageResource(item.getInCallRes());
             ivIncomingUI.setImageResource(item.getIncomingRes());
 
@@ -77,6 +73,6 @@ public class PhoneUIsAdapter extends BaseRecyclerViewAdapter<PhoneUI, PhoneUIsAd
     }
 
     public interface OnListCallback {
-        void onPhoneUISelect(PhoneUI ui);
+        void onPhoneUISelect(Call.PhoneUI ui);
     }
 }

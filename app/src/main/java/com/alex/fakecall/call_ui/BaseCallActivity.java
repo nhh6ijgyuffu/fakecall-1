@@ -14,16 +14,19 @@ import android.os.SystemClock;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alex.fakecall.App;
 import com.alex.fakecall.R;
 import com.alex.fakecall.activities.BaseActivity;
-import com.alex.fakecall.helper.AudioHelper;
+import com.alex.fakecall.helper.RingtoneHelper;
 import com.alex.fakecall.helper.CallLogHelper;
 import com.alex.fakecall.helper.VibrationHelper;
+import com.alex.fakecall.helper.WakeupHelper;
 import com.alex.fakecall.models.Call;
 import com.alex.fakecall.views.MyChronometer;
 
@@ -31,6 +34,7 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.Optional;
 
 
 public abstract class BaseCallActivity extends BaseActivity implements SensorEventListener {
@@ -118,8 +122,10 @@ public abstract class BaseCallActivity extends BaseActivity implements SensorEve
         configureForInComing();
         mHandler.sendEmptyMessageDelayed(MyHandler.HANDLE_MSG_MISSED, MAX_TIME_TO_MISSED_CALL);
 
-        AudioHelper.getInstance(this).playAudio(Settings.System.DEFAULT_RINGTONE_URI, true);
-        VibrationHelper.getInstance(this).vibrate(true);
+        RingtoneHelper.getInstance().playRingtone(this, Settings.System.DEFAULT_RINGTONE_URI, true);
+        VibrationHelper.getInstance().vibrate(this, true);
+        WakeupHelper.getInstance().wakeUp(this);
+        App.GlobalVars.isInFakeCall = true;
     }
 
     @Override
@@ -134,32 +140,36 @@ public abstract class BaseCallActivity extends BaseActivity implements SensorEve
         mSensorManager.unregisterListener(this, mProximity);
     }
 
-    protected void receiveCall() {
+    protected void answerCall() {
+        App.GlobalVars.isInFakeCall = true;
         isInCall = true;
         configureForInCall();
         mHandler.removeMessages(MyHandler.HANDLE_MSG_MISSED);
         mAudioManager.setMode(AudioManager.MODE_IN_CALL);
         mAudioManager.setSpeakerphoneOn(false);
+
         chronometer.setBase(SystemClock.elapsedRealtime());
         chronometer.start();
-        AudioHelper.getInstance(this).stopAudio();
-        VibrationHelper.getInstance(this).cancelAll();
+
+        RingtoneHelper.getInstance().stopRingtone();
+        VibrationHelper.getInstance().cancelAll(this);
     }
 
     protected void onMissedCall() {
         if (!isPreview) {
-            CallLogHelper.getInstance(this).writeMissedCall(mCall);
+            CallLogHelper.getInstance().writeMissedCall(this, mCall);
         }
-        cleanAfterEnd();
+        doWorksAfterEnd();
         finish();
     }
 
+    @Optional
     @OnClick(R.id.btnEndCall)
     protected void onEndCall() {
         if (!isPreview) {
-            CallLogHelper.getInstance(this).writeIncomingCall(mCall, chronometer.getDuration());
+            CallLogHelper.getInstance().writeIncomingCall(this, mCall, chronometer.getDuration());
         }
-        cleanAfterEnd();
+        doWorksAfterEnd();
         finish();
     }
 
@@ -177,16 +187,16 @@ public abstract class BaseCallActivity extends BaseActivity implements SensorEve
         }
     }
 
-    private void cleanAfterEnd() {
+    private void doWorksAfterEnd() {
+        App.GlobalVars.isInFakeCall = true;
         mHandler.removeMessages(MyHandler.HANDLE_MSG_MISSED);
         mHandler.removeMessages(MyHandler.HANDLE_MSG_END_CALL);
         mNotifyManager.cancel(NOTIFY_ID_INCOMING);
         mNotifyManager.cancel(NOTIFY_ID_ONGOING);
-        mAudioManager.setMode(0);
-        if (!isInCall) {
-            AudioHelper.getInstance(this).stopAudio();
-            VibrationHelper.getInstance(this).cancelAll();
-        }
+        mAudioManager.setMode(AudioManager.MODE_NORMAL);
+        RingtoneHelper.getInstance().stopRingtone();
+        VibrationHelper.getInstance().cancelAll(this);
+        WakeupHelper.getInstance().reset();
     }
 
     protected void showIncomingNotification() {
@@ -252,6 +262,25 @@ public abstract class BaseCallActivity extends BaseActivity implements SensorEve
         }
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                if (!isInCall) {
+                    return true;
+                }
+                onEndCall();
+                return true;
+            case KeyEvent.KEYCODE_CALL:
+                answerCall();
+                return true;
+            case KeyEvent.KEYCODE_ENDCALL:
+                onEndCall();
+                return true;
+            default:
+                return super.onKeyDown(keyCode, event);
+        }
+    }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {

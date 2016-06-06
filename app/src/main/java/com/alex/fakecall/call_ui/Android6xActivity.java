@@ -48,7 +48,7 @@ public class Android6xActivity extends BaseCallActivity implements OnTriggerList
     public void onTrigger(int whatToTrigger) {
         switch (whatToTrigger) {
             case OnTriggerListener.TRIGGER_ANSWER:
-                receiveCall();
+                answerCall();
                 break;
             case OnTriggerListener.TRIGGER_DECLINE:
                 onMissedCall();

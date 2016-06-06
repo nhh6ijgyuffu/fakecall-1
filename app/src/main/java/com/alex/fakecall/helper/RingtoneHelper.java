@@ -8,23 +8,22 @@ import android.net.Uri;
 
 import java.io.IOException;
 
-public class AudioHelper {
-    private static AudioHelper mInstance;
+public class RingtoneHelper {
+    private static RingtoneHelper mInstance;
     private MediaPlayer mPlayer;
-    private Context mContext;
 
-    public static AudioHelper getInstance(Context ctx) {
+    public static RingtoneHelper getInstance() {
         if (mInstance == null) {
-            mInstance = new AudioHelper(ctx);
+            mInstance = new RingtoneHelper();
         }
         return mInstance;
     }
 
-    private AudioHelper(Context ctx) {
-        mContext = ctx;
+    private RingtoneHelper() {
+
     }
 
-    public void playAudio(Uri audioUri, boolean loop) {
+    public void playRingtone(Context ctx, Uri audioUri, boolean loop) {
         if (mPlayer != null && mPlayer.isPlaying()) {
             mPlayer.stop();
             mPlayer.release();
@@ -32,7 +31,7 @@ public class AudioHelper {
         try {
             mPlayer = new MediaPlayer();
             mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            mPlayer.setDataSource(mContext, audioUri);
+            mPlayer.setDataSource(ctx, audioUri);
             mPlayer.prepare();
             mPlayer.setLooping(loop);
             mPlayer.start();
@@ -41,7 +40,7 @@ public class AudioHelper {
         }
     }
 
-    public void stopAudio() {
+    public void stopRingtone() {
         if (mPlayer != null && mPlayer.isPlaying()) {
             mPlayer.stop();
             mPlayer.release();
