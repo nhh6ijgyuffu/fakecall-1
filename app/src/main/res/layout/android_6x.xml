@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/lyCallInfo"
+        android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="visible">
@@ -100,9 +100,10 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/bottom"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/lyCallInfo">
+        android:layout_below="@id/top">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -129,14 +130,14 @@
                 android:src="@drawable/android_44x_ic_lockscreen_decline_activated" />
         </FrameLayout>
 
-        <com.alex.fakecall.views.Android44XAnim
+        <com.alex.fakecall.views.Android44xAnimation
             android:id="@+id/callAnimation"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/maskLayout"
+        android:id="@+id/mask"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#000000"

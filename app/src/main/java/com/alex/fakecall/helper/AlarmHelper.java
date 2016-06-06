@@ -14,7 +14,7 @@ public class AlarmHelper {
     private AlarmManager mAlarmManager;
     private Context mContext;
 
-    public AlarmHelper(Context ctx) {
+    private AlarmHelper(Context ctx) {
         mContext = ctx;
         mAlarmManager = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
     }

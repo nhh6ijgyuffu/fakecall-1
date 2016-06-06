@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.alex.fakecall.R;
 import com.alex.fakecall.adapters.PhoneUIsAdapter;
-import com.alex.fakecall.call_ui.Android6XUI;
+import com.alex.fakecall.call_ui.Android6xActivity;
 import com.alex.fakecall.models.PhoneUI;
 
 import butterknife.BindView;
@@ -33,7 +33,7 @@ public class PhoneUISelectorActivity extends BaseActivity implements PhoneUIsAda
                 "Android M",
                 R.drawable.android6x_preview_incoming,
                 R.drawable.android6x_preview_incall,
-                Android6XUI.class));
+                Android6xActivity.class));
 
         rvListUI.setAdapter(adapter);
     }

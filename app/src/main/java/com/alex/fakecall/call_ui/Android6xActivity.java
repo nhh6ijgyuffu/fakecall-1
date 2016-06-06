@@ -4,14 +4,14 @@ package com.alex.fakecall.call_ui;
 import android.view.View;
 
 import com.alex.fakecall.R;
-import com.alex.fakecall.views.Android44XAnim;
+import com.alex.fakecall.views.Android44xAnimation;
 import com.alex.fakecall.views.OnTriggerListener;
 
 import butterknife.BindView;
 
-public class Android6XUI extends BaseCallUI implements OnTriggerListener {
+public class Android6xActivity extends BaseCallActivity implements OnTriggerListener {
     @BindView(R.id.callAnimation)
-    Android44XAnim callAnimation;
+    Android44xAnimation callAnimation;
 
     @BindView(R.id.btnHold)
     View btnHold;
@@ -21,7 +21,7 @@ public class Android6XUI extends BaseCallUI implements OnTriggerListener {
 
     @Override
     protected int getLayoutResource() {
-        return R.layout.android6x;
+        return R.layout.android_6x;
     }
 
     @Override

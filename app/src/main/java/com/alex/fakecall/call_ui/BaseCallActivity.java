@@ -33,11 +33,11 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 
-public abstract class BaseCallUI extends BaseActivity implements SensorEventListener {
+public abstract class BaseCallActivity extends BaseActivity implements SensorEventListener {
     @BindView(R.id.chronometer)
     MyChronometer chronometer;
 
-    @BindView(R.id.maskLayout)
+    @BindView(R.id.mask)
     RelativeLayout maskLayout;
 
     @Nullable
@@ -73,15 +73,15 @@ public abstract class BaseCallUI extends BaseActivity implements SensorEventList
         public static final int HANDLE_MSG_MISSED = 1;
         public static final int HANDLE_MSG_END_CALL = 2;
 
-        private WeakReference<BaseCallUI> mWeakAct;
+        private WeakReference<BaseCallActivity> mWeakAct;
 
-        public MyHandler(BaseCallUI act) {
+        public MyHandler(BaseCallActivity act) {
             mWeakAct = new WeakReference<>(act);
         }
 
         @Override
         public void handleMessage(Message msg) {
-            BaseCallUI act = mWeakAct.get();
+            BaseCallActivity act = mWeakAct.get();
             if (act == null) return;
             switch (msg.what) {
                 case HANDLE_MSG_END_CALL:

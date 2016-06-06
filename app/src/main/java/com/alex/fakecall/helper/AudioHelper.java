@@ -20,7 +20,7 @@ public class AudioHelper {
         return mInstance;
     }
 
-    public AudioHelper(Context ctx) {
+    private AudioHelper(Context ctx) {
         mContext = ctx;
     }
 

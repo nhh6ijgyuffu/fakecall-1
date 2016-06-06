@@ -21,7 +21,7 @@ public class CallLogHelper {
         return mInstance;
     }
 
-    public CallLogHelper(Context context) {
+    private CallLogHelper(Context context) {
         mContext = context;
     }
 

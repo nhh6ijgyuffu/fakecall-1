@@ -16,7 +16,7 @@ public class VibrationHelper {
         return mInstance;
     }
 
-    public VibrationHelper(Context ctx) {
+    private VibrationHelper(Context ctx) {
         mContext = ctx;
         mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
     }

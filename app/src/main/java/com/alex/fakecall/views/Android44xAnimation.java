@@ -14,7 +14,7 @@ import android.view.View;
 import com.alex.fakecall.R;
 import com.alex.fakecall.utils.ResourceUtils;
 
-public class Android44XAnim extends View implements Runnable {
+public class Android44xAnimation extends View implements Runnable {
     private Paint mPaint;
 
     private Bitmap[] animFrames;
@@ -44,11 +44,11 @@ public class Android44XAnim extends View implements Runnable {
 
     private Thread thread;
 
-    public Android44XAnim(Context context) {
+    public Android44xAnimation(Context context) {
         this(context, null);
     }
 
-    public Android44XAnim(Context context, AttributeSet attrs) {
+    public Android44xAnimation(Context context, AttributeSet attrs) {
         super(context, attrs);
         mPaint = new Paint();
 

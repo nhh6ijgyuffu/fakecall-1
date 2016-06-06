@@ -19,4 +19,6 @@
     <string name="lb_caller_name">Caller name</string>
     <string name="lb_private_num">Private number</string>
     <string name="lb_open_contact">Open Contact</string>
+    <string name="lb_hold">HOLD</string>
+    <string name="lb_reject_call_with_message">Reject call with message</string>
 </resources>

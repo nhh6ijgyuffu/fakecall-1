@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".call_ui.Android6XUI"/>
+        <activity android:name=".call_ui.Android6xActivity"/>
 
         <activity
             android:name=".activities.PhoneUISelectorActivity"
