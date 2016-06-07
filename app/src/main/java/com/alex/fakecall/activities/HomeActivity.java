@@ -6,17 +6,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.View;
 
 import com.alex.fakecall.R;
-import com.alex.fakecall.fragments.FakeCallFragment;
+import com.alex.fakecall.fragments.ListCallFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 
-public class MainActivity extends BaseActivity {
+public class HomeActivity extends BaseActivity {
     @BindView(R.id.viewPager)
     ViewPager viewPager;
 
@@ -25,7 +24,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected int getLayoutResource() {
-        return R.layout.activity_main;
+        return R.layout.activity_home;
     }
 
     @Override
@@ -35,19 +34,14 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCleanUp() {
-     
+
     }
 
-    void setUpViewPager(){
+    void setUpViewPager() {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addTab("Fake Call", FakeCallFragment.newInstance(null));
+        adapter.addTab("Scheduled Call", new ListCallFragment());
 
         viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
-    }
-
-    public void selectPage(int pageIndex) {
-        viewPager.setCurrentItem(pageIndex);
         tabLayout.setupWithViewPager(viewPager);
     }
 

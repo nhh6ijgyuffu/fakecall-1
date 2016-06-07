@@ -1,11 +1,11 @@
-package com.alex.fakecall.utils;
+package com.alex.fakecall.helper_utils;
 
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-public class ResourceUtils {
+public class ResourceHelper {
     public static Bitmap decodeResource(Context context, int resId) {
         BitmapFactory.Options options = new BitmapFactory.Options();
         Bitmap bitmap;

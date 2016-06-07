@@ -20,13 +20,12 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alex.fakecall.App;
 import com.alex.fakecall.R;
 import com.alex.fakecall.activities.BaseActivity;
-import com.alex.fakecall.helper.RingtoneHelper;
-import com.alex.fakecall.helper.CallLogHelper;
-import com.alex.fakecall.helper.VibrationHelper;
-import com.alex.fakecall.helper.WakeupHelper;
+import com.alex.fakecall.helper_utils.RingtoneHelper;
+import com.alex.fakecall.helper_utils.CallLogUtils;
+import com.alex.fakecall.helper_utils.VibrationHelper;
+import com.alex.fakecall.helper_utils.WakeupHelper;
 import com.alex.fakecall.models.Call;
 import com.alex.fakecall.views.MyChronometer;
 
@@ -125,7 +124,6 @@ public abstract class BaseCallActivity extends BaseActivity implements SensorEve
         RingtoneHelper.getInstance().playRingtone(this, Settings.System.DEFAULT_RINGTONE_URI, true);
         VibrationHelper.getInstance().vibrate(this, true);
         WakeupHelper.getInstance().wakeUp(this);
-        App.GlobalVars.isInFakeCall = true;
     }
 
     @Override
@@ -141,7 +139,6 @@ public abstract class BaseCallActivity extends BaseActivity implements SensorEve
     }
 
     protected void answerCall() {
-        App.GlobalVars.isInFakeCall = true;
         isInCall = true;
         configureForInCall();
         mHandler.removeMessages(MyHandler.HANDLE_MSG_MISSED);
@@ -157,7 +154,7 @@ public abstract class BaseCallActivity extends BaseActivity implements SensorEve
 
     protected void onMissedCall() {
         if (!isPreview) {
-            CallLogHelper.getInstance().writeMissedCall(this, mCall);
+            CallLogUtils.writeMissedCall(this, mCall);
         }
         doWorksAfterEnd();
         finish();
@@ -167,7 +164,7 @@ public abstract class BaseCallActivity extends BaseActivity implements SensorEve
     @OnClick(R.id.btnEndCall)
     protected void onEndCall() {
         if (!isPreview) {
-            CallLogHelper.getInstance().writeIncomingCall(this, mCall, chronometer.getDuration());
+            CallLogUtils.writeIncomingCall(this, mCall, chronometer.getDuration());
         }
         doWorksAfterEnd();
         finish();
@@ -188,7 +185,6 @@ public abstract class BaseCallActivity extends BaseActivity implements SensorEve
     }
 
     private void doWorksAfterEnd() {
-        App.GlobalVars.isInFakeCall = true;
         mHandler.removeMessages(MyHandler.HANDLE_MSG_MISSED);
         mHandler.removeMessages(MyHandler.HANDLE_MSG_END_CALL);
         mNotifyManager.cancel(NOTIFY_ID_INCOMING);

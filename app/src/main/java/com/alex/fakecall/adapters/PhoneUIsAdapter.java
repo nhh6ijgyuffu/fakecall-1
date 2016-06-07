@@ -10,10 +10,11 @@ import android.widget.TextView;
 
 import com.alex.fakecall.R;
 import com.alex.fakecall.models.Call;
+import com.alex.fakecall.models.PhoneUI;
 
 import butterknife.BindView;
 
-public class PhoneUIsAdapter extends BaseRecyclerViewAdapter<Call.PhoneUI, PhoneUIsAdapter.ViewHolder> {
+public class PhoneUIsAdapter extends BaseRecyclerViewAdapter<PhoneUI, PhoneUIsAdapter.ViewHolder> {
     private OnListCallback callback;
 
     public PhoneUIsAdapter(Context context) {
@@ -30,7 +31,7 @@ public class PhoneUIsAdapter extends BaseRecyclerViewAdapter<Call.PhoneUI, Phone
         return new ViewHolder(parent, R.layout.phone_ui_item);
     }
 
-    class ViewHolder extends BaseRecyclerViewVH<Call.PhoneUI> {
+    class ViewHolder extends BaseRecyclerViewVH<PhoneUI> {
         @BindView(R.id.tvName)
         TextView tvName;
 
@@ -48,7 +49,7 @@ public class PhoneUIsAdapter extends BaseRecyclerViewAdapter<Call.PhoneUI, Phone
         }
 
         @Override
-        protected void onBind(final Call.PhoneUI item, int pos) {
+        protected void onBind(final PhoneUI item, int pos) {
             tvName.setText(item.getName());
             ivIncallUI.setImageResource(item.getInCallRes());
             ivIncomingUI.setImageResource(item.getIncomingRes());
@@ -56,7 +57,7 @@ public class PhoneUIsAdapter extends BaseRecyclerViewAdapter<Call.PhoneUI, Phone
             btnPreview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(mContext, item.getIncoming_act());
+                    Intent intent = new Intent(mContext, item.getIncomingClass());
                     intent.putExtra("isPreview", true);
                     mContext.startActivity(intent);
                 }
@@ -73,6 +74,6 @@ public class PhoneUIsAdapter extends BaseRecyclerViewAdapter<Call.PhoneUI, Phone
     }
 
     public interface OnListCallback {
-        void onPhoneUISelect(Call.PhoneUI ui);
+        void onPhoneUISelect(PhoneUI ui);
     }
 }

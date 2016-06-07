@@ -17,13 +17,21 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".activities.HomeActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".activities.NewCallActivity"
+            android:label="@string/new_fake_call" />
+
+        <activity
+            android:name=".activities.PhoneUISelectActivity"
+            android:label="@string/phone_ui" />
 
         <activity
             android:name=".call_ui.Android6xActivity"
@@ -35,13 +43,9 @@
             android:excludeFromRecents="true"
             android:launchMode="singleInstance" />
 
-        <activity
-            android:name=".activities.PhoneUISelectorActivity"
-            android:label="@string/phone_ui" />
-
         <receiver android:name=".receivers.FakeCallReceiver">
             <intent-filter>
-                <action android:name="com.alex.fakecall.ACTION_RECEIVER"/>
+                <action android:name="com.alex.fakecall.ACTION_CALL_RECEIVER" />
             </intent-filter>
         </receiver>
 

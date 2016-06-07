@@ -1,4 +1,4 @@
-package com.alex.fakecall.helper;
+package com.alex.fakecall.helper_utils;
 
 
 import android.Manifest;
@@ -10,28 +10,16 @@ import android.support.v4.content.ContextCompat;
 
 import com.alex.fakecall.models.Call;
 
-public class CallLogHelper {
-    private static CallLogHelper mInstance;
-
-    public static synchronized CallLogHelper getInstance() {
-        if (mInstance == null) {
-            mInstance = new CallLogHelper();
-        }
-        return mInstance;
-    }
-
-    private CallLogHelper() {
-    }
-
-    public void writeMissedCall(Context ctx, Call call) {
+public class CallLogUtils {
+    public static void writeMissedCall(Context ctx, Call call) {
         writeCallLog(ctx, call, 0, CallLog.Calls.MISSED_TYPE);
     }
 
-    public void writeIncomingCall(Context ctx, Call call, long duration) {
+    public static void writeIncomingCall(Context ctx, Call call, long duration) {
         writeCallLog(ctx, call, duration, CallLog.Calls.INCOMING_TYPE);
     }
 
-    private void writeCallLog(Context ctx, Call call, long duration, int type) {
+    private static void writeCallLog(Context ctx, Call call, long duration, int type) {
         ContentValues values = new ContentValues();
         values.put(CallLog.Calls.TYPE, type);
         values.put(CallLog.Calls.CACHED_NAME, call.getDisplayName());

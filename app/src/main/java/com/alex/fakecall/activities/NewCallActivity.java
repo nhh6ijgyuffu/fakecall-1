@@ -1,31 +1,25 @@
-package com.alex.fakecall.fragments;
+package com.alex.fakecall.activities;
 
 
-import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.text.Editable;
+import android.support.v7.widget.PopupMenu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alex.fakecall.App;
 import com.alex.fakecall.R;
-import com.alex.fakecall.activities.PhoneUISelectorActivity;
-import com.alex.fakecall.helper.AlarmHelper;
-import com.alex.fakecall.helper.DatabaseHelper;
+import com.alex.fakecall.appdata.AppDatabase;
+import com.alex.fakecall.helper_utils.AlarmHelper;
+import com.alex.fakecall.helper_utils.Converter;
+import com.alex.fakecall.helper_utils.DialogHelper;
+import com.alex.fakecall.helper_utils.SimpleTextWatcher;
 import com.alex.fakecall.models.Call;
-import com.alex.fakecall.utils.Converter;
-import com.alex.fakecall.utils.DialogUtils;
-import com.alex.fakecall.utils.SimpleTextWatcher;
+import com.alex.fakecall.models.PhoneUI;
 import com.alex.fakecall.views.DateTimePickerDialog;
 
 import java.util.Calendar;
@@ -33,7 +27,9 @@ import java.util.Calendar;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class FakeCallFragment extends BaseFragment {
+public class NewCallActivity extends BaseActivity {
+    private Call mCall;
+
     @BindView(R.id.tvTimeValue)
     TextView tvTimeValue;
 
@@ -46,56 +42,42 @@ public class FakeCallFragment extends BaseFragment {
     @BindView(R.id.edtCallerNumber)
     EditText edtCallerNumber;
 
-    @BindView(R.id.lyMoreSettings)
-    View lyMoreSettings;
-
-    @BindView(R.id.ivExpandSetting)
-    ImageView ivExpandSetting;
-
-    @BindView(R.id.tvMore)
-    TextView tvMore;
-
-    private long selectedTimeInterval = 0;
-    private long calendarTimePicked = 0;
-
     private static final int REQUEST_PHONE_UI = 1;
     private static final int REQUEST_PICK_CONTACT = 2;
 
-    private Call mCall;
+    private long tmpSelectedTime = 0;
+    private long tmpCalendarTime = 0;
 
     @Override
-    public int getLayoutResource() {
-        return R.layout.fragment_fake_call;
+    protected int getLayoutResource() {
+        return R.layout.activity_new_call;
     }
 
     @Override
-    protected void setUp() {
-        if (getArguments() != null)
-            mCall = (Call) getArguments().getSerializable(Call.KEY);
-
-        if (mCall == null)
-            mCall = new Call();
+    protected void onSetUp() {
+        mCall = (Call) getIntent().getSerializableExtra(Call.KEY);
+        if (mCall == null) {
+            mCall = AppDatabase.getInstance().getLatestSavedCall();
+        }
 
         edtCallerName.addTextChangedListener(new SimpleTextWatcher() {
             @Override
-            public void afterTextChanged(Editable s) {
-                mCall.setName(s.toString().trim());
+            public void afterTextChanged(String text) {
+                mCall.setName(text);
             }
         });
 
         edtCallerNumber.addTextChangedListener(new SimpleTextWatcher() {
             @Override
-            public void afterTextChanged(Editable s) {
-                mCall.setNumber(s.toString().trim());
+            public void afterTextChanged(String text) {
+                mCall.setNumber(text);
             }
         });
-
-        App.GlobalVars.isInFakeCall = false;
     }
 
     @OnClick(R.id.btnChangeCaller)
-    void onBtnChangeCallerClick(View v) {
-        DialogUtils.showPopupMenu(getContext(), v, R.menu.change_caller, new PopupMenu.OnMenuItemClickListener() {
+    void onChangeCaller(View v) {
+        DialogHelper.showPopupMenu(this, v, R.menu.change_caller, new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 final int id = item.getItemId();
@@ -121,46 +103,44 @@ public class FakeCallFragment extends BaseFragment {
 
     @OnClick(R.id.btnSelectTime)
     void onSelectTime(View v) {
-        DialogUtils.showPopupMenu(getContext(),
-                v.findViewById(R.id.anchorLeft), R.menu.select_time, new PopupMenu.OnMenuItemClickListener() {
+        DialogHelper.showPopupMenu(this, v.findViewById(R.id.anchorLeft),
+                R.menu.select_time, new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         int id = item.getItemId();
                         switch (id) {
                             case R.id.mn_now:
-                                selectedTimeInterval = 0;
+                                tmpSelectedTime = 0;
                                 tvTimeValue.setText(R.string.default_time_value);
                                 break;
                             case R.id.mn_15s:
-                                selectedTimeInterval = 15 * 1000;
+                                tmpSelectedTime = 15 * 1000;
                                 tvTimeValue.setText(R.string.time_value_15s);
                                 break;
                             case R.id.mn_30s:
-                                selectedTimeInterval = 30 * 1000;
+                                tmpSelectedTime = 30 * 1000;
                                 tvTimeValue.setText(R.string.time_value_30s);
                                 break;
                             case R.id.mn_1m:
-                                selectedTimeInterval = 60 * 1000;
+                                tmpSelectedTime = 60 * 1000;
                                 tvTimeValue.setText(R.string.time_value_1m);
                                 break;
                             case R.id.mn_5m:
-                                selectedTimeInterval = 5 * 60 * 1000;
+                                tmpSelectedTime = 5 * 60 * 1000;
                                 tvTimeValue.setText(R.string.time_value_5m);
                                 break;
                             case R.id.mn_custom:
-
-                                DateTimePickerDialog dtd = new DateTimePickerDialog(getContext(), null,
+                                DateTimePickerDialog dtd = new DateTimePickerDialog(NewCallActivity.this, null,
                                         new DateTimePickerDialog.OnDateTimeSetListener() {
                                             @Override
                                             public void OnDateTimeSet(Calendar calendar) {
                                                 String value = Converter.calendar2String(calendar, "dd/MM/yyyy HH:mm");
                                                 tvTimeValue.setText(value);
-                                                selectedTimeInterval = -1;
-                                                calendarTimePicked = calendar.getTimeInMillis();
+                                                tmpSelectedTime = -1;
+                                                tmpCalendarTime = calendar.getTimeInMillis();
                                             }
                                         });
                                 dtd.show();
-
                                 break;
                         }
                         return false;
@@ -168,57 +148,48 @@ public class FakeCallFragment extends BaseFragment {
                 });
     }
 
-    @OnClick(R.id.btnShowMore)
-    void onBtnMore() {
-        boolean visible = lyMoreSettings.getVisibility() == View.VISIBLE;
-        lyMoreSettings.setVisibility(visible ? View.GONE : View.VISIBLE);
-        ivExpandSetting.setImageResource(visible ? R.drawable.ic_action_expand : R.drawable.ic_action_collapse);
-        tvMore.setText(visible ? R.string.lb_show_more : R.string.lb_hide_more);
-    }
-
     @OnClick(R.id.btnPhoneUI)
     void onBtnPhoneUI() {
-        Intent intent = new Intent(getContext(), PhoneUISelectorActivity.class);
+        Intent intent = new Intent(this, PhoneUISelectActivity.class);
         startActivityForResult(intent, REQUEST_PHONE_UI);
     }
 
     @OnClick(R.id.btnSave)
     void onSaveCall() {
-        if (selectedTimeInterval != -1) {
-            mCall.setTime(System.currentTimeMillis() + selectedTimeInterval);
-        } else {
-            mCall.setTime(calendarTimePicked);
+        mCall.setTime(tmpSelectedTime == -1 ?
+                tmpCalendarTime : System.currentTimeMillis() + tmpSelectedTime);
+
+        Long id = AppDatabase.getInstance().addCall(mCall);
+
+        if (id == -1) {
+            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        AlarmHelper.getInstance().placeCall(getContext(), mCall);
-
-        Toast.makeText(getContext(), "New call has been planned", Toast.LENGTH_SHORT).show();
-        getActivity().finish();
+        Toast.makeText(this, "New call has been planned", Toast.LENGTH_SHORT).show();
+        mCall.setId(id);
+        AlarmHelper.getInstance().placeCall(this, mCall);
+        finish();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != Activity.RESULT_OK) return;
+        if (resultCode != RESULT_OK) return;
         switch (requestCode) {
             case REQUEST_PHONE_UI:
-                if (data == null) return;
-                Call.PhoneUI pui = (Call.PhoneUI) data.getSerializableExtra(Call.PhoneUI.KEY);
+                PhoneUI pui = (PhoneUI) data.getSerializableExtra(PhoneUI.KEY);
                 tvPhoneUIValue.setText(pui.getName());
                 mCall.setPhoneUI(pui);
-
                 break;
             case REQUEST_PICK_CONTACT:
-                if (data == null) return;
                 try {
                     Uri contactData = data.getData();
-
-                    ContentResolver cs = getContext().getContentResolver();
 
                     String[] projections = new String[]{ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
                             ContactsContract.CommonDataKinds.Phone.NUMBER};
 
-                    Cursor cursor = cs.query(contactData, projections, null, null, null);
+                    Cursor cursor = getContentResolver().query(contactData, projections, null, null, null);
 
                     if (cursor == null) return;
                     cursor.moveToFirst();
@@ -237,11 +208,8 @@ public class FakeCallFragment extends BaseFragment {
         }
     }
 
-    public static FakeCallFragment newInstance(Call mCall) {
-        FakeCallFragment frag = new FakeCallFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(Call.KEY, mCall);
-        frag.setArguments(bundle);
-        return frag;
+    @Override
+    protected void onCleanUp() {
+
     }
 }

@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">FakeCall</string>
-    <string name="more_settings">More Settings</string>
-    <string name="phone_ui">Choose your Phone UI</string>
+    <string name="app_name">Fake Call &amp; SMS</string>
+    <string name="new_fake_call">New Fake Call</string>
+    <string name="phone_ui">New Fake Call</string>
     <string name="lb_time_to_call">Time to call</string>
     <string name="default_time_value">Right now</string>
     <string name="time_value_15s">15 seconds from now</string>
@@ -9,16 +9,14 @@
     <string name="time_value_1m">1 minutes from now</string>
     <string name="time_value_5m">5 minutes from now</string>
     <string name="lb_phone_ui">Phone UI</string>
-    <string name="lb_show_more">More settings</string>
-    <string name="lb_hide_more">Hide</string>
     <string name="label_caller_name">Caller name</string>
     <string name="lb_caller_number">Caller number</string>
     <string name="lb_not_set">N/A</string>
     <string name="lb_incoming_call">Incoming call</string>
-    <string name="lb_incoming_call_cap">INCOMING CALL</string>
     <string name="lb_caller_name">Caller name</string>
     <string name="lb_private_num">Private number</string>
     <string name="lb_open_contact">Open Contact</string>
     <string name="lb_hold">HOLD</string>
     <string name="lb_reject_call_with_message">Reject call with message</string>
+    <string name="lb_save">Save</string>
 </resources>

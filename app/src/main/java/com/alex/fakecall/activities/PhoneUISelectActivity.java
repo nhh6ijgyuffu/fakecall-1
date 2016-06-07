@@ -9,14 +9,14 @@ import com.alex.fakecall.R;
 import com.alex.fakecall.adapters.PhoneUIsAdapter;
 import com.alex.fakecall.call_ui.Android6xActivity;
 import com.alex.fakecall.call_ui.GalaxyS6Activity;
-import com.alex.fakecall.models.Call;
+import com.alex.fakecall.models.PhoneUI;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 
-public class PhoneUISelectorActivity extends BaseActivity implements PhoneUIsAdapter.OnListCallback {
+public class PhoneUISelectActivity extends BaseActivity implements PhoneUIsAdapter.OnListCallback {
     @BindView(R.id.rvListUI)
     RecyclerView rvListUI;
 
@@ -35,13 +35,13 @@ public class PhoneUISelectorActivity extends BaseActivity implements PhoneUIsAda
         rvListUI.setAdapter(adapter);
     }
 
-    private List<Call.PhoneUI> getAvailablePhoneUI() {
-        List<Call.PhoneUI> list = new ArrayList<>();
+    private List<PhoneUI> getAvailablePhoneUI() {
+        List<PhoneUI> list = new ArrayList<>();
 
-        Call.PhoneUI android6 = new Call.PhoneUI("Google Android 6.0", R.drawable.android6x_preview_incoming,
+        PhoneUI android6 = new PhoneUI("Google Android 6.0", R.drawable.android6x_preview_incoming,
                 R.drawable.android6x_preview_incall, Android6xActivity.class);
 
-        Call.PhoneUI gs6 = new Call.PhoneUI("Samsung Galaxy S6 ", R.drawable.android6x_preview_incoming,
+        PhoneUI gs6 = new PhoneUI("Samsung Galaxy S6 ", R.drawable.android6x_preview_incoming,
                 R.drawable.android6x_preview_incall, GalaxyS6Activity.class);
 
         list.add(android6);
@@ -55,9 +55,9 @@ public class PhoneUISelectorActivity extends BaseActivity implements PhoneUIsAda
     }
 
     @Override
-    public void onPhoneUISelect(Call.PhoneUI ui) {
+    public void onPhoneUISelect(PhoneUI ui) {
         Intent intent = new Intent();
-        intent.putExtra(Call.PhoneUI.KEY, ui);
+        intent.putExtra(PhoneUI.KEY, ui);
         setResult(RESULT_OK, intent);
         finish();
     }

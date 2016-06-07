@@ -1,17 +1,15 @@
-package com.alex.fakecall.utils;
+package com.alex.fakecall.helper_utils;
 
 
-import android.annotation.TargetApi;
 import android.content.Context;
+import android.support.v7.widget.PopupMenu;
 import android.view.View;
-import android.widget.PopupMenu;
 
-public class DialogUtils {
+public class DialogHelper {
 
-    @TargetApi(14)
     public static void showPopupMenu(Context context, View anchor, int menuRes,
                                      PopupMenu.OnMenuItemClickListener menuItemClickListener) {
-        PopupMenu popupMenu = new PopupMenu(context, anchor);
+        android.support.v7.widget.PopupMenu popupMenu = new PopupMenu(context, anchor);
         popupMenu.inflate(menuRes);
         popupMenu.setOnMenuItemClickListener(menuItemClickListener);
         popupMenu.show();
