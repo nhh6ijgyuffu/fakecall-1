@@ -1,4 +1,4 @@
-package com.alex.fakecall.helper_utils;
+package com.alex.fakecall.helper;
 
 
 import android.Manifest;
@@ -10,7 +10,7 @@ import android.support.v4.content.ContextCompat;
 
 import com.alex.fakecall.models.Call;
 
-public class CallLogUtils {
+public class CallLogHelper {
     public static void writeMissedCall(Context ctx, Call call) {
         writeCallLog(ctx, call, 0, CallLog.Calls.MISSED_TYPE);
     }

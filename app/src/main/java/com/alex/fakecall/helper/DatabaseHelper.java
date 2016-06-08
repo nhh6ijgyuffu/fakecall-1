@@ -1,4 +1,4 @@
-package com.alex.fakecall.appdata;
+package com.alex.fakecall.helper;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -8,8 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.alex.fakecall.App;
 import com.alex.fakecall.models.Call;
 
-public class AppDatabase extends SQLiteOpenHelper {
-    private static AppDatabase mInstance;
+public class DatabaseHelper extends SQLiteOpenHelper {
+    private static DatabaseHelper mInstance;
     private static final String DB_NAME = "FakeCall";
     private static final int DB_VER = 1;
 
@@ -27,13 +27,13 @@ public class AppDatabase extends SQLiteOpenHelper {
             + KEY_TIME + " INTEGER,"
             + KEY_CREATION_TIME + " INTEGER)";
 
-    private AppDatabase() {
+    private DatabaseHelper() {
         super(App.getInstance(), DB_NAME, null, DB_VER);
     }
 
-    public static synchronized AppDatabase getInstance() {
+    public static synchronized DatabaseHelper getInstance() {
         if (mInstance == null) {
-            mInstance = new AppDatabase();
+            mInstance = new DatabaseHelper();
         }
         return mInstance;
     }
