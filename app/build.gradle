@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.alex.fakecall"
-        minSdkVersion 11
+        minSdkVersion 14
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -32,4 +32,5 @@ dependencies {
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
 
     compile 'de.hdodenhof:circleimageview:2.0.0'
+    compile 'com.timehop.stickyheadersrecyclerview:library:0.4.3@aar'
 }

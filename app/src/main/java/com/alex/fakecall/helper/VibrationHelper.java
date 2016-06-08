@@ -4,6 +4,8 @@ package com.alex.fakecall.helper;
 import android.content.Context;
 import android.os.Vibrator;
 
+import com.alex.fakecall.App;
+
 public class VibrationHelper {
     private static VibrationHelper mInstance;
     private Vibrator mVibrator;
@@ -16,12 +18,11 @@ public class VibrationHelper {
     }
 
     private VibrationHelper() {
-
     }
 
-    public void vibrate(Context ctx, boolean repeat) {
+    public void vibrate(boolean repeat) {
         if (mVibrator == null) {
-            mVibrator = (Vibrator) ctx.getSystemService(Context.VIBRATOR_SERVICE);
+            mVibrator = (Vibrator) App.getInstance().getSystemService(Context.VIBRATOR_SERVICE);
         }
         if (repeat) {
             mVibrator.vibrate(new long[]{1000, 1000, 1000, 1000}, 0);
@@ -30,9 +31,9 @@ public class VibrationHelper {
         }
     }
 
-    public void cancelAll(Context ctx) {
+    public void cancelAll() {
         if (mVibrator == null) {
-            mVibrator = (Vibrator) ctx.getSystemService(Context.VIBRATOR_SERVICE);
+            mVibrator = (Vibrator) App.getInstance().getSystemService(Context.VIBRATOR_SERVICE);
         }
         mVibrator.cancel();
         mVibrator = null;

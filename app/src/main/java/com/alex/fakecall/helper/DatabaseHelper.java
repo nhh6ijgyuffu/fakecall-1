@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.alex.fakecall.App;
 import com.alex.fakecall.models.Call;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static DatabaseHelper mInstance;
     private static final String DB_NAME = "FakeCall";
@@ -49,6 +52,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public List<Call> getAllCalls() {
+        SQLiteDatabase db = getReadableDatabase();
+        List<Call> list = new ArrayList<>();
+
+        String query = "SELECT * FROM " + TABLE_CALL + " ORDER BY "+ KEY_TIME + " ASC;";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Call call = new Call();
+                call.setId(cursor.getLong(0));
+                call.setName(cursor.getString(1));
+                call.setNumber(cursor.getString(2));
+                call.setTime(cursor.getLong(3));
+
+                list.add(call);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return list;
+    }
+
     public long addCall(Call call) {
         SQLiteDatabase db = getWritableDatabase();
 
@@ -70,12 +96,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
-    public Call getLatestSavedCall() {
+    public Call getLastSavedCall() {
         SQLiteDatabase db = getReadableDatabase();
 
         Call call = new Call();
 
-        String query = "SELECT * FROM " + TABLE_CALL + " ORDER BY " + KEY_CREATION_TIME + " DESC LIMIT 1";
+        String query = "SELECT * FROM " + TABLE_CALL + " ORDER BY " + KEY_CREATION_TIME + " DESC LIMIT 1;";
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             String name = cursor.getString(1);
@@ -90,5 +116,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return call;
+    }
+
+    public void deleteCall(long id) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(TABLE_CALL, KEY_ID + " = ?",
+                new String[]{String.valueOf(id)});
+        db.close();
     }
 }

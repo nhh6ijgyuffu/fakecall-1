@@ -4,8 +4,10 @@ package com.alex.fakecall.activities;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.alex.fakecall.R;
+import com.alex.fakecall.adapters.BaseRecyclerViewAdapter;
 import com.alex.fakecall.adapters.PhoneUIsAdapter;
 import com.alex.fakecall.call_ui.Android6xActivity;
 import com.alex.fakecall.call_ui.GalaxyS6Activity;
@@ -16,7 +18,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class PhoneUISelectActivity extends BaseActivity implements PhoneUIsAdapter.OnListCallback {
+public class PhoneUISelectActivity extends BaseActivity {
     @BindView(R.id.rvListUI)
     RecyclerView rvListUI;
 
@@ -30,9 +32,19 @@ public class PhoneUISelectActivity extends BaseActivity implements PhoneUIsAdapt
         rvListUI.setLayoutManager(new LinearLayoutManager(this));
         rvListUI.setHasFixedSize(true);
 
-        PhoneUIsAdapter adapter = new PhoneUIsAdapter(this);
+        PhoneUIsAdapter adapter = new PhoneUIsAdapter();
         adapter.setList(getAvailablePhoneUI());
         rvListUI.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, Object item, int position) {
+                Intent intent = new Intent();
+                intent.putExtra(PhoneUI.KEY, (PhoneUI) item);
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        });
     }
 
     private List<PhoneUI> getAvailablePhoneUI() {
@@ -54,11 +66,4 @@ public class PhoneUISelectActivity extends BaseActivity implements PhoneUIsAdapt
 
     }
 
-    @Override
-    public void onPhoneUISelect(PhoneUI ui) {
-        Intent intent = new Intent();
-        intent.putExtra(PhoneUI.KEY, ui);
-        setResult(RESULT_OK, intent);
-        finish();
-    }
 }

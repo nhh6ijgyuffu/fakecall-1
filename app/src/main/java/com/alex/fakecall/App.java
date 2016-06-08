@@ -16,4 +16,8 @@ public class App extends Application {
     public static synchronized App getInstance() {
         return mInstance;
     }
+
+    public static class GlobalVariables {
+        public static final String ACTION_CALL_RECEIVER = "com.alex.fakecall.ACTION_CALL_RECEIVER";
+    }
 }

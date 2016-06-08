@@ -12,7 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.alex.fakecall.R;
-import com.alex.fakecall.helper_utils.ResourceHelper;
+import com.alex.fakecall.helper.ResourceHelper;
 
 public class Android44xAnimation extends View implements Runnable {
     private Paint mPaint;

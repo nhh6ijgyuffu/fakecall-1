@@ -3,6 +3,8 @@ package com.alex.fakecall.call_ui;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -11,9 +13,11 @@ import android.media.AudioManager;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.provider.CallLog;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -22,10 +26,11 @@ import android.widget.TextView;
 
 import com.alex.fakecall.R;
 import com.alex.fakecall.activities.BaseActivity;
-import com.alex.fakecall.helper_utils.RingtoneHelper;
-import com.alex.fakecall.helper_utils.CallLogUtils;
-import com.alex.fakecall.helper_utils.VibrationHelper;
-import com.alex.fakecall.helper_utils.WakeupHelper;
+import com.alex.fakecall.helper.ResourceHelper;
+import com.alex.fakecall.helper.RingtoneHelper;
+import com.alex.fakecall.helper.CallLogHelper;
+import com.alex.fakecall.helper.VibrationHelper;
+import com.alex.fakecall.helper.WakeupHelper;
 import com.alex.fakecall.models.Call;
 import com.alex.fakecall.views.MyChronometer;
 
@@ -63,8 +68,8 @@ public abstract class BaseCallActivity extends BaseActivity implements SensorEve
     private static final int MAX_TIME_TO_MISSED_CALL = 60 * 1000;
 
     private NotificationManager mNotifyManager;
-    private static final int NOTIFY_ID_INCOMING = 1;
-    private static final int NOTIFY_ID_ONGOING = 2;
+    private static final int NOTIFY_ID_INCOMING = Integer.MAX_VALUE - 1;
+    private static final int NOTIFY_ID_ONGOING = Integer.MAX_VALUE;
 
     private AudioManager mAudioManager;
 
@@ -121,9 +126,9 @@ public abstract class BaseCallActivity extends BaseActivity implements SensorEve
         configureForInComing();
         mHandler.sendEmptyMessageDelayed(MyHandler.HANDLE_MSG_MISSED, MAX_TIME_TO_MISSED_CALL);
 
-        RingtoneHelper.getInstance().playRingtone(this, Settings.System.DEFAULT_RINGTONE_URI, true);
-        VibrationHelper.getInstance().vibrate(this, true);
-        WakeupHelper.getInstance().wakeUp(this);
+        RingtoneHelper.getInstance().playRingtone(Settings.System.DEFAULT_RINGTONE_URI, true);
+        VibrationHelper.getInstance().vibrate(true);
+        WakeupHelper.getInstance().wakeUp();
     }
 
     @Override
@@ -149,22 +154,45 @@ public abstract class BaseCallActivity extends BaseActivity implements SensorEve
         chronometer.start();
 
         RingtoneHelper.getInstance().stopRingtone();
-        VibrationHelper.getInstance().cancelAll(this);
+        VibrationHelper.getInstance().cancelAll();
     }
 
     protected void onMissedCall() {
         if (!isPreview) {
-            CallLogUtils.writeMissedCall(this, mCall);
+            CallLogHelper.writeMissedCall(mCall);
+            showMissedNotification();
         }
         doWorksAfterEnd();
         finish();
+    }
+
+    private void showMissedNotification() {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        builder.setAutoCancel(true);
+        builder.setOnlyAlertOnce(true);
+        builder.setDefaults(5);
+        builder.setSmallIcon(R.drawable.ic_notification_small);
+        builder.setTicker("Missed call from " + mCall.getDisplayName());
+        builder.setContentTitle("Missed call");
+        builder.setContentText(mCall.getDisplayName());
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setFlags(805306368);
+        intent.setType(CallLog.Calls.CONTENT_TYPE);
+
+        Bitmap bm = ResourceHelper.decodeResource(this, R.drawable.avatar);
+        if (bm != null)
+            builder.setLargeIcon(bm);
+
+        builder.setContentIntent(PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT));
+        mNotifyManager.notify(10, builder.build());
     }
 
     @Optional
     @OnClick(R.id.btnEndCall)
     protected void onEndCall() {
         if (!isPreview) {
-            CallLogUtils.writeIncomingCall(this, mCall, chronometer.getDuration());
+            CallLogHelper.writeIncomingCall(mCall, chronometer.getDuration());
         }
         doWorksAfterEnd();
         finish();
@@ -191,7 +219,7 @@ public abstract class BaseCallActivity extends BaseActivity implements SensorEve
         mNotifyManager.cancel(NOTIFY_ID_ONGOING);
         mAudioManager.setMode(AudioManager.MODE_NORMAL);
         RingtoneHelper.getInstance().stopRingtone();
-        VibrationHelper.getInstance().cancelAll(this);
+        VibrationHelper.getInstance().cancelAll();
         WakeupHelper.getInstance().reset();
     }
 
@@ -227,7 +255,11 @@ public abstract class BaseCallActivity extends BaseActivity implements SensorEve
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(pendingIntent);
 
-        builder.setSmallIcon(R.drawable.android_50x_ic_toolbar_add_call);
+        builder.setSmallIcon(R.drawable.ic_notification_small);
+
+        Bitmap bm = ResourceHelper.decodeResource(this, R.drawable.avatar);
+        if (bm != null)
+            builder.setLargeIcon(bm);
     }
 
     private void screenOff() {

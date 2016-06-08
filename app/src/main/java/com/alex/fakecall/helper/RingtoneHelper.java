@@ -1,10 +1,11 @@
 package com.alex.fakecall.helper;
 
 
-import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+
+import com.alex.fakecall.App;
 
 import java.io.IOException;
 
@@ -20,10 +21,9 @@ public class RingtoneHelper {
     }
 
     private RingtoneHelper() {
-
     }
 
-    public void playRingtone(Context ctx, Uri audioUri, boolean loop) {
+    public void playRingtone(Uri audioUri, boolean loop) {
         if (mPlayer != null && mPlayer.isPlaying()) {
             mPlayer.stop();
             mPlayer.release();
@@ -31,7 +31,7 @@ public class RingtoneHelper {
         try {
             mPlayer = new MediaPlayer();
             mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            mPlayer.setDataSource(ctx, audioUri);
+            mPlayer.setDataSource(App.getInstance(), audioUri);
             mPlayer.prepare();
             mPlayer.setLooping(loop);
             mPlayer.start();

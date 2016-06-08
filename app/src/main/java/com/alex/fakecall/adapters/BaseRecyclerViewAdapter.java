@@ -1,19 +1,32 @@
 package com.alex.fakecall.adapters;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.AdapterView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public abstract class BaseRecyclerViewAdapter<T, VH extends BaseRecyclerViewVH<T>> extends RecyclerView.Adapter<VH> {
-
     private List<T> listItem = new ArrayList<>();
-    protected Context mContext;
+    protected OnItemClickListener clickListener;
+    protected OnItemLongClickListener longClickListener;
 
-    public BaseRecyclerViewAdapter(Context context){
-        mContext = context;
+    public interface OnItemClickListener {
+        void onItemClick(View v, Object item, int position);
+    }
+
+    public interface OnItemLongClickListener {
+        boolean onItemLongClick(View v, Object item, int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener l) {
+        clickListener = l;
+    }
+
+    public void setOnItemLongClickListener(OnItemLongClickListener l) {
+        longClickListener = l;
     }
 
     public void setList(List<T> list) {
@@ -53,7 +66,6 @@ public abstract class BaseRecyclerViewAdapter<T, VH extends BaseRecyclerViewVH<T
         notifyItemRemoved(pos);
         return item;
     }
-
 
     public void moveItem(int from, int to) {
         final T item = listItem.remove(from);

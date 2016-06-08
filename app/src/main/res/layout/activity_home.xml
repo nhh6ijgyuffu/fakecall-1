@@ -26,7 +26,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabGravity="fill"
-            app:tabMode="scrollable" />
+            app:tabIndicatorHeight="3dp"
+            app:tabMode="scrollable"
+            app:tabTextAppearance="@style/TabLayoutText" />
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager

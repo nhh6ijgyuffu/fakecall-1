@@ -26,7 +26,7 @@
                 android:contentDescription="@null" />
 
             <ImageView
-                android:id="@+id/ivIncallUI"
+                android:id="@+id/ivInCallUI"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"

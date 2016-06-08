@@ -29,6 +29,9 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void onSetUp() {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        }
         setUpViewPager();
     }
 

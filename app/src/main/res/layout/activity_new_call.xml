@@ -29,7 +29,7 @@
                     android:layout_height="72dp"
                     android:layout_centerVertical="true"
                     android:layout_margin="10dp"
-                    android:src="@drawable/android_50x_img_no_image" />
+                    android:src="@drawable/avatar" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -45,7 +45,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:background="@null"
-                        android:hint="@string/label_caller_name"
+                        android:hint="@string/lb_caller_name"
                         android:inputType="textPersonName"
                         android:textColor="#000"
                         android:textSize="20sp" />
@@ -78,67 +78,51 @@
                 android:background="#ddd" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:text="REQUIRED SETTINGS"
+                android:layout_margin="15dp"
+                android:text="@string/lb_required_settings"
                 android:textColor="#FC02"
                 android:textStyle="bold" />
 
-            <RelativeLayout
+
+            <LinearLayout
                 android:id="@+id/btnSelectTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground">
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_action_timer" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/anchorLeft"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
-                    <ImageView
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="20dp"
-                        android:contentDescription="@null"
-                        android:src="@drawable/ic_action_timer" />
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/lb_time_to_call"
+                        android:textColor="#000"
+                        android:textSize="17sp" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/tvTimeValue"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:text="@string/default_time_value"
+                        android:textSize="15sp" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:text="@string/lb_time_to_call"
-                            android:textColor="#000"
-                            android:textSize="17sp" />
-
-                        <TextView
-                            android:id="@+id/tvTimeValue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/default_time_value"
-                            android:textSize="15sp" />
-
-                    </LinearLayout>
                 </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/anchorLeft"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_margin="15dp"
-                    android:contentDescription="@null"
-                    android:src="@drawable/ic_action_expand" />
-            </RelativeLayout>
+            </LinearLayout>
 
 
             <LinearLayout

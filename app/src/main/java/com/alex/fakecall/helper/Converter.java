@@ -1,5 +1,7 @@
 package com.alex.fakecall.helper;
 
+import com.alex.fakecall.models.Call;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -28,6 +30,12 @@ public class Converter {
             e.printStackTrace();
         }
         return rs;
+    }
+
+    public static String millis2String(long millis, String pattern) {
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(millis);
+        return Converter.calendar2String(c, pattern);
     }
 
 
