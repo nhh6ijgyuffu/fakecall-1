@@ -19,8 +19,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class DateTimePickerDialog extends
-        AlertDialog implements DialogInterface.OnClickListener, DatePicker.OnDateChangedListener, TimePicker.OnTimeChangedListener {
+public class DateTimePickerDialog extends AlertDialog
+        implements DialogInterface.OnClickListener, DatePicker.OnDateChangedListener, TimePicker.OnTimeChangedListener {
 
     @BindView(R.id.datePicker)
     DatePicker datePicker;
@@ -51,6 +51,8 @@ public class DateTimePickerDialog extends
 
         datePicker.init(initCal.get(Calendar.YEAR),
                 initCal.get(Calendar.MONTH), initCal.get(Calendar.DAY_OF_MONTH), this);
+        String value = Converter.calendar2String(mCalendar, "dd/MM/yyyy");
+        tvDate.setText(value);
 
         timePicker.setCurrentHour(initCal.get(Calendar.HOUR_OF_DAY));
         timePicker.setCurrentMinute(initCal.get(Calendar.MINUTE));

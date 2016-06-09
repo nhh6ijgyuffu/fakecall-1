@@ -21,6 +21,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_NAME = "name";
     private static final String KEY_NUMBER = "number";
     private static final String KEY_TIME = "time";
+    private static final String KEY_IS_ALARMED = "is_alarmed";
     private static final String KEY_CREATION_TIME = "creation_time";
 
     private static final String CREATE_TABLE_CALL = "CREATE TABLE " + TABLE_CALL + "( "
@@ -28,6 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + KEY_NAME + " TEXT,"
             + KEY_NUMBER + " TEXT,"
             + KEY_TIME + " INTEGER,"
+            + KEY_IS_ALARMED + " INTEGER,"
             + KEY_CREATION_TIME + " INTEGER)";
 
     private DatabaseHelper() {
@@ -56,7 +58,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         List<Call> list = new ArrayList<>();
 
-        String query = "SELECT * FROM " + TABLE_CALL + " ORDER BY "+ KEY_TIME + " ASC;";
+        String query = "SELECT * FROM " + TABLE_CALL + " ORDER BY " + KEY_TIME + " DESC;";
         Cursor cursor = db.rawQuery(query, null);
 
         if (cursor.moveToFirst()) {
@@ -66,7 +68,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 call.setName(cursor.getString(1));
                 call.setNumber(cursor.getString(2));
                 call.setTime(cursor.getLong(3));
+                call.setAlarmed(cursor.getInt(4) == 1);
+                list.add(call);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return list;
+    }
 
+    public List<Call> getAllPendingCalls() {
+        SQLiteDatabase db = getReadableDatabase();
+        List<Call> list = new ArrayList<>();
+
+        String query = "SELECT * FROM " + TABLE_CALL + " WHERE " + KEY_IS_ALARMED + " = '0' "
+                + " ORDER BY " + KEY_TIME + " DESC;";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Call call = new Call();
+                call.setId(cursor.getLong(0));
+                call.setName(cursor.getString(1));
+                call.setNumber(cursor.getString(2));
+                call.setTime(cursor.getLong(3));
+                call.setAlarmed(cursor.getInt(4) == 1);
                 list.add(call);
             } while (cursor.moveToNext());
         }
@@ -83,6 +109,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
         cv.put(KEY_NAME, call.getName());
         cv.put(KEY_NUMBER, call.getNumber());
+        cv.put(KEY_IS_ALARMED, call.isAlarmed() ? 1 : 0);
         cv.put(KEY_TIME, call.getTime());
 
         if (id == null) {
@@ -104,13 +131,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String query = "SELECT * FROM " + TABLE_CALL + " ORDER BY " + KEY_CREATION_TIME + " DESC LIMIT 1;";
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
-            String name = cursor.getString(1);
-            String number = cursor.getString(2);
-            Long time = cursor.getLong(3);
-
-            call.setName(name);
-            call.setNumber(number);
-            call.setTime(time);
+            call.setId(cursor.getLong(0));
+            call.setName(cursor.getString(1));
+            call.setNumber(cursor.getString(2));
+            call.setTime(cursor.getLong(3));
+            call.setAlarmed(cursor.getInt(4) == 1);
         }
 
         cursor.close();

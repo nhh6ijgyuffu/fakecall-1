@@ -36,9 +36,9 @@ public class Android40xAnimation extends View implements Runnable{
     private float density;
 
     private boolean isDragging = false;
-    private int currentTrigger = OnTriggerListener.TRIGGER_NONE;
+    private int currentTrigger = CallAnimOnTriggerListener.TRIGGER_NONE;
 
-    private OnTriggerListener listener;
+    private CallAnimOnTriggerListener listener;
 
     private Thread thread;
 
@@ -131,7 +131,7 @@ public class Android40xAnimation extends View implements Runnable{
                 xTouchPos = event.getX();
                 yTouchPos = event.getY();
 
-                currentTrigger = OnTriggerListener.TRIGGER_NONE;
+                currentTrigger = CallAnimOnTriggerListener.TRIGGER_NONE;
 
                 float right = baseX + draggable_radius - trigger_radius;
                 float left = baseX - draggable_radius + trigger_radius;
@@ -140,16 +140,16 @@ public class Android40xAnimation extends View implements Runnable{
                 if (xTouchPos < right) {
                     if (xTouchPos > left) {
                         if (yTouchPos > top) {
-                            currentTrigger = OnTriggerListener.TRIGGER_NONE;
+                            currentTrigger = CallAnimOnTriggerListener.TRIGGER_NONE;
                             break;
                         }
-                        currentTrigger = OnTriggerListener.TRIGGER_TEXT;
+                        currentTrigger = CallAnimOnTriggerListener.TRIGGER_TEXT;
                         break;
                     }
-                    currentTrigger = OnTriggerListener.TRIGGER_DECLINE;
+                    currentTrigger = CallAnimOnTriggerListener.TRIGGER_DECLINE;
                     break;
                 }
-                currentTrigger = OnTriggerListener.TRIGGER_ANSWER;
+                currentTrigger = CallAnimOnTriggerListener.TRIGGER_ANSWER;
                 break;
             case MotionEvent.ACTION_UP:
                 isDragging = false;
@@ -157,7 +157,7 @@ public class Android40xAnimation extends View implements Runnable{
                 yTouchPos = baseY;
                 if (listener != null)
                     listener.onTrigger(currentTrigger);
-                currentTrigger = OnTriggerListener.TRIGGER_NONE;
+                currentTrigger = CallAnimOnTriggerListener.TRIGGER_NONE;
                 break;
         }
         return true;
@@ -171,16 +171,16 @@ public class Android40xAnimation extends View implements Runnable{
         if (isDragging) {
             drawBorder(canvas);
             switch (currentTrigger) {
-                case OnTriggerListener.TRIGGER_NONE:
+                case CallAnimOnTriggerListener.TRIGGER_NONE:
                     drawAnimHandle(canvas);
                     break;
-                case OnTriggerListener.TRIGGER_ANSWER:
+                case CallAnimOnTriggerListener.TRIGGER_ANSWER:
                     drawTriggerAnswer(canvas);
                     break;
-                case OnTriggerListener.TRIGGER_DECLINE:
+                case CallAnimOnTriggerListener.TRIGGER_DECLINE:
                     drawTriggerDecline(canvas);
                     break;
-                case OnTriggerListener.TRIGGER_TEXT:
+                case CallAnimOnTriggerListener.TRIGGER_TEXT:
                     drawTriggerText(canvas);
                     break;
             }
@@ -206,7 +206,7 @@ public class Android40xAnimation extends View implements Runnable{
         }
     }
 
-    public void setOnTriggerListener(OnTriggerListener l) {
+    public void setOnTriggerListener(CallAnimOnTriggerListener l) {
         listener = l;
     }
 

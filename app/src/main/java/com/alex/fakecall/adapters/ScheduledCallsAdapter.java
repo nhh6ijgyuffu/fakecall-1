@@ -1,5 +1,6 @@
 package com.alex.fakecall.adapters;
 
+import android.graphics.Paint;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -8,9 +9,6 @@ import com.alex.fakecall.R;
 import com.alex.fakecall.helper.Converter;
 import com.alex.fakecall.models.Call;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
-
-import java.util.Calendar;
-import java.util.Comparator;
 
 import butterknife.BindView;
 
@@ -46,8 +44,8 @@ public class ScheduledCallsAdapter extends BaseRecyclerViewAdapter<Call, Schedul
         @BindView(R.id.tvNumber)
         TextView tvNumber;
 
-        @BindView(R.id.tvScheduledTime)
-        TextView tvScheduledTime;
+        @BindView(R.id.tvTime)
+        TextView tvTime;
 
         public ViewHolder(ViewGroup parent, int resId) {
             super(parent, resId);
@@ -57,7 +55,17 @@ public class ScheduledCallsAdapter extends BaseRecyclerViewAdapter<Call, Schedul
         protected void onBind(final Call item, final int pos) {
             tvName.setText(item.getName());
             tvNumber.setText(item.getNumber());
-            tvScheduledTime.setText(Converter.millis2String(item.getTime(), "hh:mm:ss a"));
+            tvTime.setText(Converter.millis2String(item.getTime(), "hh:mm:ss a"));
+
+            if (item.isAlarmed()) {
+                tvName.setPaintFlags(tvName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                tvNumber.setPaintFlags(tvNumber.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                tvTime.setPaintFlags(tvTime.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            } else {
+                tvName.setPaintFlags(tvName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                tvNumber.setPaintFlags(tvNumber.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                tvTime.setPaintFlags(tvTime.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+            }
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

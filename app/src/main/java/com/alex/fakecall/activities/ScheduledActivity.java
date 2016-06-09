@@ -55,11 +55,11 @@ public class ScheduledActivity extends BaseActivity {
         mAdapter.setOnItemLongClickListener(new BaseRecyclerViewAdapter.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(View v, final Object item, final int position) {
-                DialogHelper.showPopupMenu(ScheduledActivity.this, v, R.menu.list_item, Gravity.RIGHT, new PopupMenu.OnMenuItemClickListener() {
+                DialogHelper.showPopupMenu(ScheduledActivity.this, v, R.menu.mn_list_item, Gravity.RIGHT, new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem mn) {
                         switch (mn.getItemId()) {
-                            case R.id.mn_delete:
+                            case R.id.action_delete:
                                 Call call = (Call) item;
                                 AlarmHelper.getInstance().cancelCall(call.getId());
                                 DatabaseHelper.getInstance().deleteCall(call.getId());

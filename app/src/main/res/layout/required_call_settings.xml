@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.alex.fakecall.views.TwoLineTextOption
+            android:id="@+id/optTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:leftIcon="@drawable/ic_menu_timer"
+            app:optText="@string/lb_time_to_call"
+            app:valueText="@string/lb_now" />
+
+        <com.alex.fakecall.views.TwoLineTextOption
+            android:id="@+id/optTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:leftIcon="@drawable/ic_menu_phone"
+            app:optText="@string/lb_phone_ui"
+            app:valueText="@string/lb_not_set" />
+
+        <com.alex.fakecall.views.TwoLineTextOption
+            android:id="@+id/optRingtone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:leftIcon="@drawable/ic_menu_ringtone"
+            app:optText="Ringtone"
+            app:valueText="Default Ringtone" />
+
+        <com.alex.fakecall.views.TwoLineWithSwitchOption
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:leftIcon="@drawable/ic_menu_vibrate"
+            app:optText="@string/lb_vibrate"
+            app:valueOnChecked="On"
+            app:valueOnNoChecked="Off" />
+
+    </LinearLayout>
+
+</merge>

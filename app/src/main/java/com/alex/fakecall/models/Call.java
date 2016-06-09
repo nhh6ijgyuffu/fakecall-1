@@ -5,13 +5,20 @@ import java.io.Serializable;
 
 public class Call implements Serializable {
     public static final String KEY = Call.class.getSimpleName();
-
     private Long id;
     private String name;
     private String number;
     private Long time;
-
     private Theme phone_ui;
+    private boolean isAlarmed;
+
+    private CallType callType;
+
+    public enum CallType{
+        INCOMING,
+        OUTGOING,
+        MISSED
+    }
 
     public Long getId() {
         return id;
@@ -53,10 +60,39 @@ public class Call implements Serializable {
         this.time = time;
     }
 
+    public CallType getCallType() {
+        return callType;
+    }
+
+    public void setCallType(CallType callType) {
+        this.callType = callType;
+    }
+
+    public boolean isAlarmed() {
+        return isAlarmed;
+    }
+
+    public void setAlarmed(boolean alarmed) {
+        isAlarmed = alarmed;
+    }
+
     public String getDisplayName() {
         if (name == null || name.isEmpty()) {
             return number;
         }
         return name;
+    }
+
+    @Override
+    public String toString() {
+        return "Call{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", number='" + number + '\'' +
+                ", time=" + time +
+                ", phone_ui=" + phone_ui +
+                ", isAlarmed=" + isAlarmed +
+                ", callType=" + callType +
+                '}';
     }
 }

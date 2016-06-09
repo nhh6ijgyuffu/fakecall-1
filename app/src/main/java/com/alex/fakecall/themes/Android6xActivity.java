@@ -5,11 +5,11 @@ import android.view.View;
 
 import com.alex.fakecall.R;
 import com.alex.fakecall.views.Android44xAnimation;
-import com.alex.fakecall.views.OnTriggerListener;
+import com.alex.fakecall.views.CallAnimOnTriggerListener;
 
 import butterknife.BindView;
 
-public class Android6xActivity extends BaseThemeActivity implements OnTriggerListener {
+public class Android6xActivity extends BaseThemeActivity implements CallAnimOnTriggerListener {
     @BindView(R.id.callAnimation)
     Android44xAnimation callAnimation;
 
@@ -47,10 +47,10 @@ public class Android6xActivity extends BaseThemeActivity implements OnTriggerLis
     @Override
     public void onTrigger(int whatToTrigger) {
         switch (whatToTrigger) {
-            case OnTriggerListener.TRIGGER_ANSWER:
+            case CallAnimOnTriggerListener.TRIGGER_ANSWER:
                 answerCall();
                 break;
-            case OnTriggerListener.TRIGGER_DECLINE:
+            case CallAnimOnTriggerListener.TRIGGER_DECLINE:
                 onMissedCall();
                 break;
         }

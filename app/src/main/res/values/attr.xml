@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="AnimatedImageView">
-        <attr name="autoRun" format="boolean"/>
-    </declare-styleable>
+    <declare-styleable name="MyCustomOptView">
+        <attr name="leftIcon" format="reference" />
+        <attr name="rightIcon" format="reference" />
+        <attr name="optText" format="reference|string" />
+        <attr name="valueText" format="reference|string" />
 
-    <declare-styleable name="SlidingTab">
-        <attr name="TextAppearance_SlidingTabActive" format="reference"/>
-        <attr name="TextAppearance_SlidingTabNormal" format="reference"/>
-        <attr name="LeftSliderText" format="reference|string"/>
-        <attr name="RightSliderText" format="reference|string"/>
+        <attr name="checked" format="boolean" />
+        <attr name="valueOnChecked" format="reference|string" />
+        <attr name="valueOnNoChecked" format="reference|string" />
+
+
     </declare-styleable>
 </resources>

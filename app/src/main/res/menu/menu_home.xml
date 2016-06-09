@@ -3,10 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/mn_schedule"
+        android:id="@+id/action_open_schedule"
         android:icon="@drawable/ic_action_menu_scheduled"
         android:title="@string/lb_scheduled"
-        app:actionLayout="@layout/menu_item_scheduled"
-        app:showAsAction="always" />
+        app:actionLayout="@layout/action_layout_mn_scheduled"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
 
 </menu>

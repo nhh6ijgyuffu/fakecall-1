@@ -169,7 +169,7 @@ public abstract class BaseThemeActivity extends BaseActivity implements SensorEv
         builder.setAutoCancel(true);
         builder.setOnlyAlertOnce(true);
         builder.setDefaults(5);
-        builder.setSmallIcon(R.drawable.ic_notification_small);
+        builder.setSmallIcon(R.drawable.ic_missed_call_white);
         builder.setTicker("Missed call from " + mCall.getDisplayName());
         builder.setContentTitle("Missed call");
         builder.setContentText(mCall.getDisplayName());

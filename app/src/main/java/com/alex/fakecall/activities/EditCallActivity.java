@@ -15,7 +15,8 @@ public class EditCallActivity extends BaseActivity {
     @Override
     protected void onSetUp() {
         Call call = (Call) getIntent().getSerializableExtra(Call.KEY);
-        replaceFragment(R.id.contentContainer, NewCallFragment.newInstance(call, true), false);
+        boolean isEdit = getIntent().getBooleanExtra("isEdit", false);
+        replaceFragment(R.id.contentContainer, NewCallFragment.newInstance(call, isEdit), false);
     }
 
     @Override

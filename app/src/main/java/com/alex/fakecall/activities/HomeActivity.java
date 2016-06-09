@@ -10,25 +10,29 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import com.alex.fakecall.R;
 import com.alex.fakecall.fragments.NewCallFragment;
 import com.alex.fakecall.fragments.NewSMSFragment;
 import com.alex.fakecall.helper.DatabaseHelper;
 import com.alex.fakecall.models.Call;
+import com.alex.fakecall.views.BadgeView;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 
-public class HomeActivity extends BaseActivity implements View.OnClickListener {
+public class HomeActivity extends BaseActivity {
     @BindView(R.id.viewPager)
     ViewPager viewPager;
 
     @BindView(R.id.tabLayout)
     TabLayout tabLayout;
+
+    private BadgeView mnItemScheduled;
 
     static class ViewPagerAdapter extends FragmentStatePagerAdapter {
         List<Fragment> listFrags;
@@ -74,38 +78,32 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         setUpViewPager();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateCounter();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_home, menu);
-        for (int i = 0; i < menu.size(); i++) {
-            MenuItem item = menu.getItem(i);
-            if (item.getItemId() == R.id.mn_schedule) {
-                View itemChooser = item.getActionView();
-                if (itemChooser != null) {
-                    itemChooser.setOnClickListener(this);
-                }
-                break;
+        MenuItem mnItem = menu.findItem(R.id.action_open_schedule);
+        mnItemScheduled = (BadgeView) mnItem.getActionView();
+        mnItemScheduled.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this, ScheduledActivity.class));
             }
-        }
-        return super.onCreateOptionsMenu(menu);
+        });
+        updateCounter();
+        return true;
     }
 
-    @Override
-    public void onClick(View v) {
-        Intent intent = new Intent(this, ScheduledActivity.class);
-        startActivity(intent);
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        MenuItem mnItem = menu.findItem(R.id.mn_schedule);
-        TextView tvMnCounter = (TextView) mnItem.getActionView().findViewById(R.id.tvCounter);
-
-        int size = DatabaseHelper.getInstance().getAllCalls().size();
-        tvMnCounter.setText(String.valueOf(size));
-
-        return super.onPrepareOptionsMenu(menu);
+    private void updateCounter() {
+        if (mnItemScheduled == null) return;
+        YoYo.with(Techniques.Tada).duration(500).playOn(mnItemScheduled);
+        int totalSize = DatabaseHelper.getInstance().getAllPendingCalls().size();
+        mnItemScheduled.setCounter(totalSize);
     }
 
     void setUpViewPager() {
@@ -118,7 +116,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
     }
-
 
     @Override
     protected void onCleanUp() {

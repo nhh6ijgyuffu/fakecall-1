@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Fake Call &amp; SMS</string>
+    <string name="action_settings">Settings</string>
     <string name="new_fake_call">New Fake Call</string>
     <string name="edit_call">Edit Call</string>
     <string name="choose_theme">Choose your Theme</string>
@@ -11,7 +12,7 @@
     <string name="time_value_5m">5 minutes from now</string>
     <string name="lb_phone_ui">Theme</string>
     <string name="lb_caller_number">Number</string>
-    <string name="lb_not_set">N/A</string>
+    <string name="lb_not_set">Not set</string>
     <string name="lb_incoming_call">Incoming call</string>
     <string name="lb_caller_name">Name</string>
     <string name="lb_private_num">Private number</string>
@@ -23,4 +24,13 @@
     <string name="lb_example_time">20:05</string>
     <string name="lb_caller_info">Caller Info</string>
     <string name="lb_scheduled">Scheduled</string>
+    <string name="lb_now">Now</string>
+    <string name="lb_15s">15 s</string>
+    <string name="lb_30s">30 s</string>
+    <string name="lb_1min">1 min</string>
+    <string name="lb_5min">5 mins</string>
+    <string name="lb_custom">Custom</string>
+    <string name="lb_primary_text">Primary text</string>
+    <string name="lb_secondary_text">Secondary text</string>
+    <string name="lb_vibrate">Vibrate?</string>
 </resources>

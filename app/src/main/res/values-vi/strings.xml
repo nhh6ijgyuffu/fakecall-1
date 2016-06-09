@@ -23,4 +23,13 @@
     <string name="choose_theme">Chọn giao diện</string>
     <string name="lb_scheduled">Đã lên lịch</string>
     <string name="edit_call">Chỉnh sửa</string>
+    <string name="action_settings">Cài đặt</string>
+    <string name="lb_1min">1 phút</string>
+    <string name="lb_30s">30 giây</string>
+    <string name="lb_5min">5 phút</string>
+    <string name="lb_15s">15 giây</string>
+    <string name="lb_custom">Tùy chỉnh</string>
+    <string name="lb_now">Ngay bây giờ</string>
+    <string name="lb_primary_text">Dòng chính</string>
+    <string name="lb_secondary_text">Dòng phụ</string>
 </resources>
