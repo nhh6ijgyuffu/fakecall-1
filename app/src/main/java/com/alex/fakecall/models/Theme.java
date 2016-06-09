@@ -2,15 +2,15 @@ package com.alex.fakecall.models;
 
 import java.io.Serializable;
 
-public class PhoneUI implements Serializable {
-    public static final String KEY = PhoneUI.class.getSimpleName();
+public class Theme implements Serializable {
+    public static final String KEY = Theme.class.getSimpleName();
 
     private String name;
     private Class<?> incoming_class;
     private int incomingRes;
     private int inCallRes;
 
-    public PhoneUI(String name, int incomingRes, int inCallRes, Class<?> incoming_class) {
+    public Theme(String name, int incomingRes, int inCallRes, Class<?> incoming_class) {
         this.incomingRes = incomingRes;
         this.inCallRes = inCallRes;
         this.name = name;

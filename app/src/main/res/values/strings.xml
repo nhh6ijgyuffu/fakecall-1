@@ -1,23 +1,26 @@
 <resources>
     <string name="app_name">Fake Call &amp; SMS</string>
     <string name="new_fake_call">New Fake Call</string>
-    <string name="phone_ui">New Fake Call</string>
+    <string name="edit_call">Edit Call</string>
+    <string name="choose_theme">Choose your Theme</string>
     <string name="lb_time_to_call">Time to call</string>
     <string name="default_time_value">Right now</string>
     <string name="time_value_15s">15 seconds from now</string>
     <string name="time_value_30s">30 seconds from now</string>
     <string name="time_value_1m">1 minutes from now</string>
     <string name="time_value_5m">5 minutes from now</string>
-    <string name="lb_phone_ui">Phone UI</string>
-    <string name="lb_caller_number">0969 969 696</string>
+    <string name="lb_phone_ui">Theme</string>
+    <string name="lb_caller_number">Number</string>
     <string name="lb_not_set">N/A</string>
     <string name="lb_incoming_call">Incoming call</string>
-    <string name="lb_caller_name">Barrack Obama</string>
+    <string name="lb_caller_name">Name</string>
     <string name="lb_private_num">Private number</string>
     <string name="lb_open_contact">Open Contact</string>
     <string name="lb_hold">HOLD</string>
     <string name="lb_reject_call_with_message">Reject call with message</string>
     <string name="lb_save">Save</string>
-    <string name="lb_required_settings">REQUIRED SETTINGS</string>
+    <string name="lb_required_settings">Required Settings</string>
     <string name="lb_example_time">20:05</string>
+    <string name="lb_caller_info">Caller Info</string>
+    <string name="lb_scheduled">Scheduled</string>
 </resources>

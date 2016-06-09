@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Fake Call &amp; SMS</string>
+    <string name="new_fake_call">Cuộc gọi mới</string>
+    <string name="lb_time_to_call">Thời gian gọi</string>
+    <string name="default_time_value">Ngay bây giờ</string>
+    <string name="time_value_15s">15 giây kể từ bây giờ</string>
+    <string name="time_value_30s">30 giây kể từ bây giờ</string>
+    <string name="time_value_1m">1 phút kể từ bây giờ</string>
+    <string name="time_value_5m">5 phút kể từ bây giờ</string>
+    <string name="lb_phone_ui">Giao diện</string>
+    <string name="lb_caller_number">Số điện thoại</string>
+    <string name="lb_not_set">N/A</string>
+    <string name="lb_incoming_call">Cuộc gọi đến</string>
+    <string name="lb_caller_name">Tên</string>
+    <string name="lb_private_num">Không có số</string>
+    <string name="lb_open_contact">Mở danh bạ</string>
+    <string name="lb_hold">GIỮ</string>
+    <string name="lb_reject_call_with_message">Ngắt cuộc gói bằng tin nhắn</string>
+    <string name="lb_save">Lưu lại</string>
+    <string name="lb_required_settings">Cài đặt bắt buộc</string>
+    <string name="lb_example_time">20:05</string>
+    <string name="lb_caller_info">Người gọi</string>
+    <string name="choose_theme">Chọn giao diện</string>
+    <string name="lb_scheduled">Đã lên lịch</string>
+    <string name="edit_call">Chỉnh sửa</string>
+</resources>

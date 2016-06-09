@@ -1,9 +1,9 @@
-package com.alex.fakecall.call_ui;
+package com.alex.fakecall.themes;
 
 
 import com.alex.fakecall.R;
 
-public class GalaxyS6Activity extends BaseCallActivity {
+public class GalaxyS6Activity extends BaseThemeActivity {
     @Override
     protected int getLayoutResource() {
         return R.layout.galaxy_s6;

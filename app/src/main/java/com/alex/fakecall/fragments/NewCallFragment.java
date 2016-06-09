@@ -1,27 +1,28 @@
-package com.alex.fakecall.activities;
+package com.alex.fakecall.fragments;
 
-
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.PopupMenu;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alex.fakecall.R;
-import com.alex.fakecall.helper.DatabaseHelper;
+import com.alex.fakecall.activities.ScheduledActivity;
+import com.alex.fakecall.activities.ThemeSelectActivity;
 import com.alex.fakecall.helper.AlarmHelper;
 import com.alex.fakecall.helper.Converter;
+import com.alex.fakecall.helper.DatabaseHelper;
 import com.alex.fakecall.helper.DialogHelper;
 import com.alex.fakecall.helper.SimpleTextWatcher;
 import com.alex.fakecall.models.Call;
-import com.alex.fakecall.models.PhoneUI;
+import com.alex.fakecall.models.Theme;
 import com.alex.fakecall.views.DateTimePickerDialog;
 
 import java.util.Calendar;
@@ -29,7 +30,8 @@ import java.util.Calendar;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class NewCallActivity extends BaseActivity {
+
+public class NewCallFragment extends BaseFragment {
     private Call mCall;
 
     @BindView(R.id.tvTimeValue)
@@ -51,18 +53,27 @@ public class NewCallActivity extends BaseActivity {
     private boolean isCalendar;
     private boolean isEdit;
 
+    public static NewCallFragment newInstance(Call call, boolean isEdit) {
+        NewCallFragment frag = new NewCallFragment();
+        Bundle args = new Bundle();
+        args.putBoolean("isEdit", isEdit);
+        args.putSerializable(Call.KEY, call);
+        frag.setArguments(args);
+        return frag;
+    }
+
     @Override
     protected int getLayoutResource() {
-        return R.layout.activity_new_call;
+        return R.layout.fragment_new_call;
     }
 
     @Override
     protected void onSetUp() {
-        mCall = (Call) getIntent().getSerializableExtra(Call.KEY);
+        mCall = (Call) getArguments().getSerializable(Call.KEY);
         if (mCall == null) {
             mCall = DatabaseHelper.getInstance().getLastSavedCall();
         }
-        isEdit = getIntent().getBooleanExtra("isEdit", false);
+        isEdit = getArguments().getBoolean("isEdit", false);
 
         displayLastCall();
 
@@ -86,9 +97,9 @@ public class NewCallActivity extends BaseActivity {
         edtCallerNumber.setText(mCall.getNumber());
     }
 
-    @OnClick(R.id.btnChangeCaller)
+    @OnClick(R.id.callerPhoto)
     void onChangeCaller(View v) {
-        DialogHelper.showPopupMenu(this, v, R.menu.change_caller, new PopupMenu.OnMenuItemClickListener() {
+        DialogHelper.showPopupMenu(getContext(), v, R.menu.change_caller, new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 final int id = item.getItemId();
@@ -114,7 +125,7 @@ public class NewCallActivity extends BaseActivity {
 
     @OnClick(R.id.btnSelectTime)
     void onSelectTime(View v) {
-        DialogHelper.showPopupMenu(this, v, R.menu.select_time, Gravity.RIGHT,
+        DialogHelper.showPopupMenu(getContext(), v, R.menu.select_time, Gravity.RIGHT,
                 new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
@@ -146,7 +157,7 @@ public class NewCallActivity extends BaseActivity {
                                 tvTimeValue.setText(R.string.time_value_5m);
                                 break;
                             case R.id.mn_custom:
-                                DateTimePickerDialog dtd = new DateTimePickerDialog(NewCallActivity.this, null,
+                                DateTimePickerDialog dtd = new DateTimePickerDialog(getContext(), null,
                                         new DateTimePickerDialog.OnDateTimeSetListener() {
                                             @Override
                                             public void OnDateTimeSet(Calendar calendar) {
@@ -166,7 +177,7 @@ public class NewCallActivity extends BaseActivity {
 
     @OnClick(R.id.btnPhoneUI)
     void onBtnPhoneUI() {
-        Intent intent = new Intent(this, PhoneUISelectActivity.class);
+        Intent intent = new Intent(getContext(), ThemeSelectActivity.class);
         startActivityForResult(intent, REQUEST_PHONE_UI);
     }
 
@@ -178,7 +189,6 @@ public class NewCallActivity extends BaseActivity {
         Long id = DatabaseHelper.getInstance().addCall(mCall);
 
         if (id == -1) {
-            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -189,16 +199,22 @@ public class NewCallActivity extends BaseActivity {
         }
 
         AlarmHelper.getInstance().placeCall(mCall);
-        finish();
+
+        if (isEdit) {
+            getActivity().finish();
+            return;
+        }
+        Intent intent = new Intent(getContext(), ScheduledActivity.class);
+        startActivity(intent);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != RESULT_OK) return;
+        if (resultCode != Activity.RESULT_OK) return;
         switch (requestCode) {
             case REQUEST_PHONE_UI:
-                PhoneUI pui = (PhoneUI) data.getSerializableExtra(PhoneUI.KEY);
+                Theme pui = (Theme) data.getSerializableExtra(Theme.KEY);
                 tvPhoneUIValue.setText(pui.getName());
                 mCall.setPhoneUI(pui);
                 break;
@@ -209,7 +225,8 @@ public class NewCallActivity extends BaseActivity {
                     String[] projections = new String[]{ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
                             ContactsContract.CommonDataKinds.Phone.NUMBER};
 
-                    Cursor cursor = getContentResolver().query(contactData, projections, null, null, null);
+                    Cursor cursor = getContext().getContentResolver()
+                            .query(contactData, projections, null, null, null);
 
                     if (cursor == null) return;
                     cursor.moveToFirst();
@@ -226,10 +243,5 @@ public class NewCallActivity extends BaseActivity {
                 }
                 break;
         }
-    }
-
-    @Override
-    protected void onCleanUp() {
-
     }
 }

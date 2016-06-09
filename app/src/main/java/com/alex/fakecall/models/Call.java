@@ -11,7 +11,7 @@ public class Call implements Serializable {
     private String number;
     private Long time;
 
-    private PhoneUI phone_ui;
+    private Theme phone_ui;
 
     public Long getId() {
         return id;
@@ -37,11 +37,11 @@ public class Call implements Serializable {
         this.number = number;
     }
 
-    public PhoneUI getPhoneUI() {
+    public Theme getPhoneUI() {
         return phone_ui;
     }
 
-    public void setPhoneUI(PhoneUI phone_ui) {
+    public void setPhoneUI(Theme phone_ui) {
         this.phone_ui = phone_ui;
     }
 

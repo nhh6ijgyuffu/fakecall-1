@@ -116,7 +116,7 @@
                 android:adjustViewBounds="true"
                 android:contentDescription="@null"
                 android:scaleType="centerCrop"
-                android:src="@drawable/android_50x_img_no_image" />
+                android:src="@drawable/avatar" />
 
             <ImageView
                 android:id="@+id/btnEndCall"

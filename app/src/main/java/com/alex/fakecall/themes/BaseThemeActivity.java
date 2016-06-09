@@ -1,9 +1,8 @@
-package com.alex.fakecall.call_ui;
+package com.alex.fakecall.themes;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -17,7 +16,6 @@ import android.provider.CallLog;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -41,7 +39,7 @@ import butterknife.OnClick;
 import butterknife.Optional;
 
 
-public abstract class BaseCallActivity extends BaseActivity implements SensorEventListener {
+public abstract class BaseThemeActivity extends BaseActivity implements SensorEventListener {
     @BindView(R.id.chronometer)
     MyChronometer chronometer;
 
@@ -81,15 +79,15 @@ public abstract class BaseCallActivity extends BaseActivity implements SensorEve
         public static final int HANDLE_MSG_MISSED = 1;
         public static final int HANDLE_MSG_END_CALL = 2;
 
-        private WeakReference<BaseCallActivity> mWeakAct;
+        private WeakReference<BaseThemeActivity> mWeakAct;
 
-        public MyHandler(BaseCallActivity act) {
+        public MyHandler(BaseThemeActivity act) {
             mWeakAct = new WeakReference<>(act);
         }
 
         @Override
         public void handleMessage(Message msg) {
-            BaseCallActivity act = mWeakAct.get();
+            BaseThemeActivity act = mWeakAct.get();
             if (act == null) return;
             switch (msg.what) {
                 case HANDLE_MSG_END_CALL:

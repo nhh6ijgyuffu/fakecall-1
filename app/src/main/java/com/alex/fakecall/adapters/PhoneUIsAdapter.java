@@ -8,17 +8,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alex.fakecall.R;
-import com.alex.fakecall.models.PhoneUI;
+import com.alex.fakecall.models.Theme;
 
 import butterknife.BindView;
 
-public class PhoneUIsAdapter extends BaseRecyclerViewAdapter<PhoneUI, PhoneUIsAdapter.ViewHolder> {
+public class PhoneUIsAdapter extends BaseRecyclerViewAdapter<Theme, PhoneUIsAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(parent, R.layout.phone_ui_item);
     }
 
-    protected class ViewHolder extends BaseRecyclerViewVH<PhoneUI> {
+    protected class ViewHolder extends BaseRecyclerViewVH<Theme> {
         @BindView(R.id.tvName)
         TextView tvName;
 
@@ -36,7 +36,7 @@ public class PhoneUIsAdapter extends BaseRecyclerViewAdapter<PhoneUI, PhoneUIsAd
         }
 
         @Override
-        protected void onBind(final PhoneUI item, final int pos) {
+        protected void onBind(final Theme item, final int pos) {
             tvName.setText(item.getName());
             ivInCallUI.setImageResource(item.getInCallRes());
             ivIncomingUI.setImageResource(item.getIncomingRes());

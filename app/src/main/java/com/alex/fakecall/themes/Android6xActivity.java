@@ -1,4 +1,4 @@
-package com.alex.fakecall.call_ui;
+package com.alex.fakecall.themes;
 
 
 import android.view.View;
@@ -9,7 +9,7 @@ import com.alex.fakecall.views.OnTriggerListener;
 
 import butterknife.BindView;
 
-public class Android6xActivity extends BaseCallActivity implements OnTriggerListener {
+public class Android6xActivity extends BaseThemeActivity implements OnTriggerListener {
     @BindView(R.id.callAnimation)
     Android44xAnimation callAnimation;
 

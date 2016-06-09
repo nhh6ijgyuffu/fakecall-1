@@ -57,7 +57,7 @@ public class ScheduledCallsAdapter extends BaseRecyclerViewAdapter<Call, Schedul
         protected void onBind(final Call item, final int pos) {
             tvName.setText(item.getName());
             tvNumber.setText(item.getNumber());
-            tvScheduledTime.setText(Converter.millis2String(item.getTime(), "HH:mm"));
+            tvScheduledTime.setText(Converter.millis2String(item.getTime(), "hh:mm:ss a"));
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -81,29 +81,14 @@ public class ScheduledCallsAdapter extends BaseRecyclerViewAdapter<Call, Schedul
         @BindView(R.id.tvSection)
         TextView tvSection;
 
-        TimeIgnoringComparator comparator;
-
         public SectionVH(ViewGroup parent, int resId) {
             super(parent, resId);
-            comparator = new TimeIgnoringComparator();
         }
 
         @Override
         protected void onBind(Call item, int pos) {
-            Calendar now = Calendar.getInstance();
-            Calendar then = (Calendar) now.clone();
-            int c = comparator.compare(now, then);
-            tvSection.setText(c == 0 ? "TODAY" : Converter.calendar2String(then, "dd/MM/yyyy"));
+            tvSection.setText(Converter.millis2String(item.getTime(), "dd/MM/yyyy"));
         }
     }
 
-    public class TimeIgnoringComparator implements Comparator<Calendar> {
-        public int compare(Calendar c1, Calendar c2) {
-            if (c1.get(Calendar.YEAR) != c2.get(Calendar.YEAR))
-                return c1.get(Calendar.YEAR) - c2.get(Calendar.YEAR);
-            if (c1.get(Calendar.MONTH) != c2.get(Calendar.MONTH))
-                return c1.get(Calendar.MONTH) - c2.get(Calendar.MONTH);
-            return c1.get(Calendar.DAY_OF_MONTH) - c2.get(Calendar.DAY_OF_MONTH);
-        }
-    }
 }

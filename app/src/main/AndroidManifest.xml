@@ -26,20 +26,24 @@
         </activity>
 
         <activity
-            android:name=".activities.NewCallActivity"
-            android:label="@string/new_fake_call" />
+            android:name=".activities.EditCallActivity"
+            android:label="@string/edit_call" />
 
         <activity
-            android:name=".activities.PhoneUISelectActivity"
-            android:label="@string/phone_ui" />
+            android:name=".activities.ThemeSelectActivity"
+            android:label="@string/choose_theme" />
 
         <activity
-            android:name=".call_ui.Android6xActivity"
+            android:name=".activities.ScheduledActivity"
+            android:label="@string/lb_scheduled" />
+
+        <activity
+            android:name=".themes.Android6xActivity"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance" />
 
         <activity
-            android:name=".call_ui.GalaxyS6Activity"
+            android:name=".themes.GalaxyS6Activity"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance" />
 

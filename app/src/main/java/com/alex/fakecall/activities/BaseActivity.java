@@ -2,6 +2,10 @@ package com.alex.fakecall.activities;
 
 
 import android.os.Bundle;
+import android.support.annotation.IdRes;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -49,5 +53,16 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onDestroy() {
         onCleanUp();
         super.onDestroy();
+    }
+
+    protected void replaceFragment(@IdRes int containerId, Fragment frag, boolean backStack) {
+        String tag = frag.getClass().getSimpleName();
+        FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+        trans.replace(containerId, frag);
+        if (backStack)
+            trans.addToBackStack(tag);
+        else
+            trans.disallowAddToBackStack();
+        trans.commit();
     }
 }

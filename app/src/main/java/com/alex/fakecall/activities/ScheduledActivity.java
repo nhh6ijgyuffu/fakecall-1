@@ -1,4 +1,4 @@
-package com.alex.fakecall.fragments;
+package com.alex.fakecall.activities;
 
 
 import android.content.Intent;
@@ -10,20 +10,19 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.alex.fakecall.R;
-import com.alex.fakecall.activities.NewCallActivity;
 import com.alex.fakecall.adapters.BaseRecyclerViewAdapter;
 import com.alex.fakecall.adapters.ScheduledCallsAdapter;
 import com.alex.fakecall.helper.AlarmHelper;
 import com.alex.fakecall.helper.DatabaseHelper;
 import com.alex.fakecall.helper.DialogHelper;
 import com.alex.fakecall.models.Call;
-import com.alex.fakecall.views.DividerItemDecoration;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class ListCallFragment extends BaseFragment {
+public class ScheduledActivity extends BaseActivity {
+
     @BindView(R.id.rvListCall)
     RecyclerView rvListCall;
 
@@ -31,14 +30,13 @@ public class ListCallFragment extends BaseFragment {
 
     @Override
     protected int getLayoutResource() {
-        return R.layout.fragment_list_call;
+        return R.layout.activity_scheduled;
     }
 
     @Override
-    protected void setUp() {
-        rvListCall.setLayoutManager(new LinearLayoutManager(getContext()));
+    protected void onSetUp() {
+        rvListCall.setLayoutManager(new LinearLayoutManager(this));
         rvListCall.setHasFixedSize(true);
-        rvListCall.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
 
         mAdapter = new ScheduledCallsAdapter();
 
@@ -47,17 +45,20 @@ public class ListCallFragment extends BaseFragment {
 
         mAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View v, final Object item, final int position) {
-                DialogHelper.showPopupMenu(getContext(), v, R.menu.list_item, Gravity.RIGHT, new PopupMenu.OnMenuItemClickListener() {
+            public void onItemClick(View v, Object item, int position) {
+                Intent intent = new Intent(ScheduledActivity.this, EditCallActivity.class);
+                intent.putExtra(Call.KEY, (Call) item);
+                startActivity(intent);
+            }
+        });
+
+        mAdapter.setOnItemLongClickListener(new BaseRecyclerViewAdapter.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(View v, final Object item, final int position) {
+                DialogHelper.showPopupMenu(ScheduledActivity.this, v, R.menu.list_item, Gravity.RIGHT, new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem mn) {
                         switch (mn.getItemId()) {
-                            case R.id.mn_edit:
-                                Intent intent = new Intent(getContext(), NewCallActivity.class);
-                                intent.putExtra("isEdit", true);
-                                intent.putExtra(Call.KEY, (Call) item);
-                                startActivity(intent);
-                                break;
                             case R.id.mn_delete:
                                 Call call = (Call) item;
                                 AlarmHelper.getInstance().cancelCall(call.getId());
@@ -68,6 +69,7 @@ public class ListCallFragment extends BaseFragment {
                         return false;
                     }
                 });
+                return false;
             }
         });
     }
@@ -80,7 +82,12 @@ public class ListCallFragment extends BaseFragment {
 
     @OnClick(R.id.fabNewCall)
     void onNewCall() {
-        Intent intent = new Intent(getContext(), NewCallActivity.class);
+        Intent intent = new Intent(this, EditCallActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onCleanUp() {
+
     }
 }

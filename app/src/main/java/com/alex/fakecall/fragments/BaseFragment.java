@@ -20,7 +20,7 @@ public abstract class BaseFragment extends Fragment {
     /**
      * Use for setting up fragment
      */
-    protected abstract void setUp();
+    protected abstract void onSetUp();
 
     @Nullable
     @Override
@@ -31,6 +31,6 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this,view);
-        setUp();
+        onSetUp();
     }
 }
