@@ -20,7 +20,7 @@
     <string name="lb_hold">HOLD</string>
     <string name="lb_reject_call_with_message">Reject call with message</string>
     <string name="lb_save">Save</string>
-    <string name="lb_required_settings">Required Settings</string>
+    <string name="lb_required_call_settings">Required settings</string>
     <string name="lb_example_time">20:05</string>
     <string name="lb_caller_info">Caller Info</string>
     <string name="lb_scheduled">Scheduled</string>
@@ -33,4 +33,14 @@
     <string name="lb_primary_text">Primary text</string>
     <string name="lb_secondary_text">Secondary text</string>
     <string name="lb_vibrate">Vibrate?</string>
+    <string name="lb_choose_image">Choose Image</string>
+    <string name="lb_take_image">Take from Camera</string>
+    <string name="lb_on">On</string>
+    <string name="lb_off">Off</string>
+    <string name="lb_tab_call">Call</string>
+    <string name="lb_tab_sms">SMS</string>
+    <string name="lb_optional_settings">More settings</string>
+    <string name="lb_ringtones">Ringtones</string>
+    <string name="lb_alarmed">Alarmed</string>
+    <string name="lb_pending">Pending...</string>
 </resources>

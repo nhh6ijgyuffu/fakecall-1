@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="@string/lb_required_settings"
+        android:text="@string/lb_required_call_settings"
         android:textColor="?attr/colorPrimary"
         android:textSize="16sp"
         android:textStyle="bold" />

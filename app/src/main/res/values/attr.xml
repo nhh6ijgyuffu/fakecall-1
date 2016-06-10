@@ -9,7 +9,5 @@
         <attr name="checked" format="boolean" />
         <attr name="valueOnChecked" format="reference|string" />
         <attr name="valueOnNoChecked" format="reference|string" />
-
-
     </declare-styleable>
 </resources>

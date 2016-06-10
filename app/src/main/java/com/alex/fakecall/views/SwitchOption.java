@@ -16,7 +16,7 @@ import com.alex.fakecall.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TwoLineWithSwitchOption extends FrameLayout {
+public class SwitchOption extends FrameLayout {
     @BindView(R.id.tvPrimary)
     TextView tvOption;
 
@@ -33,13 +33,13 @@ public class TwoLineWithSwitchOption extends FrameLayout {
 
     private OnCheckedChangeListener checkedListener;
 
-    public TwoLineWithSwitchOption(Context context) {
+    public SwitchOption(Context context) {
         this(context, null);
     }
 
-    public TwoLineWithSwitchOption(Context context, AttributeSet attrs) {
+    public SwitchOption(Context context, AttributeSet attrs) {
         super(context, attrs);
-        LayoutInflater.from(context).inflate(R.layout.two_line_with_switch_opt, this, true);
+        LayoutInflater.from(context).inflate(R.layout.switch_opt, this, true);
         ButterKnife.bind(this);
 
         TypedArray a = context.getTheme().obtainStyledAttributes(
@@ -83,15 +83,15 @@ public class TwoLineWithSwitchOption extends FrameLayout {
         void onCheckedChange(CompoundButton switchView, boolean checked);
     }
 
-    public void toggle() {
-        switchView.toggle();
+    public void setChecked(boolean checked) {
+        switchView.setChecked(checked);
     }
 
     public boolean isChecked() {
         return switchView.isChecked();
     }
 
-    public void setOnSwitchCheckedChangeListener(OnCheckedChangeListener l) {
+    public void setOnCheckedChangeListener(OnCheckedChangeListener l) {
         checkedListener = l;
     }
 }

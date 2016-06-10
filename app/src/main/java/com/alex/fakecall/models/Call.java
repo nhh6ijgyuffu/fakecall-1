@@ -1,24 +1,22 @@
 package com.alex.fakecall.models;
 
 
+import android.media.RingtoneManager;
+import android.net.Uri;
+
 import java.io.Serializable;
 
 public class Call implements Serializable {
     public static final String KEY = Call.class.getSimpleName();
+
     private Long id;
     private String name;
     private String number;
     private Long time;
-    private Theme phone_ui;
+    private Theme theme;
     private boolean isAlarmed;
-
-    private CallType callType;
-
-    public enum CallType{
-        INCOMING,
-        OUTGOING,
-        MISSED
-    }
+    private String ringtoneStr;
+    private boolean vibrate;
 
     public Long getId() {
         return id;
@@ -44,12 +42,12 @@ public class Call implements Serializable {
         this.number = number;
     }
 
-    public Theme getPhoneUI() {
-        return phone_ui;
+    public Theme getTheme() {
+        return theme;
     }
 
-    public void setPhoneUI(Theme phone_ui) {
-        this.phone_ui = phone_ui;
+    public void setTheme(Theme theme) {
+        this.theme = theme;
     }
 
     public Long getTime() {
@@ -58,14 +56,6 @@ public class Call implements Serializable {
 
     public void setTime(Long time) {
         this.time = time;
-    }
-
-    public CallType getCallType() {
-        return callType;
-    }
-
-    public void setCallType(CallType callType) {
-        this.callType = callType;
     }
 
     public boolean isAlarmed() {
@@ -83,6 +73,27 @@ public class Call implements Serializable {
         return name;
     }
 
+    public String getRingtoneStr() {
+        if (ringtoneStr == null) {
+            Uri defaultUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+            setRingtoneStr(defaultUri.toString());
+        }
+        return ringtoneStr;
+    }
+
+    public void setRingtoneStr(String ringtone) {
+        this.ringtoneStr = ringtone;
+    }
+
+    public boolean isVibrate() {
+        return vibrate;
+    }
+
+    public void setVibrate(boolean vibrate) {
+        this.vibrate = vibrate;
+    }
+
+
     @Override
     public String toString() {
         return "Call{" +
@@ -90,9 +101,9 @@ public class Call implements Serializable {
                 ", name='" + name + '\'' +
                 ", number='" + number + '\'' +
                 ", time=" + time +
-                ", phone_ui=" + phone_ui +
+                ", theme=" + theme +
                 ", isAlarmed=" + isAlarmed +
-                ", callType=" + callType +
+                ", ringtoneStr='" + ringtoneStr + '\'' +
                 '}';
     }
 }

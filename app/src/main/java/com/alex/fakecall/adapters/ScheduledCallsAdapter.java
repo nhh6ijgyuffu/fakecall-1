@@ -22,9 +22,8 @@ public class ScheduledCallsAdapter extends BaseRecyclerViewAdapter<Call, Schedul
 
     @Override
     public long getHeaderId(int position) {
-        Call call = getItem(position);
-        String dateStr = Converter.millis2String(call.getTime(), "dd/MM/yyyy");
-        return Math.abs(dateStr.hashCode());
+        boolean isAlarmed = getItem(position).isAlarmed();
+        return isAlarmed ? 1 : 0;
     }
 
     @Override
@@ -55,7 +54,7 @@ public class ScheduledCallsAdapter extends BaseRecyclerViewAdapter<Call, Schedul
         protected void onBind(final Call item, final int pos) {
             tvName.setText(item.getName());
             tvNumber.setText(item.getNumber());
-            tvTime.setText(Converter.millis2String(item.getTime(), "hh:mm:ss a"));
+            tvTime.setText(Converter.millis2String(item.getTime(), " dd MMM yyyy, hh:mm:ss a"));
 
             if (item.isAlarmed()) {
                 tvName.setPaintFlags(tvName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -95,7 +94,12 @@ public class ScheduledCallsAdapter extends BaseRecyclerViewAdapter<Call, Schedul
 
         @Override
         protected void onBind(Call item, int pos) {
-            tvSection.setText(Converter.millis2String(item.getTime(), "dd/MM/yyyy"));
+            if(item.isAlarmed()){
+                tvSection.setText(R.string.lb_alarmed);
+            }else{
+                tvSection.setText(R.string.lb_pending);
+            }
+
         }
     }
 

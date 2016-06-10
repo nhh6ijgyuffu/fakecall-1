@@ -24,7 +24,7 @@ public class Converter {
     public static String calendar2String(Calendar calendar, String pattern) {
         String rs = null;
         try {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern, Locale.US);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern, Locale.getDefault());
             rs = simpleDateFormat.format(calendar.getTime());
         } catch (Exception e) {
             e.printStackTrace();

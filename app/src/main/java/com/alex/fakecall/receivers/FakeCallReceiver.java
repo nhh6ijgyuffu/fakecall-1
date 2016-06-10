@@ -7,7 +7,6 @@ import android.content.Intent;
 import com.alex.fakecall.helper.DatabaseHelper;
 import com.alex.fakecall.themes.Android6xActivity;
 import com.alex.fakecall.models.Call;
-import com.alex.fakecall.models.Theme;
 
 
 public class FakeCallReceiver extends BroadcastReceiver {
@@ -25,6 +24,6 @@ public class FakeCallReceiver extends BroadcastReceiver {
         ctx.startActivity(callIntent);
 
         call.setAlarmed(true);
-        DatabaseHelper.getInstance().addCall(call);
+        DatabaseHelper.getInstance().addOrUpdateCall(call);
     }
 }

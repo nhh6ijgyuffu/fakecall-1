@@ -19,58 +19,72 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/callerPhoto"
-                    android:layout_width="72dp"
-                    android:layout_height="72dp"
-                    android:layout_margin="5dp"
-                    android:src="@drawable/avatar" />
-
-                <View
-                    android:layout_width="0.5dp"
-                    android:layout_height="match_parent"
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:background="@color/divider" />
+                    android:text="@string/lb_caller_info"
+                    android:textColor="?attr/colorPrimary"
+                    android:textStyle="bold"
+                    app:textAllCaps="true" />
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:gravity="center_vertical">
 
-                    <android.support.design.widget.TextInputLayout
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/callerPhoto"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="10dp"
+                        android:src="@drawable/avatar" />
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp">
+                        android:layout_toRightOf="@+id/callerPhoto"
+                        android:orientation="vertical">
 
-                        <EditText
-                            android:id="@+id/edtCallerName"
+                        <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/lb_caller_name"
-                            android:inputType="textPersonName" />
+                            android:layout_marginBottom="2dp">
 
-                    </android.support.design.widget.TextInputLayout>
+                            <EditText
+                                android:id="@+id/edtCallerName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/lb_caller_name"
+                                android:inputType="textPersonName"
+                                android:textSize="17sp" />
+
+                        </android.support.design.widget.TextInputLayout>
 
 
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <EditText
-                            android:id="@+id/edtCallerNumber"
+                        <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/lb_caller_number"
-                            android:inputType="phone" />
+                            android:layout_height="wrap_content">
 
-                    </android.support.design.widget.TextInputLayout>
+                            <EditText
+                                android:id="@+id/edtCallerNumber"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/lb_caller_number"
+                                android:inputType="phone"
+                                android:textSize="17sp" />
+
+                        </android.support.design.widget.TextInputLayout>
 
 
-                </LinearLayout>
+                    </LinearLayout>
 
+                </RelativeLayout>
             </LinearLayout>
 
 
@@ -91,12 +105,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="@string/lb_required_settings"
+                    android:text="@string/lb_required_call_settings"
                     android:textColor="?attr/colorPrimary"
                     android:textStyle="bold"
                     app:textAllCaps="true" />
 
                 <include layout="@layout/required_call_settings" />
+
+                <TextView
+                    android:id="@+id/tvMoreSetting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="@string/lb_optional_settings"
+                    android:textColor="?attr/colorPrimary"
+                    android:textStyle="bold" />
 
             </LinearLayout>
         </android.support.v7.widget.CardView>

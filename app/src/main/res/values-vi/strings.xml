@@ -17,11 +17,10 @@
     <string name="lb_hold">GIỮ</string>
     <string name="lb_reject_call_with_message">Ngắt cuộc gói bằng tin nhắn</string>
     <string name="lb_save">Lưu lại</string>
-    <string name="lb_required_settings">Cài đặt bắt buộc</string>
     <string name="lb_example_time">20:05</string>
     <string name="lb_caller_info">Người gọi</string>
     <string name="choose_theme">Chọn giao diện</string>
-    <string name="lb_scheduled">Đã lên lịch</string>
+    <string name="lb_scheduled">Kế hoạch</string>
     <string name="edit_call">Chỉnh sửa</string>
     <string name="action_settings">Cài đặt</string>
     <string name="lb_1min">1 phút</string>
@@ -32,4 +31,16 @@
     <string name="lb_now">Ngay bây giờ</string>
     <string name="lb_primary_text">Dòng chính</string>
     <string name="lb_secondary_text">Dòng phụ</string>
+    <string name="lb_choose_image">Chọn ảnh</string>
+    <string name="lb_take_image">Chụp ảnh</string>
+    <string name="lb_vibrate">Rung khi đổ chuông?</string>
+    <string name="lb_off">Tắt</string>
+    <string name="lb_on">Bật</string>
+    <string name="lb_required_call_settings">Cài đặt bắt buộc</string>
+    <string name="lb_tab_call">Cuộc gọi</string>
+    <string name="lb_tab_sms">Tin nhắn</string>
+    <string name="lb_optional_settings">Cài đặt thêm</string>
+    <string name="lb_ringtones">Nhạc chuông</string>
+    <string name="lb_alarmed">Đã thực hiện</string>
+    <string name="lb_pending">Đang chờ</string>
 </resources>

@@ -27,6 +27,10 @@ public class RingtoneHelper {
     private RingtoneHelper() {
     }
 
+    public void playRingtone(String uriStr, boolean loop){
+        playRingtone(Uri.parse(uriStr), loop);
+    }
+
     public void playRingtone(Uri audioUri, boolean loop) {
         if (mPlayer != null && mPlayer.isPlaying()) {
             mPlayer.stop();
@@ -54,7 +58,7 @@ public class RingtoneHelper {
 
     public List<Ringtone> getAllRingtone() {
         RingtoneManager manager = new RingtoneManager(App.getInstance());
-        manager.setType(RingtoneManager.TYPE_NOTIFICATION);
+        manager.setType(RingtoneManager.TYPE_RINGTONE);
         Cursor cursor = manager.getCursor();
 
         List<Ringtone> list = new ArrayList<>();
@@ -63,8 +67,7 @@ public class RingtoneHelper {
             String title = cursor.getString(RingtoneManager.TITLE_COLUMN_INDEX);
             String uri = cursor.getString(RingtoneManager.URI_COLUMN_INDEX);
             String id = cursor.getString(RingtoneManager.ID_COLUMN_INDEX);
-
-            Ringtone r = new Ringtone(title, Uri.parse(uri + "/" + id));
+            Ringtone r = new Ringtone(Integer.valueOf(id), title, uri + "/" + id);
             list.add(r);
         }
         cursor.close();
@@ -72,12 +75,14 @@ public class RingtoneHelper {
     }
 
     public static class Ringtone {
+        public int id;
         public String name;
-        public Uri uri;
+        public String uriStr;
 
-        public Ringtone(String name, Uri uri) {
+        public Ringtone(int id, String name, String uriStr) {
+            this.id = id;
             this.name = name;
-            this.uri = uri;
+            this.uriStr = uriStr;
         }
 
         @Override

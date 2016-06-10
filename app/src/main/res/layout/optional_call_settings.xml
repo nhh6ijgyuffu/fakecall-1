@@ -3,25 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
+        android:id="@+id/lyOptionalSettings"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <com.alex.fakecall.views.TwoLineTextOption
-            android:id="@+id/optTime"
+            android:id="@+id/optRingtone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:leftIcon="@drawable/ic_menu_timer"
-            app:optText="@string/lb_time_to_call"
-            app:valueText="@string/lb_now" />
+            app:leftIcon="@drawable/ic_menu_ringtone"
+            app:optText="Ringtone"
+            app:valueText="Default Ringtone" />
 
-        <com.alex.fakecall.views.TwoLineTextOption
-            android:id="@+id/optTheme"
+        <com.alex.fakecall.views.SwitchOption
+            android:id="@+id/optVibrate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:leftIcon="@drawable/ic_menu_phone"
-            app:optText="@string/lb_phone_ui"
-            app:valueText="@string/lb_not_set" />
+            app:leftIcon="@drawable/ic_menu_vibrate"
+            app:optText="@string/lb_vibrate"
+            app:valueOnChecked="@string/lb_on"
+            app:valueOnNoChecked="@string/lb_off" />
     </LinearLayout>
-
 </merge>

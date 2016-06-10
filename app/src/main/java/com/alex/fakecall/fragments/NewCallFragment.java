@@ -1,27 +1,26 @@
 package com.alex.fakecall.fragments;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.widget.PopupMenu;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.alex.fakecall.R;
+import com.alex.fakecall.activities.MoreCallSettingsActivity;
 import com.alex.fakecall.activities.ScheduledActivity;
 import com.alex.fakecall.activities.ThemeSelectActivity;
 import com.alex.fakecall.helper.AlarmHelper;
 import com.alex.fakecall.helper.Converter;
 import com.alex.fakecall.helper.DatabaseHelper;
 import com.alex.fakecall.helper.DialogHelper;
-import com.alex.fakecall.helper.RingtoneHelper;
 import com.alex.fakecall.helper.SimpleTextWatcher;
 import com.alex.fakecall.models.Call;
 import com.alex.fakecall.models.Theme;
@@ -29,7 +28,6 @@ import com.alex.fakecall.views.DateTimePickerDialog;
 import com.alex.fakecall.views.TwoLineTextOption;
 
 import java.util.Calendar;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -50,11 +48,9 @@ public class NewCallFragment extends BaseFragment {
     @BindView(R.id.optTheme)
     TwoLineTextOption optTheme;
 
-    @BindView(R.id.optRingtone)
-    TwoLineTextOption optRingtone;
-
     private static final int REQUEST_THEME = 1;
     private static final int REQUEST_PICK_CONTACT = 2;
+    private static final int REQUEST_MORE_SETTINGS = 3;
 
     private long tmpSelectedTime;
     private boolean isCalendar;
@@ -77,12 +73,13 @@ public class NewCallFragment extends BaseFragment {
     @Override
     protected void onSetUp() {
         mCall = (Call) getArguments().getSerializable(Call.KEY);
-        isEdit = getArguments().getBoolean("isEdit", false);
-
-        if (mCall == null)
-            mCall = DatabaseHelper.getInstance().getLastSavedCall();
-
+        if (mCall == null) {
+            mCall = new Call();
+        }
+        mCall.setId(null);
         mCall.setAlarmed(false);
+
+        isEdit = getArguments().getBoolean("isEdit", false);
 
         displayCallInfo();
 
@@ -101,21 +98,23 @@ public class NewCallFragment extends BaseFragment {
         });
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (!isEdit)
-            mCall.setId(null);
-    }
-
     private void displayCallInfo() {
         edtCallerName.setText(mCall.getName());
         edtCallerNumber.setText(mCall.getNumber());
+        if (mCall.getTheme() != null)
+            optTheme.setValue(mCall.getTheme().getName());
+    }
+
+    @OnClick(R.id.tvMoreSetting)
+    void openOptionalSettings() {
+        Intent intent = new Intent(getContext(), MoreCallSettingsActivity.class);
+        intent.putExtra(Call.KEY, mCall);
+        startActivityForResult(intent, REQUEST_MORE_SETTINGS);
     }
 
     @OnClick(R.id.callerPhoto)
     void onChangeCaller(View v) {
-        DialogHelper.showPopupMenu(getContext(), v, R.menu.mn_change_caller, new PopupMenu.OnMenuItemClickListener() {
+        DialogHelper.showPopupMenu(getContext(), v, R.menu.mn_change_caller, Gravity.LEFT, new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 final int id = item.getItemId();
@@ -197,55 +196,27 @@ public class NewCallFragment extends BaseFragment {
         startActivityForResult(intent, REQUEST_THEME);
     }
 
-    @OnClick(R.id.optRingtone)
-    void onChooseRingtone() {
-        final List<RingtoneHelper.Ringtone> list = RingtoneHelper.getInstance().getAllRingtone();
-
-        DialogHelper.showSingleChoiceDialog(getContext(), "Ringtone", list, 0,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        int tmpIndex = 0;
-                        RingtoneHelper.Ringtone ringtone;
-
-                        switch (which) {
-                            case DialogInterface.BUTTON_POSITIVE:
-                                ringtone = list.get(tmpIndex);
-                                optRingtone.setValue(ringtone.name);
-                                break;
-                            case DialogInterface.BUTTON_NEGATIVE:
-                                break;
-                            default:
-                                tmpIndex = which;
-                                ringtone = list.get(tmpIndex);
-                                RingtoneHelper.getInstance().playRingtone(ringtone.uri, false);
-                        }
-                    }
-                });
-    }
-
     @OnClick(R.id.btnSave)
     void onSaveCall() {
-        long a = isCalendar ? tmpSelectedTime : System.currentTimeMillis() + tmpSelectedTime;
-
-        mCall.setTime(a);
-
-        long id = DatabaseHelper.getInstance().addCall(mCall);
-        if (id == -1) {
-            Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
-            return;
+        if (isCalendar) {
+            mCall.setTime(tmpSelectedTime);
+        } else {
+            mCall.setTime(System.currentTimeMillis() + tmpSelectedTime);
         }
-        mCall.setId(id);
-        AlarmHelper.getInstance().placeCall(mCall);
+
+        long id = DatabaseHelper.getInstance().addOrUpdateCall(mCall);
+        AlarmHelper.getInstance().scheduleCall(mCall);
 
         if (isEdit) {
-            getActivity().finish();
             AlarmHelper.getInstance().cancelCall(id);
-        } else {
-            mCall.setId(null);
-            Intent intent = new Intent(getContext(), ScheduledActivity.class);
-            startActivity(intent);
+            getActivity().finish();
+            return;
         }
+
+        mCall.setId(null);
+
+        Intent intent = new Intent(getContext(), ScheduledActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -256,7 +227,7 @@ public class NewCallFragment extends BaseFragment {
             case REQUEST_THEME:
                 Theme pui = (Theme) data.getSerializableExtra(Theme.KEY);
                 optTheme.setValue(pui.getName());
-                mCall.setPhoneUI(pui);
+                mCall.setTheme(pui);
                 break;
             case REQUEST_PICK_CONTACT:
                 try {
@@ -281,6 +252,9 @@ public class NewCallFragment extends BaseFragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                break;
+            case REQUEST_MORE_SETTINGS:
+                mCall = (Call) data.getSerializableExtra(Call.KEY);
                 break;
         }
     }

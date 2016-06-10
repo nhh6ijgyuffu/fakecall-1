@@ -9,11 +9,11 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.provider.CallLog;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.view.KeyEvent;
@@ -24,9 +24,9 @@ import android.widget.TextView;
 
 import com.alex.fakecall.R;
 import com.alex.fakecall.activities.BaseActivity;
+import com.alex.fakecall.helper.CallLogHelper;
 import com.alex.fakecall.helper.ResourceHelper;
 import com.alex.fakecall.helper.RingtoneHelper;
-import com.alex.fakecall.helper.CallLogHelper;
 import com.alex.fakecall.helper.VibrationHelper;
 import com.alex.fakecall.helper.WakeupHelper;
 import com.alex.fakecall.models.Call;
@@ -124,8 +124,12 @@ public abstract class BaseThemeActivity extends BaseActivity implements SensorEv
         configureForInComing();
         mHandler.sendEmptyMessageDelayed(MyHandler.HANDLE_MSG_MISSED, MAX_TIME_TO_MISSED_CALL);
 
-        RingtoneHelper.getInstance().playRingtone(Settings.System.DEFAULT_RINGTONE_URI, true);
-        VibrationHelper.getInstance().vibrate(true);
+        RingtoneHelper.getInstance().playRingtone(Uri.parse(mCall.getRingtoneStr()), true);
+
+        if (mCall.isVibrate()) {
+            VibrationHelper.getInstance().vibrate(true);
+        }
+
         WakeupHelper.getInstance().wakeUp();
     }
 

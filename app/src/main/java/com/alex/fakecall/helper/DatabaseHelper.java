@@ -101,7 +101,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return list;
     }
 
-    public long addCall(Call call) {
+    public long addOrUpdateCall(Call call) {
         SQLiteDatabase db = getWritableDatabase();
 
         Long id = call.getId();
@@ -119,6 +119,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.update(TABLE_CALL, cv, KEY_ID + " = ?",
                     new String[]{String.valueOf(id)});
         }
+        call.setId(id);
+
         db.close();
         return id;
     }

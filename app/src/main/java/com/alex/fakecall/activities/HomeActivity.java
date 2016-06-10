@@ -3,15 +3,13 @@ package com.alex.fakecall.activities;
 
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.alex.fakecall.R;
+import com.alex.fakecall.adapters.TabViewPagerAdapter;
 import com.alex.fakecall.fragments.NewCallFragment;
 import com.alex.fakecall.fragments.NewSMSFragment;
 import com.alex.fakecall.helper.DatabaseHelper;
@@ -19,9 +17,6 @@ import com.alex.fakecall.models.Call;
 import com.alex.fakecall.views.BadgeView;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -34,37 +29,6 @@ public class HomeActivity extends BaseActivity {
 
     private BadgeView mnItemScheduled;
 
-    static class ViewPagerAdapter extends FragmentStatePagerAdapter {
-        List<Fragment> listFrags;
-        List<String> listTitles;
-
-        public ViewPagerAdapter(FragmentManager fm) {
-            super(fm);
-            listFrags = new ArrayList<>();
-            listTitles = new ArrayList<>();
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return listFrags.get(position);
-        }
-
-        public void addTab(String title, Fragment fragment) {
-            listFrags.add(fragment);
-            listTitles.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return listTitles.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return Math.min(listFrags.size(), listTitles.size());
-        }
-    }
-
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_home;
@@ -75,7 +39,23 @@ public class HomeActivity extends BaseActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         }
-        setUpViewPager();
+
+        TabViewPagerAdapter adapter = new TabViewPagerAdapter(getSupportFragmentManager());
+
+        Call call = DatabaseHelper.getInstance().getLastSavedCall();
+
+        adapter.addTab("New Call", NewCallFragment.newInstance(call, false));
+        adapter.addTab("New SMS", new NewSMSFragment());
+
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
+
+        int[] tabIcons = new int[]{R.drawable.ic_tab_new_call, R.drawable.ic_tab_new_sms};
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+            TabLayout.Tab tab = tabLayout.getTabAt(i);
+            if (tab != null)
+                tab.setIcon(tabIcons[i]);
+        }
     }
 
     @Override
@@ -104,17 +84,6 @@ public class HomeActivity extends BaseActivity {
         YoYo.with(Techniques.Tada).duration(500).playOn(mnItemScheduled);
         int totalSize = DatabaseHelper.getInstance().getAllPendingCalls().size();
         mnItemScheduled.setCounter(totalSize);
-    }
-
-    void setUpViewPager() {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-
-        Call lastCall = DatabaseHelper.getInstance().getLastSavedCall();
-        adapter.addTab("New Call", NewCallFragment.newInstance(lastCall, false));
-        adapter.addTab("New SMS", new NewSMSFragment());
-
-        viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
     }
 
     @Override

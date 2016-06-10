@@ -38,6 +38,10 @@
             android:label="@string/lb_scheduled" />
 
         <activity
+            android:name=".activities.MoreCallSettingsActivity"
+            android:label="@string/lb_optional_settings" />
+
+        <activity
             android:name=".themes.Android6xActivity"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance" />

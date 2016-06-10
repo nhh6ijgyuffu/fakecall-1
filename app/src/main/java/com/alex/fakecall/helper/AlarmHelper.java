@@ -23,7 +23,7 @@ public class AlarmHelper {
         return mInstance;
     }
 
-    public void placeCall(Call call) {
+    public void scheduleCall(Call call) {
         if (mAlarmManager == null) {
             mAlarmManager = (AlarmManager) App.getInstance().getSystemService(Context.ALARM_SERVICE);
         }
