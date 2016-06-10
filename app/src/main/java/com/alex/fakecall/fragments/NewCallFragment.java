@@ -7,16 +7,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.widget.PopupMenu;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.alex.fakecall.R;
 import com.alex.fakecall.activities.MoreCallSettingsActivity;
 import com.alex.fakecall.activities.ScheduledActivity;
-import com.alex.fakecall.activities.ThemeSelectActivity;
+import com.alex.fakecall.activities.ChooseThemeActivity;
 import com.alex.fakecall.helper.AlarmHelper;
 import com.alex.fakecall.helper.Converter;
 import com.alex.fakecall.helper.DatabaseHelper;
@@ -48,19 +48,23 @@ public class NewCallFragment extends BaseFragment {
     @BindView(R.id.optTheme)
     TwoLineTextOption optTheme;
 
+    @BindView(R.id.callerPhoto)
+    ImageView callerPhoto;
+
     private static final int REQUEST_THEME = 1;
     private static final int REQUEST_PICK_CONTACT = 2;
     private static final int REQUEST_MORE_SETTINGS = 3;
 
     private long tmpSelectedTime;
     private boolean isCalendar;
+
     private boolean isEdit;
 
     public static NewCallFragment newInstance(Call call, boolean isEdit) {
         NewCallFragment frag = new NewCallFragment();
         Bundle args = new Bundle();
         args.putBoolean("isEdit", isEdit);
-        args.putSerializable(Call.KEY, call);
+        args.putParcelable(Call.KEY, call);
         frag.setArguments(args);
         return frag;
     }
@@ -76,7 +80,6 @@ public class NewCallFragment extends BaseFragment {
         if (mCall == null) {
             mCall = new Call();
         }
-        mCall.setId(null);
         mCall.setAlarmed(false);
 
         isEdit = getArguments().getBoolean("isEdit", false);
@@ -105,7 +108,7 @@ public class NewCallFragment extends BaseFragment {
             optTheme.setValue(mCall.getTheme().getName());
     }
 
-    @OnClick(R.id.tvMoreSetting)
+    @OnClick(R.id.optMore)
     void openOptionalSettings() {
         Intent intent = new Intent(getContext(), MoreCallSettingsActivity.class);
         intent.putExtra(Call.KEY, mCall);
@@ -114,7 +117,7 @@ public class NewCallFragment extends BaseFragment {
 
     @OnClick(R.id.callerPhoto)
     void onChangeCaller(View v) {
-        DialogHelper.showPopupMenu(getContext(), v, R.menu.mn_change_caller, Gravity.LEFT, new PopupMenu.OnMenuItemClickListener() {
+        DialogHelper.showPopupMenu(getContext(), v, R.menu.menu_change_caller, Gravity.LEFT, new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 final int id = item.getItemId();
@@ -140,7 +143,7 @@ public class NewCallFragment extends BaseFragment {
 
     @OnClick(R.id.optTime)
     void onSelectTime(View v) {
-        DialogHelper.showPopupMenu(getContext(), v, R.menu.mn_select_time, Gravity.RIGHT,
+        DialogHelper.showPopupMenu(getContext(), v, R.menu.menu_select_time, Gravity.RIGHT,
                 new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
@@ -192,7 +195,7 @@ public class NewCallFragment extends BaseFragment {
 
     @OnClick(R.id.optTheme)
     void onBtnPhoneUI() {
-        Intent intent = new Intent(getContext(), ThemeSelectActivity.class);
+        Intent intent = new Intent(getContext(), ChooseThemeActivity.class);
         startActivityForResult(intent, REQUEST_THEME);
     }
 
@@ -204,19 +207,23 @@ public class NewCallFragment extends BaseFragment {
             mCall.setTime(System.currentTimeMillis() + tmpSelectedTime);
         }
 
-        long id = DatabaseHelper.getInstance().addOrUpdateCall(mCall);
-        AlarmHelper.getInstance().scheduleCall(mCall);
-
         if (isEdit) {
-            AlarmHelper.getInstance().cancelCall(id);
-            getActivity().finish();
-            return;
+            int num = DatabaseHelper.getInstance().updateCall(mCall);
+            if (num == 1) {
+                long id = mCall.getId();
+                AlarmHelper.getInstance().cancelCall((int) id);
+                AlarmHelper.getInstance().scheduleCall((int) id, mCall);
+                getActivity().finish();
+            }
+        } else {
+            long id = DatabaseHelper.getInstance().addCall(mCall);
+            if (id != -1) {
+                mCall.setId(id);
+                AlarmHelper.getInstance().scheduleCall((int) id, mCall);
+                Intent intent = new Intent(getContext(), ScheduledActivity.class);
+                startActivity(intent);
+            }
         }
-
-        mCall.setId(null);
-
-        Intent intent = new Intent(getContext(), ScheduledActivity.class);
-        startActivity(intent);
     }
 
     @Override
@@ -225,7 +232,7 @@ public class NewCallFragment extends BaseFragment {
         if (resultCode != Activity.RESULT_OK) return;
         switch (requestCode) {
             case REQUEST_THEME:
-                Theme pui = (Theme) data.getSerializableExtra(Theme.KEY);
+                Theme pui = data.getParcelableExtra(Theme.KEY);
                 optTheme.setValue(pui.getName());
                 mCall.setTheme(pui);
                 break;
@@ -234,7 +241,7 @@ public class NewCallFragment extends BaseFragment {
                     Uri contactData = data.getData();
 
                     String[] projections = new String[]{ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
-                            ContactsContract.CommonDataKinds.Phone.NUMBER};
+                            ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.CommonDataKinds.Phone.PHOTO_URI};
 
                     Cursor cursor = getContext().getContentResolver()
                             .query(contactData, projections, null, null, null);
@@ -244,9 +251,14 @@ public class NewCallFragment extends BaseFragment {
 
                     String name = cursor.getString(0);
                     String phoneNo = cursor.getString(1);
+                    String photoUri = cursor.getString(2);
 
                     edtCallerName.setText(name);
                     edtCallerNumber.setText(phoneNo);
+
+                    Uri uri = Uri.parse(photoUri);
+                    callerPhoto.setImageURI(uri);
+                    mCall.setPhotoUri(uri);
 
                     cursor.close();
                 } catch (Exception e) {
@@ -254,7 +266,7 @@ public class NewCallFragment extends BaseFragment {
                 }
                 break;
             case REQUEST_MORE_SETTINGS:
-                mCall = (Call) data.getSerializableExtra(Call.KEY);
+                mCall = data.getParcelableExtra(Call.KEY);
                 break;
         }
     }

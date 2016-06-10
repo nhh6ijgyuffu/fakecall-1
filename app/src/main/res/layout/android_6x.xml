@@ -110,13 +110,13 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/ivCallerPicture"
+                android:id="@+id/ivCallerPhoto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
                 android:contentDescription="@null"
                 android:scaleType="centerCrop"
-                android:src="@drawable/avatar" />
+                android:src="@drawable/android_50x_img_no_image" />
 
             <ImageView
                 android:id="@+id/btnEndCall"

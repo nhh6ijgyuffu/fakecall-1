@@ -101,10 +101,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return list;
     }
 
-    public long addOrUpdateCall(Call call) {
+    public long addCall(Call call) {
         SQLiteDatabase db = getWritableDatabase();
+        long id;
 
-        Long id = call.getId();
+        ContentValues cv = new ContentValues();
+        cv.put(KEY_NAME, call.getName());
+        cv.put(KEY_NUMBER, call.getNumber());
+        cv.put(KEY_IS_ALARMED, call.isAlarmed() ? 1 : 0);
+        cv.put(KEY_TIME, call.getTime());
+        cv.put(KEY_CREATION_TIME, System.currentTimeMillis());
+
+        id = db.insert(TABLE_CALL, null, cv);
+        db.close();
+
+        return id;
+    }
+
+    public int updateCall(Call call) {
+        SQLiteDatabase db = getWritableDatabase();
+        int a;
 
         ContentValues cv = new ContentValues();
         cv.put(KEY_NAME, call.getName());
@@ -112,17 +128,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(KEY_IS_ALARMED, call.isAlarmed() ? 1 : 0);
         cv.put(KEY_TIME, call.getTime());
 
-        if (id == null) {
-            cv.put(KEY_CREATION_TIME, System.currentTimeMillis());
-            id = db.insert(TABLE_CALL, null, cv);
-        } else {
-            db.update(TABLE_CALL, cv, KEY_ID + " = ?",
-                    new String[]{String.valueOf(id)});
-        }
-        call.setId(id);
-
+        a = db.update(TABLE_CALL, cv, KEY_ID + " = ?",
+                new String[]{String.valueOf(call.getId())});
         db.close();
-        return id;
+        return a;
     }
 
     public Call getLastSavedCall() {

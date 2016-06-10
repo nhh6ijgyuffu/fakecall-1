@@ -2,7 +2,6 @@ package com.alex.fakecall.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.AdapterView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,17 +33,16 @@ public abstract class BaseRecyclerViewAdapter<T, VH extends BaseRecyclerViewVH<T
         notifyDataSetChanged();
     }
 
-    public List<T> getListItem() {
-        List<T> list = new ArrayList<>();
-        for (T item : listItem) {
-            if (item != null) list.add(item);
-        }
-        return list;
+    public void removeItem(int pos) {
+        this.listItem.remove(pos);
+        notifyDataSetChanged();
     }
 
-    public void clearList() {
-        listItem.clear();
-        notifyDataSetChanged();
+    //Animation when searching...
+    public void animateTo(List<T> listItem) {
+        applyAndAnimateRemovals(listItem);
+        applyAndAnimateAdditions(listItem);
+        applyAndAnimateMovedItems(listItem);
     }
 
     public void addItem(T item, int pos) {
@@ -52,16 +50,7 @@ public abstract class BaseRecyclerViewAdapter<T, VH extends BaseRecyclerViewVH<T
         notifyItemInserted(pos);
     }
 
-    public void addItem(T item) {
-        addItem(item, listItem.size());
-    }
-
-    public void addItems(List<T> list) {
-        listItem.addAll(list);
-        notifyItemRangeInserted(listItem.size(), list.size());
-    }
-
-    public T removeItem(int pos) {
+    public T removeItem_(int pos) {
         final T item = listItem.remove(pos);
         notifyItemRemoved(pos);
         return item;
@@ -73,17 +62,11 @@ public abstract class BaseRecyclerViewAdapter<T, VH extends BaseRecyclerViewVH<T
         notifyItemMoved(from, to);
     }
 
-    public void animateTo(List<T> listItem) {
-        applyAndAnimateRemovals(listItem);
-        applyAndAnimateAdditions(listItem);
-        applyAndAnimateMovedItems(listItem);
-    }
-
     private void applyAndAnimateRemovals(List<T> newList) {
         for (int i = listItem.size() - 1; i >= 0; i--) {
             final T item = listItem.get(i);
             if (!newList.contains(item)) {
-                removeItem(i);
+                removeItem_(i);
             }
         }
     }
@@ -106,6 +89,7 @@ public abstract class BaseRecyclerViewAdapter<T, VH extends BaseRecyclerViewVH<T
             }
         }
     }
+    //End - Animation when searching...
 
     public T getItem(int position) {
         if (position < 0 || position >= listItem.size()) return null;

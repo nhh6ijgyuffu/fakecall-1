@@ -9,7 +9,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
-import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
@@ -25,8 +24,8 @@ import android.widget.TextView;
 import com.alex.fakecall.R;
 import com.alex.fakecall.activities.BaseActivity;
 import com.alex.fakecall.helper.CallLogHelper;
-import com.alex.fakecall.helper.ResourceHelper;
-import com.alex.fakecall.helper.RingtoneHelper;
+import com.alex.fakecall.helper.Utils;
+import com.alex.fakecall.helper.AudioHelper;
 import com.alex.fakecall.helper.VibrationHelper;
 import com.alex.fakecall.helper.WakeupHelper;
 import com.alex.fakecall.models.Call;
@@ -102,7 +101,7 @@ public abstract class BaseThemeActivity extends BaseActivity implements SensorEv
 
     @Override
     protected void onSetUp() {
-        mCall = (Call) getIntent().getSerializableExtra(Call.KEY);
+        mCall = getIntent().getParcelableExtra(Call.KEY);
         if (mCall != null) {
             if (tvName != null)
                 tvName.setText(mCall.getDisplayName());
@@ -124,7 +123,7 @@ public abstract class BaseThemeActivity extends BaseActivity implements SensorEv
         configureForInComing();
         mHandler.sendEmptyMessageDelayed(MyHandler.HANDLE_MSG_MISSED, MAX_TIME_TO_MISSED_CALL);
 
-        RingtoneHelper.getInstance().playRingtone(Uri.parse(mCall.getRingtoneStr()), true);
+        AudioHelper.getInstance().startPlaying(mCall.getRingtone(), true);
 
         if (mCall.isVibrate()) {
             VibrationHelper.getInstance().vibrate(true);
@@ -149,13 +148,20 @@ public abstract class BaseThemeActivity extends BaseActivity implements SensorEv
         isInCall = true;
         configureForInCall();
         mHandler.removeMessages(MyHandler.HANDLE_MSG_MISSED);
+
+        long callDuration = mCall.getCallDuration();
+
+        if(callDuration != 0){
+            mHandler.sendEmptyMessageDelayed(MyHandler.HANDLE_MSG_END_CALL, callDuration);
+        }
+
         mAudioManager.setMode(AudioManager.MODE_IN_CALL);
         mAudioManager.setSpeakerphoneOn(false);
 
         chronometer.setBase(SystemClock.elapsedRealtime());
         chronometer.start();
 
-        RingtoneHelper.getInstance().stopRingtone();
+        AudioHelper.getInstance().stopPlaying();
         VibrationHelper.getInstance().cancelAll();
     }
 
@@ -182,7 +188,7 @@ public abstract class BaseThemeActivity extends BaseActivity implements SensorEv
         intent.setFlags(805306368);
         intent.setType(CallLog.Calls.CONTENT_TYPE);
 
-        Bitmap bm = ResourceHelper.decodeResource(this, R.drawable.avatar);
+        Bitmap bm = Utils.decodeResource(this, R.drawable.avatar);
         if (bm != null)
             builder.setLargeIcon(bm);
 
@@ -220,7 +226,7 @@ public abstract class BaseThemeActivity extends BaseActivity implements SensorEv
         mNotifyManager.cancel(NOTIFY_ID_INCOMING);
         mNotifyManager.cancel(NOTIFY_ID_ONGOING);
         mAudioManager.setMode(AudioManager.MODE_NORMAL);
-        RingtoneHelper.getInstance().stopRingtone();
+        AudioHelper.getInstance().stopPlaying();
         VibrationHelper.getInstance().cancelAll();
         WakeupHelper.getInstance().reset();
     }
@@ -259,7 +265,7 @@ public abstract class BaseThemeActivity extends BaseActivity implements SensorEv
 
         builder.setSmallIcon(R.drawable.ic_notification_small);
 
-        Bitmap bm = ResourceHelper.decodeResource(this, R.drawable.avatar);
+        Bitmap bm = Utils.decodeResource(this, R.drawable.avatar);
         if (bm != null)
             builder.setLargeIcon(bm);
     }

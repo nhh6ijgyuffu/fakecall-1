@@ -3,26 +3,75 @@ package com.alex.fakecall.models;
 
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-import java.io.Serializable;
-
-public class Call implements Serializable {
+public class Call implements Parcelable {
     public static final String KEY = Call.class.getSimpleName();
-
-    private Long id;
+    private long id;
     private String name;
     private String number;
-    private Long time;
+    private long time;
     private Theme theme;
     private boolean isAlarmed;
-    private String ringtoneStr;
+    private Uri ringtoneUri;
     private boolean vibrate;
+    private Uri photoUri;
+    private long callDuration;
 
-    public Long getId() {
+    public Call(){}
+
+    //Parcelable
+    public static final Creator<Call> CREATOR = new Creator<Call>() {
+        @Override
+        public Call createFromParcel(Parcel in) {
+            return new Call(in);
+        }
+
+        @Override
+        public Call[] newArray(int size) {
+            return new Call[size];
+        }
+    };
+
+    private Call(Parcel in) {
+        id = in.readLong();
+        name = in.readString();
+        number = in.readString();
+        time = in.readLong();
+        theme = in.readParcelable(Theme.class.getClassLoader());
+        isAlarmed = in.readInt() == 1;
+        ringtoneUri = in.readParcelable(Uri.class.getClassLoader());
+        vibrate = in.readInt() == 1;
+        photoUri = in.readParcelable(Uri.class.getClassLoader());
+        callDuration = in.readLong();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(name);
+        dest.writeString(number);
+        dest.writeLong(time);
+        dest.writeParcelable(theme, flags);
+        dest.writeInt(isAlarmed ? 1 : 0);
+        dest.writeParcelable(ringtoneUri, flags);
+        dest.writeInt(vibrate ? 1 : 0);
+        dest.writeParcelable(photoUri, flags);
+        dest.writeLong(callDuration);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    //getter and setter
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -50,11 +99,11 @@ public class Call implements Serializable {
         this.theme = theme;
     }
 
-    public Long getTime() {
+    public long getTime() {
         return time;
     }
 
-    public void setTime(Long time) {
+    public void setTime(long time) {
         this.time = time;
     }
 
@@ -73,16 +122,15 @@ public class Call implements Serializable {
         return name;
     }
 
-    public String getRingtoneStr() {
-        if (ringtoneStr == null) {
-            Uri defaultUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
-            setRingtoneStr(defaultUri.toString());
+    public Uri getRingtone() {
+        if (ringtoneUri == null) {
+            ringtoneUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
         }
-        return ringtoneStr;
+        return ringtoneUri;
     }
 
-    public void setRingtoneStr(String ringtone) {
-        this.ringtoneStr = ringtone;
+    public void setRingtone(Uri ringtone) {
+        this.ringtoneUri = ringtone;
     }
 
     public boolean isVibrate() {
@@ -93,17 +141,19 @@ public class Call implements Serializable {
         this.vibrate = vibrate;
     }
 
+    public Uri getPhotoUri() {
+        return photoUri;
+    }
 
-    @Override
-    public String toString() {
-        return "Call{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", number='" + number + '\'' +
-                ", time=" + time +
-                ", theme=" + theme +
-                ", isAlarmed=" + isAlarmed +
-                ", ringtoneStr='" + ringtoneStr + '\'' +
-                '}';
+    public void setPhotoUri(Uri photoUri) {
+        this.photoUri = photoUri;
+    }
+
+    public long getCallDuration() {
+        return callDuration;
+    }
+
+    public void setCallDuration(long callDuration) {
+        this.callDuration = callDuration;
     }
 }

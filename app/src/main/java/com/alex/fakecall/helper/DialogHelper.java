@@ -1,8 +1,10 @@
 package com.alex.fakecall.helper;
 
 
+import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
+import android.content.DialogInterface.OnDismissListener;
 import android.support.annotation.MenuRes;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -17,15 +19,17 @@ import java.util.List;
 
 public class DialogHelper {
 
-    public static <T> void showSingleChoiceDialog(Context context, CharSequence title, List<T> list, int checkedPos,
-                                                  DialogInterface.OnClickListener onClickListener) {
+    public static <T> Dialog createSingleChoiceDialog(Context context, String title, List<T> list, int checkedPos,
+                                                      OnClickListener onClickListener, OnDismissListener dismissListener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         ArrayAdapter<T> arrayAdapter = new ArrayAdapter<>(context, R.layout.single_list_dialog_item, list);
         builder.setTitle(title);
         builder.setPositiveButton("OK", onClickListener);
-        builder.setNegativeButton("Cancel", onClickListener);
+        builder.setNegativeButton("Cancel", null);
         builder.setSingleChoiceItems(arrayAdapter, checkedPos, onClickListener);
+        builder.setOnDismissListener(dismissListener);
         builder.show();
+        return builder.create();
     }
 
     public static void showPopupMenu(Context context, View anchor, @MenuRes int menuRes,

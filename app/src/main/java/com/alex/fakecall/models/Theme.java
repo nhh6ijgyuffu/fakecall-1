@@ -1,8 +1,9 @@
 package com.alex.fakecall.models;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class Theme implements Serializable {
+public class Theme implements Parcelable {
     public static final String KEY = Theme.class.getSimpleName();
 
     private String name;
@@ -11,12 +12,46 @@ public class Theme implements Serializable {
     private int inCallRes;
 
     public Theme(String name, int incomingRes, int inCallRes, Class<?> incoming_class) {
-        this.incomingRes = incomingRes;
-        this.inCallRes = inCallRes;
         this.name = name;
         this.incoming_class = incoming_class;
+        this.incomingRes = incomingRes;
+        this.inCallRes = inCallRes;
     }
 
+    //Parcelable
+    private Theme(Parcel in) {
+        name = in.readString();
+        incoming_class = (Class<?>) in.readSerializable();
+        incomingRes = in.readInt();
+        inCallRes = in.readInt();
+    }
+
+    public static final Creator<Theme> CREATOR = new Creator<Theme>() {
+        @Override
+        public Theme createFromParcel(Parcel in) {
+            return new Theme(in);
+        }
+
+        @Override
+        public Theme[] newArray(int size) {
+            return new Theme[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeInt(incomingRes);
+        dest.writeInt(inCallRes);
+        dest.writeSerializable(incoming_class);
+    }
+
+    //Getter and Setter
     public String getName() {
         return name;
     }
@@ -48,4 +83,6 @@ public class Theme implements Serializable {
     public void setInCallRes(int inCallRes) {
         this.inCallRes = inCallRes;
     }
+
+
 }

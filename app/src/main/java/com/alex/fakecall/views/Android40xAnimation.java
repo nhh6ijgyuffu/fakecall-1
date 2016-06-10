@@ -11,7 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.alex.fakecall.R;
-import com.alex.fakecall.helper.ResourceHelper;
+import com.alex.fakecall.helper.Utils;
 
 
 public class Android40xAnimation extends View implements Runnable{
@@ -51,17 +51,17 @@ public class Android40xAnimation extends View implements Runnable{
         mPaint = new Paint();
 
         animFrames = new Bitmap[5];
-        animFrames[0] = ResourceHelper.decodeResource(getContext(), R.drawable.android_40x_anim_0);
-        animFrames[1] = ResourceHelper.decodeResource(getContext(), R.drawable.android_40x_anim_1);
-        animFrames[2] = ResourceHelper.decodeResource(getContext(), R.drawable.android_40x_anim_2);
-        animFrames[3] = ResourceHelper.decodeResource(getContext(), R.drawable.android_40x_anim_3);
-        animFrames[4] = ResourceHelper.decodeResource(getContext(), R.drawable.android_40x_anim_4);
+        animFrames[0] = Utils.decodeResource(getContext(), R.drawable.android_40x_anim_0);
+        animFrames[1] = Utils.decodeResource(getContext(), R.drawable.android_40x_anim_1);
+        animFrames[2] = Utils.decodeResource(getContext(), R.drawable.android_40x_anim_2);
+        animFrames[3] = Utils.decodeResource(getContext(), R.drawable.android_40x_anim_3);
+        animFrames[4] = Utils.decodeResource(getContext(), R.drawable.android_40x_anim_4);
 
-        icTouchHandle = ResourceHelper.decodeResource(getContext(), R.drawable.android_44x_ic_in_call_touch_handle_normal);
-        icDecline = ResourceHelper.decodeResource(context, R.drawable.android_44x_ic_lockscreen_decline_normal);
-        icAnswer = ResourceHelper.decodeResource(context, R.drawable.android_44x_ic_lockscreen_answer_normal);
-        icText = ResourceHelper.decodeResource(context, R.drawable.android_44x_ic_text_holo_dark);
-        icAnimHandle = ResourceHelper.decodeResource(context, R.drawable.android_40x_ic_lockscreen_handle_pressed);
+        icTouchHandle = Utils.decodeResource(getContext(), R.drawable.android_44x_ic_in_call_touch_handle_normal);
+        icDecline = Utils.decodeResource(context, R.drawable.android_44x_ic_lockscreen_decline_normal);
+        icAnswer = Utils.decodeResource(context, R.drawable.android_44x_ic_lockscreen_answer_normal);
+        icText = Utils.decodeResource(context, R.drawable.android_44x_ic_text_holo_dark);
+        icAnimHandle = Utils.decodeResource(context, R.drawable.android_40x_ic_lockscreen_handle_pressed);
 
         density = getResources().getDisplayMetrics().density;
     }

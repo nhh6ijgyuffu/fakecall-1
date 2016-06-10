@@ -7,6 +7,12 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="21"/>
 
     <application
         android:name=".App"
@@ -30,7 +36,7 @@
             android:label="@string/edit_call" />
 
         <activity
-            android:name=".activities.ThemeSelectActivity"
+            android:name=".activities.ChooseThemeActivity"
             android:label="@string/choose_theme" />
 
         <activity
@@ -39,15 +45,10 @@
 
         <activity
             android:name=".activities.MoreCallSettingsActivity"
-            android:label="@string/lb_optional_settings" />
+            android:label="@string/lb_more_setting" />
 
         <activity
             android:name=".themes.Android6xActivity"
-            android:excludeFromRecents="true"
-            android:launchMode="singleInstance" />
-
-        <activity
-            android:name=".themes.GalaxyS6Activity"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance" />
 

@@ -54,13 +54,13 @@ public class ListScheduledCallFragment extends BaseFragment {
         mAdapter.setOnItemLongClickListener(new BaseRecyclerViewAdapter.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(View v, final Object item, final int position) {
-                DialogHelper.showPopupMenu(getContext(), v, R.menu.mn_list_item, Gravity.RIGHT, new PopupMenu.OnMenuItemClickListener() {
+                DialogHelper.showPopupMenu(getContext(), v, R.menu.menu_list_item, Gravity.RIGHT, new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem mn) {
                         switch (mn.getItemId()) {
                             case R.id.action_delete:
                                 Call call = (Call) item;
-                                AlarmHelper.getInstance().cancelCall(call.getId());
+                                AlarmHelper.getInstance().cancelCall((int)call.getId());
                                 DatabaseHelper.getInstance().deleteCall(call.getId());
                                 mAdapter.removeItem(position);
                                 break;

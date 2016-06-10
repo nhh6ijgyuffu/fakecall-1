@@ -1,6 +1,5 @@
 package com.alex.fakecall.adapters;
 
-import android.graphics.Paint;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -55,16 +54,6 @@ public class ScheduledCallsAdapter extends BaseRecyclerViewAdapter<Call, Schedul
             tvName.setText(item.getName());
             tvNumber.setText(item.getNumber());
             tvTime.setText(Converter.millis2String(item.getTime(), " dd MMM yyyy, hh:mm:ss a"));
-
-            if (item.isAlarmed()) {
-                tvName.setPaintFlags(tvName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                tvNumber.setPaintFlags(tvNumber.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                tvTime.setPaintFlags(tvTime.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            } else {
-                tvName.setPaintFlags(tvName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-                tvNumber.setPaintFlags(tvNumber.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-                tvTime.setPaintFlags(tvTime.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-            }
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

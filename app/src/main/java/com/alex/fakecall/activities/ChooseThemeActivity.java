@@ -9,16 +9,15 @@ import android.view.View;
 import com.alex.fakecall.R;
 import com.alex.fakecall.adapters.BaseRecyclerViewAdapter;
 import com.alex.fakecall.adapters.PhoneUIsAdapter;
-import com.alex.fakecall.themes.Android6xActivity;
-import com.alex.fakecall.themes.GalaxyS6Activity;
 import com.alex.fakecall.models.Theme;
+import com.alex.fakecall.themes.Android6xActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 
-public class ThemeSelectActivity extends BaseActivity {
+public class ChooseThemeActivity extends BaseActivity {
     @BindView(R.id.rvListUI)
     RecyclerView rvThemes;
 
@@ -53,11 +52,7 @@ public class ThemeSelectActivity extends BaseActivity {
         Theme android6 = new Theme("Google Android 6.0", R.drawable.android6x_preview_incoming,
                 R.drawable.android6x_preview_incall, Android6xActivity.class);
 
-        Theme gs6 = new Theme("Samsung Galaxy S6 ", R.drawable.android6x_preview_incoming,
-                R.drawable.android6x_preview_incall, GalaxyS6Activity.class);
-
         list.add(android6);
-        list.add(gs6);
         return list;
     }
 

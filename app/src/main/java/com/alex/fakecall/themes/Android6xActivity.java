@@ -2,6 +2,7 @@ package com.alex.fakecall.themes;
 
 
 import android.view.View;
+import android.widget.ImageView;
 
 import com.alex.fakecall.R;
 import com.alex.fakecall.views.Android44xAnimation;
@@ -19,6 +20,9 @@ public class Android6xActivity extends BaseThemeActivity implements CallAnimOnTr
     @BindView(R.id.tvIncoming)
     View tvIncoming;
 
+    @BindView(R.id.ivCallerPhoto)
+    ImageView ivCallerPhoto;
+
     @Override
     protected int getLayoutResource() {
         return R.layout.android_6x;
@@ -30,6 +34,7 @@ public class Android6xActivity extends BaseThemeActivity implements CallAnimOnTr
         callAnimation.setVisibility(View.GONE);
         tvIncoming.setVisibility(View.GONE);
         chronometer.setVisibility(View.VISIBLE);
+        ivCallerPhoto.setImageURI(mCall.getPhotoUri());
         showInCallNotification();
     }
 

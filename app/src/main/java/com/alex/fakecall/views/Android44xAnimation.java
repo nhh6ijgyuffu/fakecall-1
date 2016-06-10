@@ -12,7 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.alex.fakecall.R;
-import com.alex.fakecall.helper.ResourceHelper;
+import com.alex.fakecall.helper.Utils;
 
 public class Android44xAnimation extends View implements Runnable {
     private Paint mPaint;
@@ -53,24 +53,24 @@ public class Android44xAnimation extends View implements Runnable {
         mPaint = new Paint();
 
         animFrames = new Bitmap[10];
-        animFrames[0] = ResourceHelper.decodeResource(context, R.drawable.android_44x_anim_00);
-        animFrames[1] = ResourceHelper.decodeResource(context, R.drawable.android_44x_anim_01);
-        animFrames[2] = ResourceHelper.decodeResource(context, R.drawable.android_44x_anim_02);
-        animFrames[3] = ResourceHelper.decodeResource(context, R.drawable.android_44x_anim_03);
-        animFrames[4] = ResourceHelper.decodeResource(context, R.drawable.android_44x_anim_04);
-        animFrames[5] = ResourceHelper.decodeResource(context, R.drawable.android_44x_anim_05);
-        animFrames[6] = ResourceHelper.decodeResource(context, R.drawable.android_44x_anim_06);
-        animFrames[7] = ResourceHelper.decodeResource(context, R.drawable.android_44x_anim_07);
-        animFrames[8] = ResourceHelper.decodeResource(context, R.drawable.android_44x_anim_08);
-        animFrames[9] = ResourceHelper.decodeResource(context, R.drawable.android_44x_anim_09);
+        animFrames[0] = Utils.decodeResource(context, R.drawable.android_44x_anim_00);
+        animFrames[1] = Utils.decodeResource(context, R.drawable.android_44x_anim_01);
+        animFrames[2] = Utils.decodeResource(context, R.drawable.android_44x_anim_02);
+        animFrames[3] = Utils.decodeResource(context, R.drawable.android_44x_anim_03);
+        animFrames[4] = Utils.decodeResource(context, R.drawable.android_44x_anim_04);
+        animFrames[5] = Utils.decodeResource(context, R.drawable.android_44x_anim_05);
+        animFrames[6] = Utils.decodeResource(context, R.drawable.android_44x_anim_06);
+        animFrames[7] = Utils.decodeResource(context, R.drawable.android_44x_anim_07);
+        animFrames[8] = Utils.decodeResource(context, R.drawable.android_44x_anim_08);
+        animFrames[9] = Utils.decodeResource(context, R.drawable.android_44x_anim_09);
 
-        icTouchHandle = ResourceHelper.decodeResource(context, R.drawable.android_44x_ic_in_call_touch_handle_normal);
-        icDeclineNormal = ResourceHelper.decodeResource(context, R.drawable.android_44x_ic_lockscreen_decline_normal);
-        icDeclineActivated = ResourceHelper.decodeResource(context, R.drawable.android_44x_ic_lockscreen_decline_activated);
-        icAnswerNormal = ResourceHelper.decodeResource(context, R.drawable.android_44x_ic_lockscreen_answer_normal);
-        icAnswerActivated = ResourceHelper.decodeResource(context, R.drawable.android_44x_ic_lockscreen_answer_activated);
-        icText = ResourceHelper.decodeResource(context, R.drawable.android_44x_ic_text_holo_dark);
-        icAnimHandle = ResourceHelper.decodeResource(context, R.drawable.android_44x_anim_handle);
+        icTouchHandle = Utils.decodeResource(context, R.drawable.android_44x_ic_in_call_touch_handle_normal);
+        icDeclineNormal = Utils.decodeResource(context, R.drawable.android_44x_ic_lockscreen_decline_normal);
+        icDeclineActivated = Utils.decodeResource(context, R.drawable.android_44x_ic_lockscreen_decline_activated);
+        icAnswerNormal = Utils.decodeResource(context, R.drawable.android_44x_ic_lockscreen_answer_normal);
+        icAnswerActivated = Utils.decodeResource(context, R.drawable.android_44x_ic_lockscreen_answer_activated);
+        icText = Utils.decodeResource(context, R.drawable.android_44x_ic_text_holo_dark);
+        icAnimHandle = Utils.decodeResource(context, R.drawable.android_44x_anim_handle);
 
         density = getResources().getDisplayMetrics().density;
     }

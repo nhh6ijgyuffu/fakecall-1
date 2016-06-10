@@ -79,6 +79,7 @@ public class HomeActivity extends BaseActivity {
         return true;
     }
 
+
     private void updateCounter() {
         if (mnItemScheduled == null) return;
         YoYo.with(Techniques.Tada).duration(500).playOn(mnItemScheduled);

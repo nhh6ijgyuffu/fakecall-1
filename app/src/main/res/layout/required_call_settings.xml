@@ -22,6 +22,14 @@
             app:leftIcon="@drawable/ic_menu_phone"
             app:optText="@string/lb_phone_ui"
             app:valueText="@string/lb_not_set" />
+
+        <com.alex.fakecall.views.TwoLineTextOption
+            android:id="@+id/optMore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:leftIcon="@drawable/ic_menu_setting"
+            app:optText="@string/lb_more_setting"
+            app:valueText="@string/lb_more_setting_" />
     </LinearLayout>
 
 </merge>

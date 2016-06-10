@@ -24,5 +24,23 @@
             app:optText="@string/lb_vibrate"
             app:valueOnChecked="@string/lb_on"
             app:valueOnNoChecked="@string/lb_off" />
+
+        <com.alex.fakecall.views.TwoLineTextOption
+            android:id="@+id/optCallDuration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:leftIcon="@drawable/ic_menu_call_duration"
+            app:optText="@string/lb_call_duration"
+            app:valueText="@string/lb_not_set" />
+
+        <com.alex.fakecall.views.TwoLineTextOption
+            android:id="@+id/optVoice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:leftIcon="@drawable/ic_menu_voice"
+            app:optText="@string/lb_incall_voice"
+            app:valueText="@string/lb_not_set" />
+
+
     </LinearLayout>
 </merge>
