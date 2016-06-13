@@ -11,10 +11,9 @@
             android:id="@+id/ivLeftIcon"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="16dp"
-            android:contentDescription="@null"
-            android:src="@drawable/ic_menu_timer" />
+            android:layout_marginTop="20dp"
+            android:contentDescription="@null" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,8 +32,8 @@
                 android:id="@+id/tvPrimary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
                 android:text="@string/lb_primary_text"
-                android:textColor="#000"
                 android:textSize="16sp" />
 
             <TextView
@@ -42,19 +41,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/lb_secondary_text"
+                android:textColor="@color/secondary_text"
                 android:textSize="14sp" />
         </LinearLayout>
 
         <ImageView
             android:id="@+id/ivRightIcon"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_alignParentRight="true"
+            android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:layout_marginTop="16dp"
-            android:contentDescription="@null"
-            android:src="@drawable/ic_menu_timer"
-            android:visibility="gone" />
+            android:layout_marginTop="20dp"
+            android:contentDescription="@null" />
 
 
     </RelativeLayout>

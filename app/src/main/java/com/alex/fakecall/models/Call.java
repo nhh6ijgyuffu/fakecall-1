@@ -7,7 +7,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Call implements Parcelable {
-    public static final String KEY = Call.class.getSimpleName();
+    public static final String TAG = Call.class.getSimpleName();
     private long id;
     private String name;
     private String number;
@@ -18,6 +18,7 @@ public class Call implements Parcelable {
     private boolean vibrate;
     private Uri photoUri;
     private long callDuration;
+    private Uri voiceUri;
 
     public Call(){}
 
@@ -45,6 +46,7 @@ public class Call implements Parcelable {
         vibrate = in.readInt() == 1;
         photoUri = in.readParcelable(Uri.class.getClassLoader());
         callDuration = in.readLong();
+        voiceUri = in.readParcelable(Uri.class.getClassLoader());
     }
 
     @Override
@@ -59,6 +61,7 @@ public class Call implements Parcelable {
         dest.writeInt(vibrate ? 1 : 0);
         dest.writeParcelable(photoUri, flags);
         dest.writeLong(callDuration);
+        dest.writeParcelable(voiceUri, flags);
     }
 
     @Override
@@ -122,14 +125,14 @@ public class Call implements Parcelable {
         return name;
     }
 
-    public Uri getRingtone() {
+    public Uri getRingtoneUri() {
         if (ringtoneUri == null) {
             ringtoneUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
         }
         return ringtoneUri;
     }
 
-    public void setRingtone(Uri ringtone) {
+    public void setRingtoneUri(Uri ringtone) {
         this.ringtoneUri = ringtone;
     }
 
@@ -155,5 +158,13 @@ public class Call implements Parcelable {
 
     public void setCallDuration(long callDuration) {
         this.callDuration = callDuration;
+    }
+
+    public Uri getVoiceUri() {
+        return voiceUri;
+    }
+
+    public void setVoiceUri(Uri voiceUri) {
+        this.voiceUri = voiceUri;
     }
 }

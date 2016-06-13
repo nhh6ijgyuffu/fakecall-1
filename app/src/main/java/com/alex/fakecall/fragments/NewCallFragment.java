@@ -14,17 +14,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.alex.fakecall.R;
-import com.alex.fakecall.activities.MoreCallSettingsActivity;
+import com.alex.fakecall.activities.MoreCallSettingActivity;
 import com.alex.fakecall.activities.ScheduledActivity;
 import com.alex.fakecall.activities.ChooseThemeActivity;
-import com.alex.fakecall.helper.AlarmHelper;
-import com.alex.fakecall.helper.Converter;
-import com.alex.fakecall.helper.DatabaseHelper;
-import com.alex.fakecall.helper.DialogHelper;
-import com.alex.fakecall.helper.SimpleTextWatcher;
+import com.alex.fakecall.controllers.AlarmController;
+import com.alex.fakecall.controllers.DatabaseController;
+import com.alex.fakecall.dialogs.DateTimePickerDialog;
 import com.alex.fakecall.models.Call;
 import com.alex.fakecall.models.Theme;
-import com.alex.fakecall.views.DateTimePickerDialog;
+import com.alex.fakecall.utils.DialogUtils;
+import com.alex.fakecall.utils.SimpleTextWatcher;
+import com.alex.fakecall.utils.Utils;
 import com.alex.fakecall.views.TwoLineTextOption;
 
 import java.util.Calendar;
@@ -64,7 +64,7 @@ public class NewCallFragment extends BaseFragment {
         NewCallFragment frag = new NewCallFragment();
         Bundle args = new Bundle();
         args.putBoolean("isEdit", isEdit);
-        args.putParcelable(Call.KEY, call);
+        args.putParcelable(Call.TAG, call);
         frag.setArguments(args);
         return frag;
     }
@@ -76,7 +76,7 @@ public class NewCallFragment extends BaseFragment {
 
     @Override
     protected void onSetUp() {
-        mCall = (Call) getArguments().getSerializable(Call.KEY);
+        mCall = getArguments().getParcelable(Call.TAG);
         if (mCall == null) {
             mCall = new Call();
         }
@@ -110,14 +110,14 @@ public class NewCallFragment extends BaseFragment {
 
     @OnClick(R.id.optMore)
     void openOptionalSettings() {
-        Intent intent = new Intent(getContext(), MoreCallSettingsActivity.class);
-        intent.putExtra(Call.KEY, mCall);
+        Intent intent = new Intent(getContext(), MoreCallSettingActivity.class);
+        intent.putExtra(Call.TAG, mCall);
         startActivityForResult(intent, REQUEST_MORE_SETTINGS);
     }
 
     @OnClick(R.id.callerPhoto)
     void onChangeCaller(View v) {
-        DialogHelper.showPopupMenu(getContext(), v, R.menu.menu_change_caller, Gravity.LEFT, new PopupMenu.OnMenuItemClickListener() {
+        DialogUtils.showPopupMenu(getContext(), v, R.menu.menu_change_caller, Gravity.LEFT, new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 final int id = item.getItemId();
@@ -143,7 +143,7 @@ public class NewCallFragment extends BaseFragment {
 
     @OnClick(R.id.optTime)
     void onSelectTime(View v) {
-        DialogHelper.showPopupMenu(getContext(), v, R.menu.menu_select_time, Gravity.RIGHT,
+        DialogUtils.showPopupMenu(getContext(), v, R.menu.menu_select_time, Gravity.RIGHT,
                 new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
@@ -179,7 +179,7 @@ public class NewCallFragment extends BaseFragment {
                                         new DateTimePickerDialog.OnDateTimeSetListener() {
                                             @Override
                                             public void OnDateTimeSet(Calendar calendar) {
-                                                String value = Converter.calendar2String(calendar, "dd/MM/yyyy HH:mm");
+                                                String value = Utils.calendarToString(calendar, "dd/MM/yyyy HH:mm");
                                                 isCalendar = true;
                                                 optTime.setValue(value);
                                                 tmpSelectedTime = calendar.getTimeInMillis();
@@ -194,8 +194,9 @@ public class NewCallFragment extends BaseFragment {
     }
 
     @OnClick(R.id.optTheme)
-    void onBtnPhoneUI() {
+    void onChooseTheme() {
         Intent intent = new Intent(getContext(), ChooseThemeActivity.class);
+        intent.putExtra(Theme.TAG, mCall.getTheme());
         startActivityForResult(intent, REQUEST_THEME);
     }
 
@@ -208,22 +209,30 @@ public class NewCallFragment extends BaseFragment {
         }
 
         if (isEdit) {
-            int num = DatabaseHelper.getInstance().updateCall(mCall);
+            int num = DatabaseController.getInstance().updateCall(mCall);
             if (num == 1) {
                 long id = mCall.getId();
-                AlarmHelper.getInstance().cancelCall((int) id);
-                AlarmHelper.getInstance().scheduleCall((int) id, mCall);
+                AlarmController.getInstance().cancelCall((int) id);
+                AlarmController.getInstance().scheduleCall((int) id, mCall);
                 getActivity().finish();
             }
         } else {
-            long id = DatabaseHelper.getInstance().addCall(mCall);
+            long id = DatabaseController.getInstance().addCall(mCall);
             if (id != -1) {
                 mCall.setId(id);
-                AlarmHelper.getInstance().scheduleCall((int) id, mCall);
+                AlarmController.getInstance().scheduleCall((int) id, mCall);
                 Intent intent = new Intent(getContext(), ScheduledActivity.class);
                 startActivity(intent);
             }
         }
+    }
+
+    @OnClick(R.id.btnPreview)
+    void onPreviewCall() {
+        Intent intent = new Intent(getContext(), mCall.getTheme().getClazz());
+        intent.putExtra("isPreview", true);
+        intent.putExtra(Call.TAG, mCall);
+        startActivity(intent);
     }
 
     @Override
@@ -231,11 +240,6 @@ public class NewCallFragment extends BaseFragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != Activity.RESULT_OK) return;
         switch (requestCode) {
-            case REQUEST_THEME:
-                Theme pui = data.getParcelableExtra(Theme.KEY);
-                optTheme.setValue(pui.getName());
-                mCall.setTheme(pui);
-                break;
             case REQUEST_PICK_CONTACT:
                 try {
                     Uri contactData = data.getData();
@@ -247,26 +251,33 @@ public class NewCallFragment extends BaseFragment {
                             .query(contactData, projections, null, null, null);
 
                     if (cursor == null) return;
-                    cursor.moveToFirst();
 
-                    String name = cursor.getString(0);
-                    String phoneNo = cursor.getString(1);
-                    String photoUri = cursor.getString(2);
+                    if (cursor.moveToFirst()) {
+                        String name = cursor.getString(0);
+                        String phoneNo = cursor.getString(1);
+                        String photoUri = cursor.getString(2);
 
-                    edtCallerName.setText(name);
-                    edtCallerNumber.setText(phoneNo);
+                        edtCallerName.setText(name);
+                        edtCallerNumber.setText(phoneNo);
 
-                    Uri uri = Uri.parse(photoUri);
-                    callerPhoto.setImageURI(uri);
-                    mCall.setPhotoUri(uri);
-
+                        Uri uri = Uri.parse(photoUri);
+                        callerPhoto.setImageURI(uri);
+                        mCall.setPhotoUri(uri);
+                    }
                     cursor.close();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 break;
+            case REQUEST_THEME:
+                Theme theme = data.getParcelableExtra(Theme.TAG);
+                if (theme != null) {
+                    optTheme.setValue(theme.getName());
+                    mCall.setTheme(theme);
+                }
+                break;
             case REQUEST_MORE_SETTINGS:
-                mCall = data.getParcelableExtra(Call.KEY);
+                mCall = data.getParcelableExtra(Call.TAG);
                 break;
         }
     }

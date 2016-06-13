@@ -12,10 +12,10 @@
 
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="21"/>
+        android:maxSdkVersion="21" />
 
     <application
-        android:name=".App"
+        android:name=".FakeCallApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -32,7 +32,7 @@
         </activity>
 
         <activity
-            android:name=".activities.EditCallActivity"
+            android:name=".activities.NewCallActivity"
             android:label="@string/edit_call" />
 
         <activity
@@ -44,13 +44,17 @@
             android:label="@string/lb_scheduled" />
 
         <activity
-            android:name=".activities.MoreCallSettingsActivity"
+            android:name=".activities.MoreCallSettingActivity"
             android:label="@string/lb_more_setting" />
+
+        <activity
+            android:name=".activities.ChooseVoiceActivity"
+            android:label="@string/lb_choose_voice" />
 
         <activity
             android:name=".themes.Android6xActivity"
             android:excludeFromRecents="true"
-            android:launchMode="singleInstance" />
+            android:launchMode="singleInstance"/>
 
         <receiver android:name=".receivers.FakeCallReceiver">
             <intent-filter>

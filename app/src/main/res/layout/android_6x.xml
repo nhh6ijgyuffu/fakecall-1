@@ -13,7 +13,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
+            android:background="@color/android6x"
             android:orientation="vertical"
             android:padding="20dp">
 
@@ -42,7 +42,7 @@
                 android:textColor="#fff"
                 android:textSize="17sp" />
 
-            <com.alex.fakecall.views.MyChronometer
+            <com.alex.fakecall.views.CountableChronometer
                 android:id="@+id/chronometer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

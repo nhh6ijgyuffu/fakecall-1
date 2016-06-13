@@ -4,7 +4,6 @@ package com.alex.fakecall.activities;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -19,8 +18,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract int getLayoutResource();
 
     protected abstract void onSetUp();
-
-    protected abstract void onCleanUp();
 
     protected Toolbar toolbar;
 
@@ -49,11 +46,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onDestroy() {
-        onCleanUp();
-        super.onDestroy();
-    }
 
     protected void replaceFragment(@IdRes int containerId, Fragment frag, boolean backStack) {
         String tag = frag.getClass().getSimpleName();

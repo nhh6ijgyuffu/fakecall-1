@@ -4,16 +4,16 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Theme implements Parcelable {
-    public static final String KEY = Theme.class.getSimpleName();
+    public static final String TAG = Theme.class.getSimpleName();
 
     private String name;
-    private Class<?> incoming_class;
+    private Class<?> clazz;
     private int incomingRes;
     private int inCallRes;
 
-    public Theme(String name, int incomingRes, int inCallRes, Class<?> incoming_class) {
+    public Theme(String name, Class<?> clazz, int incomingRes, int inCallRes) {
         this.name = name;
-        this.incoming_class = incoming_class;
+        this.clazz = clazz;
         this.incomingRes = incomingRes;
         this.inCallRes = inCallRes;
     }
@@ -21,7 +21,7 @@ public class Theme implements Parcelable {
     //Parcelable
     private Theme(Parcel in) {
         name = in.readString();
-        incoming_class = (Class<?>) in.readSerializable();
+        clazz = (Class<?>) in.readSerializable();
         incomingRes = in.readInt();
         inCallRes = in.readInt();
     }
@@ -31,6 +31,7 @@ public class Theme implements Parcelable {
         public Theme createFromParcel(Parcel in) {
             return new Theme(in);
         }
+
 
         @Override
         public Theme[] newArray(int size) {
@@ -46,9 +47,9 @@ public class Theme implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
+        dest.writeSerializable(clazz);
         dest.writeInt(incomingRes);
         dest.writeInt(inCallRes);
-        dest.writeSerializable(incoming_class);
     }
 
     //Getter and Setter
@@ -60,29 +61,22 @@ public class Theme implements Parcelable {
         this.name = name;
     }
 
-    public Class<?> getIncomingClass() {
-        return incoming_class;
-    }
-
-    public void setIncomingClass(Class<?> incoming_class) {
-        this.incoming_class = incoming_class;
+    public Class<?> getClazz() {
+        return clazz;
     }
 
     public int getIncomingRes() {
         return incomingRes;
     }
 
-    public void setIncomingRes(int incomingRes) {
-        this.incomingRes = incomingRes;
-    }
-
     public int getInCallRes() {
         return inCallRes;
     }
 
-    public void setInCallRes(int inCallRes) {
-        this.inCallRes = inCallRes;
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Theme)) return false;
+        Theme other = (Theme) o;
+        return other.clazz.equals(this.clazz);
     }
-
-
 }

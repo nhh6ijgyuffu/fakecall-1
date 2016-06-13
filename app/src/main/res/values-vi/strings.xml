@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Fake Call &amp; SMS</string>
-    <string name="new_fake_call">Cuộc gọi mới</string>
     <string name="lb_time_to_call">Thời gian gọi</string>
     <string name="default_time_value">Ngay bây giờ</string>
     <string name="time_value_15s">15 giây kể từ bây giờ</string>
@@ -14,10 +13,7 @@
     <string name="lb_caller_name">Tên</string>
     <string name="lb_private_num">Không có số</string>
     <string name="lb_open_contact">Mở danh bạ</string>
-    <string name="lb_hold">GIỮ</string>
-    <string name="lb_reject_call_with_message">Ngắt cuộc gói bằng tin nhắn</string>
     <string name="lb_save">Lưu lại</string>
-    <string name="lb_example_time">20:05</string>
     <string name="lb_caller_info">Người gọi</string>
     <string name="choose_theme">Chọn giao diện</string>
     <string name="lb_scheduled">Kế hoạch</string>
@@ -43,9 +39,15 @@
     <string name="lb_choose_ringtone">Nhạc chuông</string>
     <string name="lb_alarmed">Đã thực hiện</string>
     <string name="lb_pending">Đang chờ</string>
-    <string name="lb_more_setting_">Nhạc chuông, rung…</string>
+    <string name="lb_more_setting_">Nhiều cài đặt hơn</string>
     <string name="lb_call_duration">Thời lượng cuộc gọi</string>
-    <string name="lb_incall_voice">Âm thanh người nói chuyện</string>
-    <string name="lb_record">Ghi âm</string>
-    <string name="lb_choose_file">Chọn tệp âm thanh</string>
+    <string name="lb_in_call_voice">Âm thanh cuộc gọi</string>
+    <string name="lb_tab_all">Tất cả</string>
+    <string name="lb_tab_recorded">Các file ghi âm</string>
+    <string name="lb_choose_voice">Chọn tệp âm thanh</string>
+    <string name="lb_delete">Xóa</string>
+    <string name="lb_delete_all">Xóa hết</string>
+    <string name="lb_cancel">Hủy</string>
+    <string name="lb_ok">Đồng ý</string>
+    <string name="lb_preview">Xem trước</string>
 </resources>

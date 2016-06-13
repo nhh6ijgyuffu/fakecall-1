@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.support.annotation.StringRes;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,6 +25,9 @@ public class TwoLineTextOption extends FrameLayout {
 
     @BindView(R.id.ivLeftIcon)
     ImageView ivIconLeft;
+
+    @BindView(R.id.ivRightIcon)
+    ImageView ivIconRight;
 
     public TwoLineTextOption(Context context) {
         this(context, null);
@@ -49,9 +53,23 @@ public class TwoLineTextOption extends FrameLayout {
 
             int ivLeftRes = a.getResourceId(R.styleable.MyCustomOptView_leftIcon, 0);
             ivIconLeft.setImageResource(ivLeftRes);
+
+            int ivRightRes = a.getResourceId(R.styleable.MyCustomOptView_rightIcon, 0);
+            ivIconRight.setImageResource(ivRightRes);
+
+            boolean showRightIcon = a.getBoolean(R.styleable.MyCustomOptView_showRightIcon, false);
+            ivIconRight.setVisibility(showRightIcon ? VISIBLE : GONE);
         } finally {
             a.recycle();
         }
+    }
+
+    public void setOnRightIconClickListener(View.OnClickListener l){
+        ivIconRight.setOnClickListener(l);
+    }
+
+    public void setRightIconVisibility(int v){
+        ivIconRight.setVisibility(v);
     }
 
     public void setValue(@StringRes int value) {

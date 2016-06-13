@@ -33,8 +33,22 @@ public abstract class BaseRecyclerViewAdapter<T, VH extends BaseRecyclerViewVH<T
         notifyDataSetChanged();
     }
 
+    public List<T> getList(){
+        return listItem;
+    }
+
     public void removeItem(int pos) {
         this.listItem.remove(pos);
+        notifyDataSetChanged();
+    }
+
+    public void addItem(T item) {
+        listItem.add(item);
+        notifyDataSetChanged();
+    }
+
+    public void clearList() {
+        listItem.clear();
         notifyDataSetChanged();
     }
 
@@ -45,18 +59,18 @@ public abstract class BaseRecyclerViewAdapter<T, VH extends BaseRecyclerViewVH<T
         applyAndAnimateMovedItems(listItem);
     }
 
-    public void addItem(T item, int pos) {
+    private void addItem(T item, int pos) {
         listItem.add(pos, item);
         notifyItemInserted(pos);
     }
 
-    public T removeItem_(int pos) {
+    private T removeItem_(int pos) {
         final T item = listItem.remove(pos);
         notifyItemRemoved(pos);
         return item;
     }
 
-    public void moveItem(int from, int to) {
+    private void moveItem(int from, int to) {
         final T item = listItem.remove(from);
         listItem.add(to, item);
         notifyItemMoved(from, to);

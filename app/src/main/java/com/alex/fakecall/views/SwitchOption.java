@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.support.v7.widget.SwitchCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -16,7 +17,7 @@ import com.alex.fakecall.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SwitchOption extends FrameLayout {
+public class SwitchOption extends FrameLayout implements View.OnClickListener {
     @BindView(R.id.tvPrimary)
     TextView tvOption;
 
@@ -69,6 +70,7 @@ public class SwitchOption extends FrameLayout {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
+        tvValue.setText(isChecked() ? valueOnChecked : valueOnNoChecked);
         switchView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -77,6 +79,12 @@ public class SwitchOption extends FrameLayout {
                 tvValue.setText(isChecked ? valueOnChecked : valueOnNoChecked);
             }
         });
+        this.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switchView.toggle();
     }
 
     public interface OnCheckedChangeListener {

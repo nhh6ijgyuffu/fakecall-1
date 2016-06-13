@@ -9,22 +9,25 @@ import java.util.List;
 
 
 public class TabViewPagerAdapter extends FragmentStatePagerAdapter {
-    private List<TabItem> list;
+    private List<Fragment> listFrag;
+    private List<String> listTitle;
     private boolean showTitle;
 
     public TabViewPagerAdapter(FragmentManager fm) {
         super(fm);
-        list = new ArrayList<>();
+        listFrag = new ArrayList<>();
+        listTitle = new ArrayList<>();
     }
 
     public void addTab(String title, Fragment frag) {
-        list.add(new TabItem(frag, title));
+        listFrag.add(frag);
+        listTitle.add(title);
         notifyDataSetChanged();
     }
 
     @Override
     public Fragment getItem(int position) {
-        return list.get(position).frag;
+        return listFrag.get(position);
     }
 
     public void setShowTitle(boolean showTitle) {
@@ -33,21 +36,11 @@ public class TabViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return (!showTitle) ? null : list.get(position).title;
+        return (!showTitle) ? null : listTitle.get(position);
     }
 
     @Override
     public int getCount() {
-        return list.size();
-    }
-
-    public static class TabItem {
-        public Fragment frag;
-        public String title;
-
-        public TabItem(Fragment frag, String title) {
-            this.frag = frag;
-            this.title = title;
-        }
+        return Math.min(listFrag.size(), listTitle.size());
     }
 }

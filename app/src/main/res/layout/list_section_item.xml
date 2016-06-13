@@ -1,28 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FFF"
+    android:background="@color/card_background"
     android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="#ddd" />
-
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/tvSection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/lb_required_call_settings"
-        android:textColor="?attr/colorPrimary"
         android:textSize="16sp"
-        android:textStyle="bold" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="#ddd" />
+        android:textStyle="bold"
+        app:textAllCaps="true" />
 
 </LinearLayout>

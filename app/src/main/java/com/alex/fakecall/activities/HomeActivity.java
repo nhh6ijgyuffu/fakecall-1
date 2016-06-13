@@ -11,8 +11,8 @@ import android.view.View;
 import com.alex.fakecall.R;
 import com.alex.fakecall.adapters.TabViewPagerAdapter;
 import com.alex.fakecall.fragments.NewCallFragment;
-import com.alex.fakecall.fragments.NewSMSFragment;
-import com.alex.fakecall.helper.DatabaseHelper;
+import com.alex.fakecall.fragments.NewSmsFragment;
+import com.alex.fakecall.controllers.DatabaseController;
 import com.alex.fakecall.models.Call;
 import com.alex.fakecall.views.BadgeView;
 import com.daimajia.androidanimations.library.Techniques;
@@ -27,7 +27,7 @@ public class HomeActivity extends BaseActivity {
     @BindView(R.id.tabLayout)
     TabLayout tabLayout;
 
-    private BadgeView mnItemScheduled;
+    private BadgeView mScheduleCounter;
 
     @Override
     protected int getLayoutResource() {
@@ -40,12 +40,13 @@ public class HomeActivity extends BaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         }
 
+
         TabViewPagerAdapter adapter = new TabViewPagerAdapter(getSupportFragmentManager());
 
-        Call call = DatabaseHelper.getInstance().getLastSavedCall();
+        Call call = DatabaseController.getInstance().getLastSavedCall();
 
         adapter.addTab("New Call", NewCallFragment.newInstance(call, false));
-        adapter.addTab("New SMS", new NewSMSFragment());
+        adapter.addTab("New SMS", new NewSmsFragment());
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -56,6 +57,16 @@ public class HomeActivity extends BaseActivity {
             if (tab != null)
                 tab.setIcon(tabIcons[i]);
         }
+
+        mScheduleCounter = new BadgeView(this);
+
+        mScheduleCounter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, ScheduledActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -66,29 +77,19 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        MenuItem mnItem = menu.add(getString(R.string.lb_scheduled));
+        mnItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        mnItem.setActionView(mScheduleCounter);
+
         getMenuInflater().inflate(R.menu.menu_home, menu);
-        MenuItem mnItem = menu.findItem(R.id.action_open_schedule);
-        mnItemScheduled = (BadgeView) mnItem.getActionView();
-        mnItemScheduled.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this, ScheduledActivity.class));
-            }
-        });
-        updateCounter();
         return true;
     }
 
 
     private void updateCounter() {
-        if (mnItemScheduled == null) return;
-        YoYo.with(Techniques.Tada).duration(500).playOn(mnItemScheduled);
-        int totalSize = DatabaseHelper.getInstance().getAllPendingCalls().size();
-        mnItemScheduled.setCounter(totalSize);
-    }
-
-    @Override
-    protected void onCleanUp() {
-
+        if (mScheduleCounter == null) return;
+        YoYo.with(Techniques.Tada).duration(500).playOn(mScheduleCounter);
+        int totalSize = DatabaseController.getInstance().getAllPendingCalls().size();
+        mScheduleCounter.setCounter(totalSize);
     }
 }

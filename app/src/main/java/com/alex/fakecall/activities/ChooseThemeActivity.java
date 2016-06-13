@@ -4,11 +4,11 @@ package com.alex.fakecall.activities;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.alex.fakecall.R;
-import com.alex.fakecall.adapters.BaseRecyclerViewAdapter;
-import com.alex.fakecall.adapters.PhoneUIsAdapter;
+import com.alex.fakecall.adapters.ThemesAdapter;
 import com.alex.fakecall.models.Theme;
 import com.alex.fakecall.themes.Android6xActivity;
 
@@ -21,6 +21,8 @@ public class ChooseThemeActivity extends BaseActivity {
     @BindView(R.id.rvListUI)
     RecyclerView rvThemes;
 
+    public static Theme selectedTheme;
+
     @Override
     public int getLayoutResource() {
         return R.layout.activity_choose_theme;
@@ -28,37 +30,46 @@ public class ChooseThemeActivity extends BaseActivity {
 
     @Override
     protected void onSetUp() {
+        selectedTheme = getIntent().getParcelableExtra(Theme.TAG);
+        toolbar.setNavigationIcon(R.drawable.ic_action_close);
+
         rvThemes.setLayoutManager(new LinearLayoutManager(this));
         rvThemes.setHasFixedSize(true);
 
-        PhoneUIsAdapter adapter = new PhoneUIsAdapter();
-        adapter.setList(getAvailableTheme());
-        rvThemes.setAdapter(adapter);
-
-        adapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View v, Object item, int position) {
-                Intent intent = new Intent();
-                intent.putExtra(Theme.KEY, (Theme) item);
-                setResult(RESULT_OK, intent);
-                finish();
-            }
-        });
+        ThemesAdapter mAdapter = new ThemesAdapter();
+        mAdapter.setList(getAvailableTheme());
+        rvThemes.setAdapter(mAdapter);
     }
 
     private List<Theme> getAvailableTheme() {
         List<Theme> list = new ArrayList<>();
 
-        Theme android6 = new Theme("Google Android 6.0", R.drawable.android6x_preview_incoming,
-                R.drawable.android6x_preview_incall, Android6xActivity.class);
+        Theme android6X = new Theme("Google Android 6.0", Android6xActivity.class, R.drawable.android6x_preview_incoming,
+                R.drawable.android6x_preview_incall);
 
-        list.add(android6);
+        list.add(android6X);
         return list;
     }
 
-    @Override
-    protected void onCleanUp() {
-
+    private void setResult() {
+        Intent intent = new Intent();
+        intent.putExtra(Theme.TAG, selectedTheme);
+        setResult(RESULT_OK, intent);
+        selectedTheme = null;
+        finish();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuItem mnItem = menu.add("OK");
+        mnItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        mnItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                setResult();
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
+    }
 }

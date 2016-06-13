@@ -23,13 +23,14 @@ import android.widget.TextView;
 
 import com.alex.fakecall.R;
 import com.alex.fakecall.activities.BaseActivity;
-import com.alex.fakecall.helper.CallLogHelper;
-import com.alex.fakecall.helper.Utils;
-import com.alex.fakecall.helper.AudioHelper;
-import com.alex.fakecall.helper.VibrationHelper;
-import com.alex.fakecall.helper.WakeupHelper;
+import com.alex.fakecall.controllers.AudioController;
+import com.alex.fakecall.controllers.AudioController.PlayerTag;
+import com.alex.fakecall.controllers.VibrationController;
+import com.alex.fakecall.controllers.WakeUpController;
 import com.alex.fakecall.models.Call;
-import com.alex.fakecall.views.MyChronometer;
+import com.alex.fakecall.utils.CallLogUtils;
+import com.alex.fakecall.utils.Utils;
+import com.alex.fakecall.views.CountableChronometer;
 
 import java.lang.ref.WeakReference;
 
@@ -40,7 +41,7 @@ import butterknife.Optional;
 
 public abstract class BaseThemeActivity extends BaseActivity implements SensorEventListener {
     @BindView(R.id.chronometer)
-    MyChronometer chronometer;
+    CountableChronometer chronometer;
 
     @BindView(R.id.mask)
     RelativeLayout maskLayout;
@@ -101,7 +102,7 @@ public abstract class BaseThemeActivity extends BaseActivity implements SensorEv
 
     @Override
     protected void onSetUp() {
-        mCall = getIntent().getParcelableExtra(Call.KEY);
+        mCall = getIntent().getParcelableExtra(Call.TAG);
         if (mCall != null) {
             if (tvName != null)
                 tvName.setText(mCall.getDisplayName());
@@ -123,13 +124,14 @@ public abstract class BaseThemeActivity extends BaseActivity implements SensorEv
         configureForInComing();
         mHandler.sendEmptyMessageDelayed(MyHandler.HANDLE_MSG_MISSED, MAX_TIME_TO_MISSED_CALL);
 
-        AudioHelper.getInstance().startPlaying(mCall.getRingtone(), true);
+        AudioController.getInstance().startPlaying(PlayerTag.RINGTONE,
+                mCall.getRingtoneUri(), true);
 
         if (mCall.isVibrate()) {
-            VibrationHelper.getInstance().vibrate(true);
+            VibrationController.getInstance().vibrate(true);
         }
 
-        WakeupHelper.getInstance().wakeUp();
+        WakeUpController.getInstance().wakeUp();
     }
 
     @Override
@@ -151,7 +153,7 @@ public abstract class BaseThemeActivity extends BaseActivity implements SensorEv
 
         long callDuration = mCall.getCallDuration();
 
-        if(callDuration != 0){
+        if (callDuration != 0) {
             mHandler.sendEmptyMessageDelayed(MyHandler.HANDLE_MSG_END_CALL, callDuration);
         }
 
@@ -161,13 +163,18 @@ public abstract class BaseThemeActivity extends BaseActivity implements SensorEv
         chronometer.setBase(SystemClock.elapsedRealtime());
         chronometer.start();
 
-        AudioHelper.getInstance().stopPlaying();
-        VibrationHelper.getInstance().cancelAll();
+        AudioController.getInstance().stopPlaying(PlayerTag.RINGTONE);
+        VibrationController.getInstance().cancelAll();
+
+        if (mCall.getVoiceUri() != null) {
+            AudioController.getInstance().startPlaying(PlayerTag.VOICE,
+                    mCall.getVoiceUri(), true);
+        }
     }
 
     protected void onMissedCall() {
         if (!isPreview) {
-            CallLogHelper.writeMissedCall(mCall);
+            CallLogUtils.writeMissedCall(mCall);
             showMissedNotification();
         }
         doWorksAfterEnd();
@@ -200,7 +207,7 @@ public abstract class BaseThemeActivity extends BaseActivity implements SensorEv
     @OnClick(R.id.btnEndCall)
     protected void onEndCall() {
         if (!isPreview) {
-            CallLogHelper.writeIncomingCall(mCall, chronometer.getDuration());
+            CallLogUtils.writeIncomingCall(mCall, chronometer.getDuration());
         }
         doWorksAfterEnd();
         finish();
@@ -226,9 +233,9 @@ public abstract class BaseThemeActivity extends BaseActivity implements SensorEv
         mNotifyManager.cancel(NOTIFY_ID_INCOMING);
         mNotifyManager.cancel(NOTIFY_ID_ONGOING);
         mAudioManager.setMode(AudioManager.MODE_NORMAL);
-        AudioHelper.getInstance().stopPlaying();
-        VibrationHelper.getInstance().cancelAll();
-        WakeupHelper.getInstance().reset();
+        AudioController.getInstance().stopAllPlaying();
+        VibrationController.getInstance().cancelAll();
+        WakeUpController.getInstance().reset();
     }
 
     protected void showIncomingNotification() {
@@ -320,11 +327,6 @@ public abstract class BaseThemeActivity extends BaseActivity implements SensorEv
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-    }
-
-    @Override
-    protected void onCleanUp() {
 
     }
 }

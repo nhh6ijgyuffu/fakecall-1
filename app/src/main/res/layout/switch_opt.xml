@@ -11,8 +11,8 @@
             android:id="@+id/ivLeftIcon"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="16dp"
+            android:layout_marginTop="20dp"
             android:contentDescription="@null"
             android:src="@drawable/ic_menu_timer" />
 
@@ -33,8 +33,8 @@
                 android:id="@+id/tvPrimary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
                 android:text="@string/lb_primary_text"
-                android:textColor="#000"
                 android:textSize="16sp" />
 
             <TextView
@@ -42,10 +42,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/lb_primary_text"
+                android:textColor="@color/secondary_text"
                 android:textSize="14sp" />
 
         </LinearLayout>
-
 
         <android.support.v7.widget.SwitchCompat
             android:id="@+id/switchView"
@@ -53,10 +53,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="20dp"
+            android:clickable="false"
             android:contentDescription="@null"
             android:src="@drawable/ic_menu_timer" />
-
 
     </RelativeLayout>
 </merge>

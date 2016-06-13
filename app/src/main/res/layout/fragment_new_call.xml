@@ -13,7 +13,10 @@
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
             app:contentPadding="10dp">
 
             <LinearLayout
@@ -24,9 +27,8 @@
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="5dp"
                     android:text="@string/lb_caller_info"
-                    android:textColor="?attr/colorPrimary"
                     android:textStyle="bold"
                     app:textAllCaps="true" />
 
@@ -37,8 +39,8 @@
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/callerPhoto"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
                         android:layout_marginBottom="10dp"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
@@ -61,11 +63,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="@string/lb_caller_name"
-                                android:inputType="textPersonName"
-                                android:textSize="17sp" />
-
+                                android:inputType="textPersonName" />
                         </android.support.design.widget.TextInputLayout>
-
 
                         <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
@@ -76,14 +75,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="@string/lb_caller_number"
-                                android:inputType="phone"
-                                android:textSize="17sp" />
-
+                                android:inputType="phone" />
                         </android.support.design.widget.TextInputLayout>
-
-
                     </LinearLayout>
-
                 </RelativeLayout>
             </LinearLayout>
 
@@ -93,7 +87,9 @@
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
             app:contentPadding="10dp">
 
             <LinearLayout
@@ -104,9 +100,8 @@
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="5dp"
                     android:text="@string/lb_required_call_settings"
-                    android:textColor="?attr/colorPrimary"
                     android:textStyle="bold"
                     app:textAllCaps="true" />
 
@@ -115,14 +110,33 @@
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
-        <Button
-            android:id="@+id/btnSave"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:background="@drawable/primary_button_bg"
-            android:text="@string/lb_save"
-            android:textColor="#FFF" />
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnPreview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/primary_button_bg"
+                android:text="@string/lb_preview"
+                android:textColor="#FFF" />
+
+            <Button
+                android:id="@+id/btnSave"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/primary_button_bg"
+                android:text="@string/lb_save"
+                android:textColor="#FFF" />
+        </LinearLayout>
+
     </LinearLayout>
 
 </ScrollView>

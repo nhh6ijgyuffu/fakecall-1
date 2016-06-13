@@ -15,19 +15,23 @@
             app:optText="@string/lb_time_to_call"
             app:valueText="@string/lb_now" />
 
+        <View style="@style/Divider"/>
+
         <com.alex.fakecall.views.TwoLineTextOption
             android:id="@+id/optTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:leftIcon="@drawable/ic_menu_phone"
+            app:leftIcon="@drawable/ic_menu_theme"
             app:optText="@string/lb_phone_ui"
             app:valueText="@string/lb_not_set" />
+
+        <View style="@style/Divider"/>
 
         <com.alex.fakecall.views.TwoLineTextOption
             android:id="@+id/optMore"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:leftIcon="@drawable/ic_menu_setting"
+            app:leftIcon="@drawable/ic_action_settings"
             app:optText="@string/lb_more_setting"
             app:valueText="@string/lb_more_setting_" />
     </LinearLayout>

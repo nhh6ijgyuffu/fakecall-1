@@ -5,8 +5,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.alex.fakecall.R;
-import com.alex.fakecall.helper.Converter;
 import com.alex.fakecall.models.Call;
+import com.alex.fakecall.utils.Utils;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 
 import butterknife.BindView;
@@ -53,7 +53,7 @@ public class ScheduledCallsAdapter extends BaseRecyclerViewAdapter<Call, Schedul
         protected void onBind(final Call item, final int pos) {
             tvName.setText(item.getName());
             tvNumber.setText(item.getNumber());
-            tvTime.setText(Converter.millis2String(item.getTime(), " dd MMM yyyy, hh:mm:ss a"));
+            tvTime.setText(Utils.millisToString(item.getTime(), " dd MMM yyyy, hh:mm:ss a"));
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -83,12 +83,11 @@ public class ScheduledCallsAdapter extends BaseRecyclerViewAdapter<Call, Schedul
 
         @Override
         protected void onBind(Call item, int pos) {
-            if(item.isAlarmed()){
+            if (item.isAlarmed()) {
                 tvSection.setText(R.string.lb_alarmed);
-            }else{
+            } else {
                 tvSection.setText(R.string.lb_pending);
             }
-
         }
     }
 
