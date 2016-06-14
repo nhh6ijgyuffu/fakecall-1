@@ -14,11 +14,11 @@ public class Call implements Parcelable {
     private long time;
     private Theme theme;
     private boolean isAlarmed;
-    private Uri ringtoneUri;
+    private String ringtoneUri;
     private boolean vibrate;
-    private Uri photoUri;
+    private String photoUri;
     private long callDuration;
-    private Uri voiceUri;
+    private String voiceUri;
 
     public Call(){}
 
@@ -42,11 +42,11 @@ public class Call implements Parcelable {
         time = in.readLong();
         theme = in.readParcelable(Theme.class.getClassLoader());
         isAlarmed = in.readInt() == 1;
-        ringtoneUri = in.readParcelable(Uri.class.getClassLoader());
+        ringtoneUri = in.readString();
         vibrate = in.readInt() == 1;
-        photoUri = in.readParcelable(Uri.class.getClassLoader());
+        photoUri = in.readString();
         callDuration = in.readLong();
-        voiceUri = in.readParcelable(Uri.class.getClassLoader());
+        voiceUri = in.readString();
     }
 
     @Override
@@ -57,11 +57,11 @@ public class Call implements Parcelable {
         dest.writeLong(time);
         dest.writeParcelable(theme, flags);
         dest.writeInt(isAlarmed ? 1 : 0);
-        dest.writeParcelable(ringtoneUri, flags);
+        dest.writeString(ringtoneUri);
         dest.writeInt(vibrate ? 1 : 0);
-        dest.writeParcelable(photoUri, flags);
+        dest.writeString(photoUri);
         dest.writeLong(callDuration);
-        dest.writeParcelable(voiceUri, flags);
+        dest.writeString(voiceUri);
     }
 
     @Override
@@ -125,14 +125,14 @@ public class Call implements Parcelable {
         return name;
     }
 
-    public Uri getRingtoneUri() {
+    public String getRingtoneUri() {
         if (ringtoneUri == null) {
-            ringtoneUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+            ringtoneUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE).toString();
         }
         return ringtoneUri;
     }
 
-    public void setRingtoneUri(Uri ringtone) {
+    public void setRingtoneUri(String ringtone) {
         this.ringtoneUri = ringtone;
     }
 
@@ -144,11 +144,11 @@ public class Call implements Parcelable {
         this.vibrate = vibrate;
     }
 
-    public Uri getPhotoUri() {
+    public String getPhotoUri() {
         return photoUri;
     }
 
-    public void setPhotoUri(Uri photoUri) {
+    public void setPhotoUri(String photoUri) {
         this.photoUri = photoUri;
     }
 
@@ -160,11 +160,11 @@ public class Call implements Parcelable {
         this.callDuration = callDuration;
     }
 
-    public Uri getVoiceUri() {
+    public String getVoiceUri() {
         return voiceUri;
     }
 
-    public void setVoiceUri(Uri voiceUri) {
+    public void setVoiceUri(String voiceUri) {
         this.voiceUri = voiceUri;
     }
 }

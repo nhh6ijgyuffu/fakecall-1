@@ -9,6 +9,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
@@ -125,7 +126,7 @@ public abstract class BaseThemeActivity extends BaseActivity implements SensorEv
         mHandler.sendEmptyMessageDelayed(MyHandler.HANDLE_MSG_MISSED, MAX_TIME_TO_MISSED_CALL);
 
         AudioController.getInstance().startPlaying(PlayerTag.RINGTONE,
-                mCall.getRingtoneUri(), true);
+                Uri.parse(mCall.getRingtoneUri()), true);
 
         if (mCall.isVibrate()) {
             VibrationController.getInstance().vibrate(true);
@@ -168,7 +169,7 @@ public abstract class BaseThemeActivity extends BaseActivity implements SensorEv
 
         if (mCall.getVoiceUri() != null) {
             AudioController.getInstance().startPlaying(PlayerTag.VOICE,
-                    mCall.getVoiceUri(), true);
+                    Uri.parse(mCall.getVoiceUri()), true);
         }
     }
 

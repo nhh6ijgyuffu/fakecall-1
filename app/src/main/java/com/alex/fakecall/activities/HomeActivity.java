@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.alex.fakecall.R;
 import com.alex.fakecall.adapters.TabViewPagerAdapter;
+import com.alex.fakecall.appdata.SharedPrefController;
 import com.alex.fakecall.fragments.NewCallFragment;
 import com.alex.fakecall.fragments.NewSmsFragment;
 import com.alex.fakecall.controllers.DatabaseController;
@@ -40,10 +41,10 @@ public class HomeActivity extends BaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         }
 
-
         TabViewPagerAdapter adapter = new TabViewPagerAdapter(getSupportFragmentManager());
 
-        Call call = DatabaseController.getInstance().getLastSavedCall();
+        Call call = SharedPrefController.getInstance()
+                .getObject(SharedPrefController.KEY_LAST_CALL, Call.class);
 
         adapter.addTab("New Call", NewCallFragment.newInstance(call, false));
         adapter.addTab("New SMS", new NewSmsFragment());

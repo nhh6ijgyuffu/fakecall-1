@@ -2,7 +2,6 @@ package com.alex.fakecall.activities;
 
 
 import android.content.Intent;
-import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -22,7 +21,7 @@ public class ChooseVoiceActivity extends BaseActivity {
     @BindView(R.id.viewPager)
     ViewPager mViewPager;
 
-    public static Uri selectedUri;
+    public static String selectedUri;
 
     @Override
     protected int getLayoutResource() {
@@ -38,7 +37,7 @@ public class ChooseVoiceActivity extends BaseActivity {
         final TabViewPagerAdapter mTabAdapter = new TabViewPagerAdapter(getSupportFragmentManager());
         mTabAdapter.setShowTitle(true);
 
-        selectedUri = getIntent().getParcelableExtra("mUri");
+        selectedUri = getIntent().getStringExtra("mUri");
 
         mTabAdapter.addTab(getString(R.string.lb_tab_recorded), VoiceFragment.newInstance(VoiceFragment.TYPE_RECORDED));
         mTabAdapter.addTab(getString(R.string.lb_tab_all), VoiceFragment.newInstance(VoiceFragment.TYPE_OTHER));

@@ -2,6 +2,7 @@ package com.alex.fakecall.utils;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +12,7 @@ import android.net.Uri;
 
 import com.alex.fakecall.FakeCallApp;
 import com.alex.fakecall.models.Ringtone;
+import com.alex.fakecall.themes.Android6xActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -102,5 +104,14 @@ public class Utils {
         mm.release();
 
         return totalSecs;
+    }
+
+    public static Intent getCallingIntent(Context ctx, int themeId) {
+        switch (themeId) {
+            case 1:
+                return new Intent(ctx, Android6xActivity.class);
+            default:
+                return null;
+        }
     }
 }

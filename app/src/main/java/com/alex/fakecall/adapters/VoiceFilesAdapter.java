@@ -1,5 +1,6 @@
 package com.alex.fakecall.adapters;
 
+import android.annotation.SuppressLint;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
@@ -9,6 +10,8 @@ import com.alex.fakecall.R;
 import com.alex.fakecall.activities.ChooseVoiceActivity;
 import com.alex.fakecall.controllers.AudioController;
 import com.alex.fakecall.models.VoiceFile;
+
+import java.util.Locale;
 
 import butterknife.BindView;
 
@@ -37,24 +40,25 @@ public class VoiceFilesAdapter extends BaseRecyclerViewAdapter<VoiceFile, VoiceF
         @Override
         protected void onBind(final VoiceFile item, final int pos) {
             tvName.setText(item.getName());
+            @SuppressLint("DefaultLocale")
             String properties = String.format("%s | %dKB", item.getFormattedDuration(), item.getSizeKB());
             tvProperties.setText(properties);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (item.getFileUri().equals(ChooseVoiceActivity.selectedUri)) {
+                    if (item.getFileUri().toString().equals(ChooseVoiceActivity.selectedUri)) {
                         ChooseVoiceActivity.selectedUri = null;
                         AudioController.getInstance().stopPlaying(AudioController.PlayerTag.VOICE);
                     } else {
-                        ChooseVoiceActivity.selectedUri = item.getFileUri();
+                        ChooseVoiceActivity.selectedUri = item.getFileUri().toString();
                         AudioController.getInstance().startPlaying(AudioController.PlayerTag.VOICE,
                                 item.getFileUri(), false);
                     }
                     notifyDataSetChanged();
                 }
             });
-            radioButton.setChecked(item.getFileUri().equals(ChooseVoiceActivity.selectedUri));
+            radioButton.setChecked(item.getFileUri().toString().equals(ChooseVoiceActivity.selectedUri));
         }
     }
 }

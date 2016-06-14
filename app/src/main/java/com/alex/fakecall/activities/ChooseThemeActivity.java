@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import com.alex.fakecall.R;
 import com.alex.fakecall.adapters.ThemesAdapter;
 import com.alex.fakecall.models.Theme;
-import com.alex.fakecall.themes.Android6xActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,10 +43,9 @@ public class ChooseThemeActivity extends BaseActivity {
     private List<Theme> getAvailableTheme() {
         List<Theme> list = new ArrayList<>();
 
-        Theme android6X = new Theme("Google Android 6.0", Android6xActivity.class, R.drawable.android6x_preview_incoming,
-                R.drawable.android6x_preview_incall);
+        list.add(new Theme(1, "Google Android 6.0", R.drawable.android6x_preview_incoming,
+                R.drawable.android6x_preview_incall));
 
-        list.add(android6X);
         return list;
     }
 

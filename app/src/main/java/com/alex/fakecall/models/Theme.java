@@ -6,22 +6,22 @@ import android.os.Parcelable;
 public class Theme implements Parcelable {
     public static final String TAG = Theme.class.getSimpleName();
 
+    private int id;
     private String name;
-    private Class<?> clazz;
     private int incomingRes;
     private int inCallRes;
 
-    public Theme(String name, Class<?> clazz, int incomingRes, int inCallRes) {
+    public Theme(int id, String name, int incomingRes, int inCallRes) {
+        this.id = id;
         this.name = name;
-        this.clazz = clazz;
         this.incomingRes = incomingRes;
         this.inCallRes = inCallRes;
     }
 
     //Parcelable
     private Theme(Parcel in) {
+        id = in.readInt();
         name = in.readString();
-        clazz = (Class<?>) in.readSerializable();
         incomingRes = in.readInt();
         inCallRes = in.readInt();
     }
@@ -46,23 +46,27 @@ public class Theme implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
         dest.writeString(name);
-        dest.writeSerializable(clazz);
         dest.writeInt(incomingRes);
         dest.writeInt(inCallRes);
     }
 
     //Getter and Setter
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Class<?> getClazz() {
-        return clazz;
     }
 
     public int getIncomingRes() {
@@ -77,6 +81,6 @@ public class Theme implements Parcelable {
     public boolean equals(Object o) {
         if (!(o instanceof Theme)) return false;
         Theme other = (Theme) o;
-        return other.clazz.equals(this.clazz);
+        return other.id == this.id;
     }
 }

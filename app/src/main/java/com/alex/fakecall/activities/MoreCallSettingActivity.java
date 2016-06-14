@@ -83,7 +83,8 @@ public class MoreCallSettingActivity extends BaseActivity {
         }
 
         if (mCall.getVoiceUri() != null) {
-            optVoice.setValue(mCall.getVoiceUri().getLastPathSegment());
+            Uri uri = Uri.parse(mCall.getVoiceUri());
+            optVoice.setValue(uri.getLastPathSegment());
         }
     }
 
@@ -136,7 +137,7 @@ public class MoreCallSettingActivity extends BaseActivity {
                                     rt.getUri(), false);
                         } else {
                             optRingtone.setValue(rt.getName());
-                            mCall.setRingtoneUri(rt.getUri());
+                            mCall.setRingtoneUri(rt.getUri().toString());
                         }
                     }
                 }, new DialogInterface.OnDismissListener() {
@@ -149,7 +150,7 @@ public class MoreCallSettingActivity extends BaseActivity {
 
     private int getPositionRingtone() {
         for (int i = 0; i < listRingtone.size(); i++) {
-            Uri crUri = listRingtone.get(i).getUri();
+            String crUri = listRingtone.get(i).getUri().toString();
             if (crUri.equals(mCall.getRingtoneUri())) {
                 return i;
             }
@@ -163,10 +164,11 @@ public class MoreCallSettingActivity extends BaseActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_CHOOSE_VOICE:
-                    Uri selectedUri = data.getParcelableExtra("mUri");
+                    String selectedUri = data.getStringExtra("mUri");
                     if (selectedUri != null) {
                         mCall.setVoiceUri(selectedUri);
-                        optVoice.setValue(selectedUri.getLastPathSegment());
+                        Uri uri = Uri.parse(selectedUri);
+                        optVoice.setValue(uri.getLastPathSegment());
                     }
                     break;
             }

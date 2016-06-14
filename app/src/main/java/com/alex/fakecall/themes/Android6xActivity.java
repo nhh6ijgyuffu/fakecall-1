@@ -1,6 +1,7 @@
 package com.alex.fakecall.themes;
 
 
+import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -34,7 +35,7 @@ public class Android6xActivity extends BaseThemeActivity implements CallAnimOnTr
         callAnimation.setVisibility(View.GONE);
         tvIncoming.setVisibility(View.GONE);
         chronometer.setVisibility(View.VISIBLE);
-        ivCallerPhoto.setImageURI(mCall.getPhotoUri());
+        ivCallerPhoto.setImageURI(Uri.parse(mCall.getPhotoUri()));
         showInCallNotification();
     }
 

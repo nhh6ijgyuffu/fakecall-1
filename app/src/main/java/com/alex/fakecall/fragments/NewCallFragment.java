@@ -14,9 +14,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.alex.fakecall.R;
+import com.alex.fakecall.activities.ChooseThemeActivity;
 import com.alex.fakecall.activities.MoreCallSettingActivity;
 import com.alex.fakecall.activities.ScheduledActivity;
-import com.alex.fakecall.activities.ChooseThemeActivity;
+import com.alex.fakecall.appdata.SharedPrefController;
 import com.alex.fakecall.controllers.AlarmController;
 import com.alex.fakecall.controllers.DatabaseController;
 import com.alex.fakecall.dialogs.DateTimePickerDialog;
@@ -224,12 +225,14 @@ public class NewCallFragment extends BaseFragment {
                 Intent intent = new Intent(getContext(), ScheduledActivity.class);
                 startActivity(intent);
             }
+            SharedPrefController.getInstance().saveObject(SharedPrefController.KEY_LAST_CALL, mCall);
         }
     }
 
     @OnClick(R.id.btnPreview)
     void onPreviewCall() {
-        Intent intent = new Intent(getContext(), mCall.getTheme().getClazz());
+        Intent intent = Utils.getCallingIntent(getContext(), mCall.getTheme().getId());
+        if (intent == null) return;
         intent.putExtra("isPreview", true);
         intent.putExtra(Call.TAG, mCall);
         startActivity(intent);
@@ -262,7 +265,7 @@ public class NewCallFragment extends BaseFragment {
 
                         Uri uri = Uri.parse(photoUri);
                         callerPhoto.setImageURI(uri);
-                        mCall.setPhotoUri(uri);
+                        mCall.setPhotoUri(uri.toString());
                     }
                     cursor.close();
                 } catch (Exception e) {

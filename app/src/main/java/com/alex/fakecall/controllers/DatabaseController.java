@@ -65,9 +65,6 @@ public class DatabaseController extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addTheme(Theme theme){
-
-    }
 
     public List<Call> getAllCalls() {
         SQLiteDatabase db = getReadableDatabase();
