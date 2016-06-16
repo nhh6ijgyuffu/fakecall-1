@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="select_time_option">
+        <item>@string/menu_opt_now</item>
+        <item>@string/menu_opt_15s</item>
+        <item>@string/menu_opt_30s</item>
+        <item>@string/menu_opt_1min</item>
+        <item>@string/menu_opt_5min</item>
+        <item>@string/menu_opt_custom</item>
+    </string-array>
+
+    <string-array name="time_call_value">
+        <item>@string/time_value_now</item>
+        <item>@string/time_value_15s</item>
+        <item>@string/time_value_30s</item>
+        <item>@string/time_value_1m</item>
+        <item>@string/time_value_5m</item>
+    </string-array>
+
+    <string-array name="select_call_duration_option">
+        <item>@string/menu_opt_15s</item>
+        <item>@string/menu_opt_30s</item>
+        <item>@string/menu_opt_1min</item>
+    </string-array>
+
+    <string-array name="list_item_opt">
+        <item>@string/mn_opt_delete</item>
+    </string-array>
+
+    <string-array name="choose_contact">
+        <item>@string/mn_opt_private_num</item>
+        <item>@string/mn_opt_open_contact</item>
+    </string-array>
+
+    <string-array name="choose_image">
+        <item>@string/mn_opt_choose_image</item>
+        <item>@string/mn_opt_take_image</item>
+    </string-array>
+
+
+</resources>

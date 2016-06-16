@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.widget.Chronometer;
 
 
-public class CountableChronometer extends Chronometer {
+public class MyChronometer extends Chronometer {
     private long duration;
 
     private OnChronometerTickListener listener = new OnChronometerTickListener() {
@@ -15,13 +15,12 @@ public class CountableChronometer extends Chronometer {
         }
     };
 
-    public CountableChronometer(Context context) {
+    public MyChronometer(Context context) {
         super(context);
     }
 
-    public CountableChronometer(Context context, AttributeSet attrs) {
+    public MyChronometer(Context context, AttributeSet attrs) {
         super(context, attrs);
-        duration = 0;
         this.setOnChronometerTickListener(listener);
     }
 

@@ -13,7 +13,6 @@ import com.alex.fakecall.models.Theme;
 import butterknife.BindView;
 
 public class ThemesAdapter extends BaseRecyclerViewAdapter<Theme, ThemesAdapter.ViewHolder> {
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(parent, R.layout.theme_item);
@@ -43,7 +42,7 @@ public class ThemesAdapter extends BaseRecyclerViewAdapter<Theme, ThemesAdapter.
             ivInCallUI.setImageResource(item.getInCallRes());
             ivIncomingUI.setImageResource(item.getIncomingRes());
 
-            if (item.equals(ChooseThemeActivity.selectedTheme)) {
+            if (item.getId() == ChooseThemeActivity.selectedId) {
                 ivSelected.setVisibility(View.VISIBLE);
             } else {
                 ivSelected.setVisibility(View.GONE);
@@ -52,14 +51,12 @@ public class ThemesAdapter extends BaseRecyclerViewAdapter<Theme, ThemesAdapter.
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (!item.equals(ChooseThemeActivity.selectedTheme)) {
-                        ChooseThemeActivity.selectedTheme = item;
+                    if (item.getId() != ChooseThemeActivity.selectedId) {
+                        ChooseThemeActivity.selectedId = item.getId();
                     }
                     notifyDataSetChanged();
                 }
             });
         }
     }
-
-
 }

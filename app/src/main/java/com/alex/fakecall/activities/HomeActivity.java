@@ -10,10 +10,10 @@ import android.view.View;
 
 import com.alex.fakecall.R;
 import com.alex.fakecall.adapters.TabViewPagerAdapter;
-import com.alex.fakecall.appdata.SharedPrefController;
-import com.alex.fakecall.fragments.NewCallFragment;
-import com.alex.fakecall.fragments.NewSmsFragment;
-import com.alex.fakecall.controllers.DatabaseController;
+import com.alex.fakecall.data.AppPrefs;
+import com.alex.fakecall.fragments.CallFragment;
+import com.alex.fakecall.fragments.SmsFragment;
+import com.alex.fakecall.data.AppDB;
 import com.alex.fakecall.models.Call;
 import com.alex.fakecall.views.BadgeView;
 import com.daimajia.androidanimations.library.Techniques;
@@ -43,11 +43,11 @@ public class HomeActivity extends BaseActivity {
 
         TabViewPagerAdapter adapter = new TabViewPagerAdapter(getSupportFragmentManager());
 
-        Call call = SharedPrefController.getInstance()
-                .getObject(SharedPrefController.KEY_LAST_CALL, Call.class);
+        Call call = AppPrefs.getInstance()
+                .getObject(AppPrefs.KEY_LAST_CALL, Call.class);
 
-        adapter.addTab("New Call", NewCallFragment.newInstance(call, false));
-        adapter.addTab("New SMS", new NewSmsFragment());
+        adapter.addTab("New Call", CallFragment.newInstance(call, false));
+        adapter.addTab("New SMS", new SmsFragment());
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -90,7 +90,7 @@ public class HomeActivity extends BaseActivity {
     private void updateCounter() {
         if (mScheduleCounter == null) return;
         YoYo.with(Techniques.Tada).duration(500).playOn(mScheduleCounter);
-        int totalSize = DatabaseController.getInstance().getAllPendingCalls().size();
+        int totalSize = AppDB.getInstance().getAllPendingCalls().size();
         mScheduleCounter.setCounter(totalSize);
     }
 }

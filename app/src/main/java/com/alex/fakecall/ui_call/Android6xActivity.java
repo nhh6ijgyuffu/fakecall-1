@@ -1,9 +1,7 @@
-package com.alex.fakecall.themes;
+package com.alex.fakecall.ui_call;
 
 
-import android.net.Uri;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.alex.fakecall.R;
 import com.alex.fakecall.views.Android44xAnimation;
@@ -11,7 +9,7 @@ import com.alex.fakecall.views.CallAnimOnTriggerListener;
 
 import butterknife.BindView;
 
-public class Android6xActivity extends BaseThemeActivity implements CallAnimOnTriggerListener {
+public class Android6xActivity extends BaseCallActivity implements CallAnimOnTriggerListener {
     @BindView(R.id.callAnimation)
     Android44xAnimation callAnimation;
 
@@ -21,12 +19,9 @@ public class Android6xActivity extends BaseThemeActivity implements CallAnimOnTr
     @BindView(R.id.tvIncoming)
     View tvIncoming;
 
-    @BindView(R.id.ivCallerPhoto)
-    ImageView ivCallerPhoto;
-
     @Override
     protected int getLayoutResource() {
-        return R.layout.android_6x;
+        return R.layout.activity_android_6x;
     }
 
     @Override
@@ -35,7 +30,6 @@ public class Android6xActivity extends BaseThemeActivity implements CallAnimOnTr
         callAnimation.setVisibility(View.GONE);
         tvIncoming.setVisibility(View.GONE);
         chronometer.setVisibility(View.VISIBLE);
-        ivCallerPhoto.setImageURI(Uri.parse(mCall.getPhotoUri()));
         showInCallNotification();
     }
 
@@ -54,7 +48,7 @@ public class Android6xActivity extends BaseThemeActivity implements CallAnimOnTr
     public void onTrigger(int whatToTrigger) {
         switch (whatToTrigger) {
             case CallAnimOnTriggerListener.TRIGGER_ANSWER:
-                answerCall();
+                onAnswerCall();
                 break;
             case CallAnimOnTriggerListener.TRIGGER_DECLINE:
                 onMissedCall();

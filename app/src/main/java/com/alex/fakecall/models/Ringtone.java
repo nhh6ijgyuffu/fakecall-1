@@ -1,14 +1,12 @@
 package com.alex.fakecall.models;
 
-import android.net.Uri;
-
 public class Ringtone {
     private String name;
-    private Uri uri;
+    private String uriStr;
 
-    public Ringtone(String name, Uri uri) {
+    public Ringtone(String name, String uriStr) {
         this.name = name;
-        this.uri = uri;
+        this.uriStr = uriStr;
     }
 
     public String getName() {
@@ -19,8 +17,8 @@ public class Ringtone {
         this.name = name;
     }
 
-    public Uri getUri() {
-        return uri;
+    public String getUriString() {
+        return uriStr;
     }
 
     @Override
@@ -32,6 +30,6 @@ public class Ringtone {
     public boolean equals(Object o) {
         if (!(o instanceof Ringtone)) return false;
         Ringtone other = (Ringtone) o;
-        return other.uri.equals(this.uri);
+        return other.uriStr.equals(this.uriStr);
     }
 }

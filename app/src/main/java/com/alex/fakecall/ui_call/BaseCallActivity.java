@@ -1,4 +1,4 @@
-package com.alex.fakecall.themes;
+package com.alex.fakecall.ui_call;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -19,6 +19,7 @@ import android.support.v4.app.NotificationCompat;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -31,7 +32,7 @@ import com.alex.fakecall.controllers.WakeUpController;
 import com.alex.fakecall.models.Call;
 import com.alex.fakecall.utils.CallLogUtils;
 import com.alex.fakecall.utils.Utils;
-import com.alex.fakecall.views.CountableChronometer;
+import com.alex.fakecall.views.MyChronometer;
 
 import java.lang.ref.WeakReference;
 
@@ -40,9 +41,9 @@ import butterknife.OnClick;
 import butterknife.Optional;
 
 
-public abstract class BaseThemeActivity extends BaseActivity implements SensorEventListener {
+public abstract class BaseCallActivity extends BaseActivity implements SensorEventListener {
     @BindView(R.id.chronometer)
-    CountableChronometer chronometer;
+    MyChronometer chronometer;
 
     @BindView(R.id.mask)
     RelativeLayout maskLayout;
@@ -54,6 +55,10 @@ public abstract class BaseThemeActivity extends BaseActivity implements SensorEv
     @Nullable
     @BindView(R.id.tvNumber)
     TextView tvNumber;
+
+    @Nullable
+    @BindView(R.id.ivPhoto)
+    ImageView ivPhoto;
 
     private boolean isInCall = false;
     private boolean isPreview;
@@ -72,23 +77,23 @@ public abstract class BaseThemeActivity extends BaseActivity implements SensorEv
 
     private AudioManager mAudioManager;
 
-    protected abstract void configureForInCall();
-
     protected abstract void configureForInComing();
+
+    protected abstract void configureForInCall();
 
     private static class MyHandler extends Handler {
         public static final int HANDLE_MSG_MISSED = 1;
         public static final int HANDLE_MSG_END_CALL = 2;
 
-        private WeakReference<BaseThemeActivity> mWeakAct;
+        private WeakReference<BaseCallActivity> mWeakAct;
 
-        public MyHandler(BaseThemeActivity act) {
+        public MyHandler(BaseCallActivity act) {
             mWeakAct = new WeakReference<>(act);
         }
 
         @Override
         public void handleMessage(Message msg) {
-            BaseThemeActivity act = mWeakAct.get();
+            BaseCallActivity act = mWeakAct.get();
             if (act == null) return;
             switch (msg.what) {
                 case HANDLE_MSG_END_CALL:
@@ -133,6 +138,10 @@ public abstract class BaseThemeActivity extends BaseActivity implements SensorEv
         }
 
         WakeUpController.getInstance().wakeUp();
+
+        if (mCall.getPhotoUri() != null && ivPhoto != null) {
+            ivPhoto.setImageURI(Uri.parse(mCall.getPhotoUri()));
+        }
     }
 
     @Override
@@ -147,7 +156,7 @@ public abstract class BaseThemeActivity extends BaseActivity implements SensorEv
         mSensorManager.unregisterListener(this, mProximity);
     }
 
-    protected void answerCall() {
+    protected void onAnswerCall() {
         isInCall = true;
         configureForInCall();
         mHandler.removeMessages(MyHandler.HANDLE_MSG_MISSED);
@@ -168,8 +177,7 @@ public abstract class BaseThemeActivity extends BaseActivity implements SensorEv
         VibrationController.getInstance().cancelAll();
 
         if (mCall.getVoiceUri() != null) {
-            AudioController.getInstance().startPlaying(PlayerTag.VOICE,
-                    Uri.parse(mCall.getVoiceUri()), true);
+            AudioController.getInstance().startPlaying(PlayerTag.VOICE, mCall.getVoiceUri(), true);
         }
     }
 
@@ -316,7 +324,7 @@ public abstract class BaseThemeActivity extends BaseActivity implements SensorEv
                 onEndCall();
                 return true;
             case KeyEvent.KEYCODE_CALL:
-                answerCall();
+                onAnswerCall();
                 return true;
             case KeyEvent.KEYCODE_ENDCALL:
                 onEndCall();

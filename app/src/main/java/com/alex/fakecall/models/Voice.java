@@ -2,30 +2,27 @@ package com.alex.fakecall.models;
 
 
 import android.net.Uri;
-import android.os.Parcel;
-import android.os.Parcelable;
 
 import com.alex.fakecall.utils.Utils;
 
 import java.io.File;
 
-public class VoiceFile {
-    public static final String TAG = "VoiceFile";
-    private Uri fileUri;
+public class Voice {
+    public static final String TAG = "Voice";
+    private String uriString;
     private String name;
     private long duration;
     private int sizeKB;
 
-    public VoiceFile(File file) {
-        Uri uri = Uri.fromFile(file);
-        fileUri = uri;
+    public Voice(File file) {
+        uriString = Uri.fromFile(file).toString();
         name = file.getName();
-        duration = Utils.getDurationOfAudioFile(uri);
-        sizeKB = (int) (file.length() / 1000);
+        duration = Utils.getDurationOfAudioFile(file);
+        sizeKB = (int) (file.length() / 1024);
     }
 
-    public Uri getFileUri() {
-        return fileUri;
+    public String getUriString() {
+        return uriString;
     }
 
     public String getName() {

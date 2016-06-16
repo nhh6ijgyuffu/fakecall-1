@@ -32,25 +32,29 @@
                     android:textStyle="bold"
                     app:textAllCaps="true" />
 
+                <ImageView
+                    android:id="@+id/btnContact"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="right"
+                    android:src="@drawable/ic_menu_contact" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical">
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/callerPhoto"
+                        android:id="@+id/btnPhoto"
                         android:layout_width="72dp"
                         android:layout_height="72dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_margin="10dp"
                         android:src="@drawable/avatar" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/callerPhoto"
+                        android:layout_toRightOf="@+id/btnPhoto"
                         android:orientation="vertical">
 
                         <android.support.design.widget.TextInputLayout

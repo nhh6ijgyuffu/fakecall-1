@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             app:leftIcon="@drawable/ic_menu_timer"
             app:optText="@string/lb_time_to_call"
-            app:valueText="@string/lb_now" />
+            app:valueText="@string/menu_opt_now" />
 
         <View style="@style/Divider"/>
 

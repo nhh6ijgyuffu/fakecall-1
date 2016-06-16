@@ -27,6 +27,5 @@
         app:backgroundTint="#F02"
         app:fabSize="normal"
         app:layout_anchor="@id/rvListRecorded"
-        app:layout_anchorGravity="bottom|right|end"
-        app:layout_behavior="com.alex.fakecall.utils.FABScrollingBehavior" />
+        app:layout_anchorGravity="bottom|right|end"/>
 </android.support.design.widget.CoordinatorLayout>

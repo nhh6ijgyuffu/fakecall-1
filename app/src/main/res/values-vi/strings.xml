@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Fake Call &amp; SMS</string>
     <string name="lb_time_to_call">Thời gian gọi</string>
-    <string name="default_time_value">Ngay bây giờ</string>
+    <string name="time_value_now">Ngay bây giờ</string>
     <string name="time_value_15s">15 giây kể từ bây giờ</string>
     <string name="time_value_30s">30 giây kể từ bây giờ</string>
     <string name="time_value_1m">1 phút kể từ bây giờ</string>
@@ -11,24 +11,24 @@
     <string name="lb_not_set">Chưa thiết lập</string>
     <string name="lb_incoming_call">Cuộc gọi đến</string>
     <string name="lb_caller_name">Tên</string>
-    <string name="lb_private_num">Không có số</string>
-    <string name="lb_open_contact">Mở danh bạ</string>
+    <string name="mn_opt_private_num">Không có số</string>
+    <string name="mn_opt_open_contact">Mở danh bạ</string>
     <string name="lb_save">Lưu lại</string>
     <string name="lb_caller_info">Người gọi</string>
     <string name="choose_theme">Chọn giao diện</string>
     <string name="lb_scheduled">Kế hoạch</string>
     <string name="edit_call">Chỉnh sửa</string>
     <string name="action_settings">Cài đặt</string>
-    <string name="lb_1min">1 phút</string>
-    <string name="lb_30s">30 giây</string>
-    <string name="lb_5min">5 phút</string>
-    <string name="lb_15s">15 giây</string>
-    <string name="lb_custom">Tùy chỉnh</string>
-    <string name="lb_now">Ngay bây giờ</string>
+    <string name="menu_opt_1min">1 phút</string>
+    <string name="menu_opt_30s">30 giây</string>
+    <string name="menu_opt_5min">5 phút</string>
+    <string name="menu_opt_15s">15 giây</string>
+    <string name="menu_opt_custom">Tùy chỉnh</string>
+    <string name="menu_opt_now">Ngay bây giờ</string>
     <string name="lb_primary_text">Dòng chính</string>
     <string name="lb_secondary_text">Dòng phụ</string>
-    <string name="lb_choose_image">Chọn ảnh</string>
-    <string name="lb_take_image">Chụp ảnh</string>
+    <string name="mn_opt_choose_image">Chọn ảnh</string>
+    <string name="mn_opt_take_image">Chụp ảnh</string>
     <string name="lb_vibrate">Rung khi đổ chuông?</string>
     <string name="lb_off">Tắt</string>
     <string name="lb_on">Bật</string>
@@ -45,9 +45,10 @@
     <string name="lb_tab_all">Tất cả</string>
     <string name="lb_tab_recorded">Các file ghi âm</string>
     <string name="lb_choose_voice">Chọn tệp âm thanh</string>
-    <string name="lb_delete">Xóa</string>
+    <string name="mn_opt_delete">Xóa</string>
     <string name="lb_delete_all">Xóa hết</string>
     <string name="lb_cancel">Hủy</string>
     <string name="lb_ok">Đồng ý</string>
     <string name="lb_preview">Xem trước</string>
+    <string name="full_date_time_pattern">dd MMM yyyy, hh:mm:ss a</string>
 </resources>

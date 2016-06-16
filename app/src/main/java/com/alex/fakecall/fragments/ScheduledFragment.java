@@ -13,11 +13,11 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.alex.fakecall.R;
-import com.alex.fakecall.activities.NewCallActivity;
+import com.alex.fakecall.activities.EditCallActivity;
 import com.alex.fakecall.adapters.BaseRecyclerViewAdapter;
 import com.alex.fakecall.adapters.ScheduledCallsAdapter;
 import com.alex.fakecall.controllers.AlarmController;
-import com.alex.fakecall.controllers.DatabaseController;
+import com.alex.fakecall.data.AppDB;
 import com.alex.fakecall.utils.DialogUtils;
 import com.alex.fakecall.models.Call;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
@@ -49,7 +49,7 @@ public class ScheduledFragment extends BaseFragment {
         mAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, Object item, int position) {
-                Intent intent = new Intent(getContext(), NewCallActivity.class);
+                Intent intent = new Intent(getContext(), EditCallActivity.class);
                 intent.putExtra(Call.TAG, (Call) item);
                 startActivity(intent);
             }
@@ -58,11 +58,11 @@ public class ScheduledFragment extends BaseFragment {
         mAdapter.setOnItemLongClickListener(new BaseRecyclerViewAdapter.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(View v, final Object item, final int position) {
-                DialogUtils.showPopupMenu(getContext(), v, R.menu.menu_list_item, Gravity.RIGHT, new PopupMenu.OnMenuItemClickListener() {
+                DialogUtils.showPopupMenu(getContext(), v, R.array.list_item_opt, Gravity.RIGHT, new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem mn) {
                         switch (mn.getItemId()) {
-                            case R.id.action_delete:
+                            case 0:
                                 cancelCall((Call) item);
                                 mAdapter.removeItem(position);
                                 break;
@@ -77,12 +77,12 @@ public class ScheduledFragment extends BaseFragment {
 
     private void cancelCall(Call call) {
         AlarmController.getInstance().cancelCall((int) call.getId());
-        DatabaseController.getInstance().deleteCall(call.getId());
+        AppDB.getInstance().deleteCall(call.getId());
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        MenuItem mnDelete = menu.add(getString(R.string.lb_delete));
+        MenuItem mnDelete = menu.add(getString(R.string.mn_opt_delete));
         mnDelete.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         mnDelete.setIcon(R.drawable.ic_action_delete);
         mnDelete.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
@@ -108,6 +108,6 @@ public class ScheduledFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        mAdapter.setList(DatabaseController.getInstance().getAllCalls());
+        mAdapter.setList(AppDB.getInstance().getAllCalls());
     }
 }

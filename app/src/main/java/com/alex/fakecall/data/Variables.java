@@ -1,4 +1,4 @@
-package com.alex.fakecall.appdata;
+package com.alex.fakecall.data;
 
 
 import android.os.Environment;
@@ -8,7 +8,7 @@ import com.alex.fakecall.BuildConfig;
 
 import java.io.File;
 
-public class GlobalVars {
+public class Variables {
     public static final String ACTION_CALL_RECEIVER;
     public static final String APP_FOLDER;
     public static final String VOICE_FOLDER;

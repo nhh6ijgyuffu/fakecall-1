@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
 import android.widget.ListView;
@@ -75,11 +76,11 @@ public class MoreCallSettingActivity extends BaseActivity {
         if (duration == 0) {
             optCallDuration.setValue(R.string.lb_not_set);
         } else if (duration == 15 * 1000) {
-            optCallDuration.setValue(R.string.lb_15s);
+            optCallDuration.setValue(R.string.menu_opt_15s);
         } else if (duration == 30 * 1000) {
-            optCallDuration.setValue(R.string.lb_30s);
+            optCallDuration.setValue(R.string.menu_opt_30s);
         } else if (duration == 60 * 1000) {
-            optCallDuration.setValue(R.string.lb_1min);
+            optCallDuration.setValue(R.string.menu_opt_1min);
         }
 
         if (mCall.getVoiceUri() != null) {
@@ -97,23 +98,23 @@ public class MoreCallSettingActivity extends BaseActivity {
 
     @OnClick(R.id.optCallDuration)
     protected void onChooseCallDuration() {
-        DialogUtils.showPopupMenu(this, optCallDuration, R.menu.menu_select_call_duration,
+        DialogUtils.showPopupMenu(this, optCallDuration, R.array.select_call_duration_option, Gravity.NO_GRAVITY,
                 new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         final int id = item.getItemId();
                         switch (id) {
-                            case R.id.action_15s:
+                            case 0:
                                 mCall.setCallDuration(15 * 1000);
-                                optCallDuration.setValue(R.string.lb_15s);
+                                optCallDuration.setValue(R.string.menu_opt_15s);
                                 break;
-                            case R.id.action_30s:
+                            case 1:
                                 mCall.setCallDuration(30 * 1000);
-                                optCallDuration.setValue(R.string.lb_30s);
+                                optCallDuration.setValue(R.string.menu_opt_30s);
                                 break;
-                            case R.id.action_1m:
+                            case 2:
                                 mCall.setCallDuration(60 * 1000);
-                                optCallDuration.setValue(R.string.lb_1min);
+                                optCallDuration.setValue(R.string.menu_opt_1min);
                                 break;
                         }
                         return false;
@@ -134,10 +135,10 @@ public class MoreCallSettingActivity extends BaseActivity {
 
                         if (which != DialogInterface.BUTTON_POSITIVE) {
                             AudioController.getInstance().startPlaying(PlayerTag.RINGTONE,
-                                    rt.getUri(), false);
+                                    Uri.parse(rt.getUriString()), false);
                         } else {
                             optRingtone.setValue(rt.getName());
-                            mCall.setRingtoneUri(rt.getUri().toString());
+                            mCall.setRingtoneUri(rt.getUriString());
                         }
                     }
                 }, new DialogInterface.OnDismissListener() {
@@ -150,7 +151,7 @@ public class MoreCallSettingActivity extends BaseActivity {
 
     private int getPositionRingtone() {
         for (int i = 0; i < listRingtone.size(); i++) {
-            String crUri = listRingtone.get(i).getUri().toString();
+            String crUri = listRingtone.get(i).getUriString();
             if (crUri.equals(mCall.getRingtoneUri())) {
                 return i;
             }

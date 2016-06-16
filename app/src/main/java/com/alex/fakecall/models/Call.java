@@ -1,10 +1,9 @@
 package com.alex.fakecall.models;
 
 
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.provider.Settings;
 
 public class Call implements Parcelable {
     public static final String TAG = Call.class.getSimpleName();
@@ -12,64 +11,19 @@ public class Call implements Parcelable {
     private String name;
     private String number;
     private long time;
-    private Theme theme;
     private boolean isAlarmed;
+    private int themeId;
     private String ringtoneUri;
     private boolean vibrate;
     private String photoUri;
     private long callDuration;
     private String voiceUri;
+    private int selectedTimeOpt;
+    private boolean isPrivate;
 
-    public Call(){}
-
-    //Parcelable
-    public static final Creator<Call> CREATOR = new Creator<Call>() {
-        @Override
-        public Call createFromParcel(Parcel in) {
-            return new Call(in);
-        }
-
-        @Override
-        public Call[] newArray(int size) {
-            return new Call[size];
-        }
-    };
-
-    private Call(Parcel in) {
-        id = in.readLong();
-        name = in.readString();
-        number = in.readString();
-        time = in.readLong();
-        theme = in.readParcelable(Theme.class.getClassLoader());
-        isAlarmed = in.readInt() == 1;
-        ringtoneUri = in.readString();
-        vibrate = in.readInt() == 1;
-        photoUri = in.readString();
-        callDuration = in.readLong();
-        voiceUri = in.readString();
+    public Call() {
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeString(name);
-        dest.writeString(number);
-        dest.writeLong(time);
-        dest.writeParcelable(theme, flags);
-        dest.writeInt(isAlarmed ? 1 : 0);
-        dest.writeString(ringtoneUri);
-        dest.writeInt(vibrate ? 1 : 0);
-        dest.writeString(photoUri);
-        dest.writeLong(callDuration);
-        dest.writeString(voiceUri);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    //getter and setter
     public long getId() {
         return id;
     }
@@ -94,12 +48,12 @@ public class Call implements Parcelable {
         this.number = number;
     }
 
-    public Theme getTheme() {
-        return theme;
+    public int getThemeId() {
+        return themeId;
     }
 
-    public void setTheme(Theme theme) {
-        this.theme = theme;
+    public void setThemeId(int themeId) {
+        this.themeId = themeId;
     }
 
     public long getTime() {
@@ -108,6 +62,7 @@ public class Call implements Parcelable {
 
     public void setTime(long time) {
         this.time = time;
+
     }
 
     public boolean isAlarmed() {
@@ -127,7 +82,7 @@ public class Call implements Parcelable {
 
     public String getRingtoneUri() {
         if (ringtoneUri == null) {
-            ringtoneUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE).toString();
+            ringtoneUri = Settings.System.DEFAULT_RINGTONE_URI.toString();
         }
         return ringtoneUri;
     }
@@ -167,4 +122,72 @@ public class Call implements Parcelable {
     public void setVoiceUri(String voiceUri) {
         this.voiceUri = voiceUri;
     }
+
+    public int getSelectedTimeOpt() {
+        return selectedTimeOpt;
+    }
+
+    public void setSelectedTimeOpt(int time_opt) {
+        this.selectedTimeOpt = time_opt;
+    }
+
+    public boolean isPrivate() {
+        return isPrivate;
+    }
+
+    public void setPrivate(boolean aPrivate) {
+        isPrivate = aPrivate;
+    }
+
+    public static final Creator<Call> CREATOR = new Creator<Call>() {
+        @Override
+        public Call createFromParcel(Parcel in) {
+            return new Call(in);
+        }
+
+        @Override
+        public Call[] newArray(int size) {
+            return new Call[size];
+        }
+    };
+
+    private Call(Parcel in) {
+        id = in.readLong();
+        name = in.readString();
+        number = in.readString();
+        time = in.readLong();
+        themeId = in.readInt();
+        isAlarmed = in.readInt() == 1;
+        ringtoneUri = in.readString();
+        vibrate = in.readInt() == 1;
+        photoUri = in.readString();
+        callDuration = in.readLong();
+        voiceUri = in.readString();
+        selectedTimeOpt = in.readInt();
+        isPrivate = in.readInt() == 1;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(name);
+        dest.writeString(number);
+        dest.writeLong(time);
+        dest.writeInt(themeId);
+        dest.writeInt(isAlarmed ? 1 : 0);
+        dest.writeString(ringtoneUri);
+        dest.writeInt(vibrate ? 1 : 0);
+        dest.writeString(photoUri);
+        dest.writeLong(callDuration);
+        dest.writeString(voiceUri);
+        dest.writeInt(selectedTimeOpt);
+        dest.writeInt(isPrivate ? 1 : 0);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+
 }

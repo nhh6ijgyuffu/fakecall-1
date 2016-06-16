@@ -17,7 +17,7 @@ public class AudioController {
     private HashMap<PlayerTag, MediaPlayer> mediaPlayers;
     private MediaRecorder mRecorder;
 
-    public enum PlayerTag{
+    public enum PlayerTag {
         RINGTONE,
         VOICE
     }
@@ -31,6 +31,10 @@ public class AudioController {
 
     private AudioController() {
         mediaPlayers = new HashMap<>();
+    }
+
+    public synchronized void startPlaying(PlayerTag tag, String uriStr, boolean loop) {
+        startPlaying(tag, Uri.parse(uriStr), loop);
     }
 
     public synchronized void startPlaying(PlayerTag tag, Uri audioUri, boolean loop) {

@@ -53,7 +53,8 @@ public class ScheduledCallsAdapter extends BaseRecyclerViewAdapter<Call, Schedul
         protected void onBind(final Call item, final int pos) {
             tvName.setText(item.getName());
             tvNumber.setText(item.getNumber());
-            tvTime.setText(Utils.millisToString(item.getTime(), " dd MMM yyyy, hh:mm:ss a"));
+            tvTime.setText(Utils.millisToString(item.getTime(),
+                    itemView.getContext().getString(R.string.full_date_time_pattern)));
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

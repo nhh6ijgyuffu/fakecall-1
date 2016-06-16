@@ -11,6 +11,10 @@ public class Theme implements Parcelable {
     private int incomingRes;
     private int inCallRes;
 
+    public Theme(int id) {
+        this.id = id;
+    }
+
     public Theme(int id, String name, int incomingRes, int inCallRes) {
         this.id = id;
         this.name = name;
@@ -18,7 +22,36 @@ public class Theme implements Parcelable {
         this.inCallRes = inCallRes;
     }
 
-    //Parcelable
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getIncomingRes() {
+        return incomingRes;
+    }
+
+    public int getInCallRes() {
+        return inCallRes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Theme)) return false;
+        return ((Theme) o).id == this.id;
+    }
+
     private Theme(Parcel in) {
         id = in.readInt();
         name = in.readString();
@@ -50,37 +83,5 @@ public class Theme implements Parcelable {
         dest.writeString(name);
         dest.writeInt(incomingRes);
         dest.writeInt(inCallRes);
-    }
-
-    //Getter and Setter
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getIncomingRes() {
-        return incomingRes;
-    }
-
-    public int getInCallRes() {
-        return inCallRes;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof Theme)) return false;
-        Theme other = (Theme) o;
-        return other.id == this.id;
     }
 }

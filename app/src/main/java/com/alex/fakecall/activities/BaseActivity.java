@@ -46,7 +46,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     protected void replaceFragment(@IdRes int containerId, Fragment frag, boolean backStack) {
         String tag = frag.getClass().getSimpleName();
         FragmentTransaction trans = getSupportFragmentManager().beginTransaction();

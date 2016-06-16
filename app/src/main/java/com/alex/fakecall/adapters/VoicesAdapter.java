@@ -1,6 +1,7 @@
 package com.alex.fakecall.adapters;
 
 import android.annotation.SuppressLint;
+import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
@@ -9,21 +10,19 @@ import android.widget.TextView;
 import com.alex.fakecall.R;
 import com.alex.fakecall.activities.ChooseVoiceActivity;
 import com.alex.fakecall.controllers.AudioController;
-import com.alex.fakecall.models.VoiceFile;
-
-import java.util.Locale;
+import com.alex.fakecall.models.Voice;
 
 import butterknife.BindView;
 
 
-public class VoiceFilesAdapter extends BaseRecyclerViewAdapter<VoiceFile, VoiceFilesAdapter.ViewHolder> {
+public class VoicesAdapter extends BaseRecyclerViewAdapter<Voice, VoicesAdapter.ViewHolder> {
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(parent, R.layout.audio_file_item);
     }
 
-    public class ViewHolder extends BaseRecyclerViewVH<VoiceFile> {
+    public class ViewHolder extends BaseRecyclerViewVH<Voice> {
         @BindView(R.id.tvPrimary)
         TextView tvName;
 
@@ -38,7 +37,7 @@ public class VoiceFilesAdapter extends BaseRecyclerViewAdapter<VoiceFile, VoiceF
         }
 
         @Override
-        protected void onBind(final VoiceFile item, final int pos) {
+        protected void onBind(final Voice item, final int pos) {
             tvName.setText(item.getName());
             @SuppressLint("DefaultLocale")
             String properties = String.format("%s | %dKB", item.getFormattedDuration(), item.getSizeKB());
@@ -47,18 +46,17 @@ public class VoiceFilesAdapter extends BaseRecyclerViewAdapter<VoiceFile, VoiceF
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (item.getFileUri().toString().equals(ChooseVoiceActivity.selectedUri)) {
+                    if (item.getUriString().equals(ChooseVoiceActivity.selectedUri)) {
                         ChooseVoiceActivity.selectedUri = null;
                         AudioController.getInstance().stopPlaying(AudioController.PlayerTag.VOICE);
                     } else {
-                        ChooseVoiceActivity.selectedUri = item.getFileUri().toString();
-                        AudioController.getInstance().startPlaying(AudioController.PlayerTag.VOICE,
-                                item.getFileUri(), false);
+                        ChooseVoiceActivity.selectedUri = item.getUriString();
+                        AudioController.getInstance().startPlaying(AudioController.PlayerTag.VOICE, item.getUriString(), false);
                     }
                     notifyDataSetChanged();
                 }
             });
-            radioButton.setChecked(item.getFileUri().toString().equals(ChooseVoiceActivity.selectedUri));
+            radioButton.setChecked(item.getUriString().equals(ChooseVoiceActivity.selectedUri));
         }
     }
 }

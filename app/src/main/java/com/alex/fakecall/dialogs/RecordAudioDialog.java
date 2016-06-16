@@ -7,10 +7,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Chronometer;
 
-import com.alex.fakecall.appdata.GlobalVars;
+import com.alex.fakecall.data.Variables;
 import com.alex.fakecall.R;
 import com.alex.fakecall.controllers.AudioController;
-import com.alex.fakecall.models.VoiceFile;
+import com.alex.fakecall.models.Voice;
 import com.alex.fakecall.utils.Utils;
 
 import java.io.File;
@@ -30,7 +30,7 @@ public class RecordAudioDialog extends AlertDialog implements DialogInterface.On
     private boolean mPositivePressed;
 
     public interface OnRecordCompletedCallback {
-        void onCompleted(VoiceFile file);
+        void onCompleted(Voice file);
     }
 
     public RecordAudioDialog(Context context, OnRecordCompletedCallback c) {
@@ -45,7 +45,7 @@ public class RecordAudioDialog extends AlertDialog implements DialogInterface.On
         String fName = String.format("rc_%s.amr", suffix);
         setTitle(fName);
 
-        mRecordedFile = new File(GlobalVars.VOICE_FOLDER + "/" + fName);
+        mRecordedFile = new File(Variables.VOICE_FOLDER + "/" + fName);
 
         setButton(BUTTON_POSITIVE, "Save", this);
         setButton(BUTTON_NEGATIVE, "Cancel", this);
@@ -66,7 +66,7 @@ public class RecordAudioDialog extends AlertDialog implements DialogInterface.On
         if (which == DialogInterface.BUTTON_POSITIVE) {
             mPositivePressed = true;
             if (mCallback != null){
-                mCallback.onCompleted(new VoiceFile(mRecordedFile));
+                mCallback.onCompleted(new Voice(mRecordedFile));
             }
         } else if (which == DialogInterface.BUTTON_NEGATIVE) {
             mPositivePressed = false;

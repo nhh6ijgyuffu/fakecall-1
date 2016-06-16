@@ -7,7 +7,7 @@ import android.support.v4.view.ViewPager;
 import com.alex.fakecall.R;
 import com.alex.fakecall.adapters.TabViewPagerAdapter;
 import com.alex.fakecall.fragments.ScheduledFragment;
-import com.alex.fakecall.fragments.NewSmsFragment;
+import com.alex.fakecall.fragments.SmsFragment;
 
 import butterknife.BindView;
 
@@ -30,7 +30,7 @@ public class ScheduledActivity extends BaseActivity {
         adapter.setShowTitle(true);
 
         adapter.addTab(getString(R.string.lb_tab_call), new ScheduledFragment());
-        adapter.addTab(getString(R.string.lb_tab_sms), new NewSmsFragment());
+        adapter.addTab(getString(R.string.lb_tab_sms), new SmsFragment());
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);

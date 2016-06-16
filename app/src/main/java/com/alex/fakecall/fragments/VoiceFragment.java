@@ -12,12 +12,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.alex.fakecall.R;
-import com.alex.fakecall.adapters.VoiceFilesAdapter;
-import com.alex.fakecall.appdata.GlobalVars;
+import com.alex.fakecall.adapters.VoicesAdapter;
+import com.alex.fakecall.data.Variables;
 import com.alex.fakecall.controllers.AudioController;
 import com.alex.fakecall.controllers.AudioController.PlayerTag;
 import com.alex.fakecall.dialogs.RecordAudioDialog;
-import com.alex.fakecall.models.VoiceFile;
+import com.alex.fakecall.models.Voice;
 import com.alex.fakecall.utils.ExtensionFilter;
 
 import java.io.File;
@@ -35,7 +35,7 @@ public class VoiceFragment extends BaseFragment {
     @BindView(R.id.fabRecord)
     FloatingActionButton fabRecord;
 
-    private VoiceFilesAdapter mAdapter;
+    private VoicesAdapter mAdapter;
 
     private int mType;
     public static final int TYPE_RECORDED = 0;
@@ -59,8 +59,23 @@ public class VoiceFragment extends BaseFragment {
         mType = getArguments().getInt("type");
         rvListRecorded.setHasFixedSize(true);
         rvListRecorded.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new VoiceFilesAdapter();
+        mAdapter = new VoicesAdapter();
         rvListRecorded.setAdapter(mAdapter);
+
+        rvListRecorded.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (mType == TYPE_OTHER) return;
+
+                if (dy > 0 && fabRecord.getVisibility() == View.VISIBLE) {
+                    fabRecord.hide();
+                } else if (dy < 0 && fabRecord.getVisibility() != View.VISIBLE) {
+                    fabRecord.show();
+                }
+            }
+        });
+
         new GetAudioFilesTask(this, mType).execute();
     }
 
@@ -69,7 +84,7 @@ public class VoiceFragment extends BaseFragment {
         RecordAudioDialog dialog = new RecordAudioDialog(getContext(),
                 new RecordAudioDialog.OnRecordCompletedCallback() {
                     @Override
-                    public void onCompleted(VoiceFile file) {
+                    public void onCompleted(Voice file) {
                         mAdapter.addItem(file);
                     }
                 });
@@ -98,7 +113,7 @@ public class VoiceFragment extends BaseFragment {
         AudioController.getInstance().stopPlaying(PlayerTag.VOICE);
     }
 
-    private static class GetAudioFilesTask extends AsyncTask<Void, Void, List<VoiceFile>> {
+    private static class GetAudioFilesTask extends AsyncTask<Void, Void, List<Voice>> {
         private WeakReference<VoiceFragment> mWeakRef;
         private int mType;
 
@@ -109,28 +124,28 @@ public class VoiceFragment extends BaseFragment {
 
 
         @Override
-        protected List<VoiceFile> doInBackground(Void... params) {
+        protected List<Voice> doInBackground(Void... params) {
             if (mType == TYPE_RECORDED) {
                 return fromRecorded();
             }
             return fromOther();
         }
 
-        private List<VoiceFile> fromRecorded() {
-            File voiceDir = new File(GlobalVars.VOICE_FOLDER);
+        private List<Voice> fromRecorded() {
+            File voiceDir = new File(Variables.VOICE_FOLDER);
             File[] files = voiceDir.listFiles(new ExtensionFilter(new String[]{"amr", "wav", "mp4"}));
 
-            List<VoiceFile> list = new ArrayList<>();
+            List<Voice> list = new ArrayList<>();
 
             for (File file : files) {
-                list.add(new VoiceFile(file));
+                list.add(new Voice(file));
             }
             return list;
         }
 
-        private List<VoiceFile> fromOther() {
+        private List<Voice> fromOther() {
             VoiceFragment frag = mWeakRef.get();
-            List<VoiceFile> list = new ArrayList<>();
+            List<Voice> list = new ArrayList<>();
             if (frag != null) {
                 Uri queryUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
                 String[] projections = new String[]{MediaStore.Audio.Media.DATA};
@@ -141,9 +156,9 @@ public class VoiceFragment extends BaseFragment {
                 if (cursor.moveToFirst()) {
                     do {
                         String path = cursor.getString(0);
-                        if (!path.contains(GlobalVars.VOICE_FOLDER)) {
+                        if (!path.contains(Variables.VOICE_FOLDER)) {
                             File file = new File(path);
-                            list.add(new VoiceFile(file));
+                            list.add(new Voice(file));
                         }
                     } while (cursor.moveToNext());
                 }
@@ -153,7 +168,7 @@ public class VoiceFragment extends BaseFragment {
         }
 
         @Override
-        protected void onPostExecute(List<VoiceFile> audioFiles) {
+        protected void onPostExecute(List<Voice> audioFiles) {
             VoiceFragment frag = mWeakRef.get();
             if (frag != null) {
                 frag.mAdapter.setList(audioFiles);

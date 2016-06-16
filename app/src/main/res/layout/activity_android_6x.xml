@@ -23,7 +23,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text="@string/lb_incoming_call"
-                android:textColor="#fff"
                 android:textSize="17sp" />
 
             <TextView
@@ -31,7 +30,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/lb_caller_name"
-                android:textColor="#fff"
                 android:textSize="30sp" />
 
             <TextView
@@ -39,15 +37,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/lb_caller_number"
-                android:textColor="#fff"
                 android:textSize="17sp" />
 
-            <com.alex.fakecall.views.CountableChronometer
+            <com.alex.fakecall.views.MyChronometer
                 android:id="@+id/chronometer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:textColor="#fff"
                 android:textSize="17sp"
                 android:visibility="gone" />
 
@@ -110,7 +106,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/ivCallerPhoto"
+                android:id="@+id/ivPhoto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"

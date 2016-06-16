@@ -4,7 +4,7 @@ package com.alex.fakecall.utils;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.annotation.MenuRes;
+import android.support.annotation.ArrayRes;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.view.Gravity;
@@ -39,15 +39,19 @@ public class DialogUtils {
         builder.show();
     }
 
-    public static void showPopupMenu(Context context, View anchor, @MenuRes int menuRes,
+
+    public static void showPopupMenu(Context context, View anchor, @ArrayRes int arrayId, int gravity,
                                      PopupMenu.OnMenuItemClickListener menuItemClickListener) {
-        DialogUtils.showPopupMenu(context, anchor, menuRes, Gravity.NO_GRAVITY, menuItemClickListener);
+        String[] arrayOpt = context.getResources().getStringArray(arrayId);
+        DialogUtils.showPopupMenu(context, anchor, arrayOpt, gravity, menuItemClickListener);
     }
 
-    public static void showPopupMenu(Context context, View anchor, @MenuRes int menuRes, int gravity,
+    public static void showPopupMenu(Context context, View anchor, String[] option, int gravity,
                                      PopupMenu.OnMenuItemClickListener menuItemClickListener) {
         PopupMenu popupMenu = new PopupMenu(context, anchor, gravity);
-        popupMenu.inflate(menuRes);
+        for (int i = 0; i < option.length; i++) {
+            popupMenu.getMenu().add(0, i, i, option[i]);
+        }
         popupMenu.setOnMenuItemClickListener(menuItemClickListener);
         popupMenu.show();
     }

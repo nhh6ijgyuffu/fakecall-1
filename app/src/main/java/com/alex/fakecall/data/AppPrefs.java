@@ -1,4 +1,4 @@
-package com.alex.fakecall.appdata;
+package com.alex.fakecall.data;
 
 
 import android.content.SharedPreferences;
@@ -6,22 +6,22 @@ import android.content.SharedPreferences;
 import com.alex.fakecall.FakeCallApp;
 import com.alex.fakecall.utils.GsonUtils;
 
-public class SharedPrefController {
-    private static SharedPrefController mInstance;
+public class AppPrefs {
+    private static AppPrefs mInstance;
     private SharedPreferences mPrefs;
 
     private static final String PREF_NAME = "fake_call";
     public static final String KEY_LAST_CALL = "last_call";
 
 
-    public static synchronized SharedPrefController getInstance() {
+    public static synchronized AppPrefs getInstance() {
         if (mInstance == null) {
-            mInstance = new SharedPrefController();
+            mInstance = new AppPrefs();
         }
         return mInstance;
     }
 
-    private SharedPrefController() {
+    private AppPrefs() {
         mPrefs = FakeCallApp.getInstance().getSharedPreferences(PREF_NAME, 0);
     }
 
